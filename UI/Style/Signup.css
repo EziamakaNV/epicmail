@@ -1,0 +1,86 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto+Condensed');
+
+body{
+    font-family: 'Roboto Condensed', sans-serif;
+    margin: 0;
+    height: auto;
+}
+
+header{
+    text-align: center;
+    background-color: #f80652;
+    color: white
+}
+
+#heading-message{
+    text-align: center;
+}
+
+main{
+    max-width: 800px;
+    margin:auto
+}
+
+
+section{
+    max-width: 100%;
+    width: 90vw;
+    margin: auto;
+    
+}
+
+
+input{
+    width: 100%;
+    margin-top: 15px;
+    padding: 10px 0 10px 10px;
+    border-radius: 4px;
+    border-width: 0.5px;
+    outline: none
+}
+
+input:focus{
+    border-color: blue
+}
+
+p{
+    margin-bottom: 0;
+}
+#form-bottom{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+#form-bottom div{
+    margin:auto
+}
+
+#form-bottom div span a{
+    text-decoration: none;
+    font-size: 16px
+}
+
+button{
+    background-color: #e8f1f8;
+    border: none;
+    color: blue;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+}
+
+button:hover{
+    background-color: #ADC4DC
+}
+
+@media(min-width:700px){
+    main{
+        margin-top: 5vh;
+        border: 1px solid gainsboro;
+        border-radius: 4px;
+        padding: 10px
+    }
+}
