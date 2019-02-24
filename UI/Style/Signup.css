@@ -76,6 +76,15 @@ button:hover{
     background-color: #ADC4DC
 }
 
+footer{
+    display: flex;
+    flex-direction: row;
+    justify-content: center
+}
+footer div{
+    margin:auto
+}
+
 @media(min-width:700px){
     main{
         margin-top: 5vh;
