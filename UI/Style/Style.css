@@ -200,6 +200,12 @@ textarea:focus{
     background-color: #ADC4DC
 }
 
+#sent-messages div.flex-wrapper:hover{
+    border: 1px solid blue;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
 
 
 
