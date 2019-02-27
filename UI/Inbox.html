@@ -21,6 +21,7 @@
                     <a href="Inbox.html">Inbox</a>
                     <a href="Sent.html">Sent</a>
                     <a href="Drafts.html">Drafts</a>
+                    <a href="Contacts.html">Contacts</a>
                     <a href="Creategroups.html">Groups</a>
                 </div>
             </div>
@@ -33,10 +34,16 @@
             <div id="new-message-icon">
                 <a href="Newmessage.html">
                     <img src="Images/CreateMessage.png" alt="New Message Icon">
+                    <span class="pop-up">Create New Message</span>
                 </a>  
             </div>
         </header>
         <section id="messages">
+            <section id="message-modal">
+                <button id="close-button" class="close">close</button>
+                <iframe id="individual-message" src="Readmessage.html"></iframe>
+            </section>
+           
             <div id="">
                 <p class="From">Lorem, ipsum.</p>
                 <p class="Subject">Lorem, ipsum dolor.</p>
@@ -80,6 +87,6 @@
         </footer>
 
     </main>
-    
+    <script src="Js/readMessage.js"></script>
 </body>
 </html>
