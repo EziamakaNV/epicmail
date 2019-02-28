@@ -2,14 +2,11 @@ const divs = document.getElementById('messages').getElementsByTagName('div');
 
 
 for(let i= 0; i < divs.length; i++){
-    divs[i].addEventListener('click',showMessage)
+    divs[i].addEventListener('click',(e)=>{
+        document.getElementById("message-modal").style.display = "block";
+    });
 }
 
-
-function showMessage(e){
-    document.getElementById("message-modal").style.display = "block";
-    console.log('yeah');
-}
 
 const button = document.getElementById('close-button');
 button.onclick = (e)=>{
