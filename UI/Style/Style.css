@@ -254,6 +254,10 @@ body.message-body{
     background-color: white;
 }
 
+#draft-messages button a{
+    text-decoration: none
+}
+
 
 
 img{
