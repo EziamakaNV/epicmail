@@ -1,34 +1,34 @@
 const deleteButtons = document.getElementsByClassName('delete');
-const deleteDialog = document.getElementById('Dialog-2');
-const closeDeleteDialog = document.getElementById('close-dialog-2');
+const deleteModal = document.getElementById('delete-modal');
+const closeDeleteModal = document.getElementById('close-delete-modal');
 
 const sendButtons = document.getElementsByClassName('send');
-const sendDialog = document.getElementById('Dialog-1');
-const closeSendDialog = document.getElementById('close-dialog-1');
+const sendModal = document.getElementById('send-modal');
+const closeSendModal = document.getElementById('close-send-modal');
 
 
 
-closeDeleteDialog.addEventListener('click', (e)=>{
-    deleteDialog.close();
+closeDeleteModal.addEventListener('click', (e)=>{
+    deleteModal.style.display = 'none'
 });
 
 for(let i = 0; i<deleteButtons.length; i++){
     deleteButtons[i].addEventListener('click',(e)=>{
         e.target.parentNode.parentNode.parentNode.style.display = 'none';
-        deleteDialog.showModal();
+        deleteModal.style.display = "block";
 
     });
 }
 
 
-closeSendDialog.addEventListener('click', (e)=>{
-    sendDialog.close();
+closeSendModal.addEventListener('click', (e)=>{
+    sendModal.style.display = 'none';
 });
 
 for(let i = 0; i<sendButtons.length; i++){
     sendButtons[i].addEventListener('click',(e)=>{
         e.target.parentNode.parentNode.parentNode.style.display = 'none';
-        sendDialog.showModal();
+        sendModal.style.display = 'block';
 
     });
 }

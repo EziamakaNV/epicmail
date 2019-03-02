@@ -1,11 +1,11 @@
-const dialog = document.getElementById('Dialog');
-const closeDialog = document.getElementById('close-dialog');
+const modal = document.getElementsByClassName('modal')[0];
+const close = document.getElementsByClassName('close')[0];
 const submit = document.getElementById('submit');
 
-submit.addEventListener('click',()=>{
-    dialog.showModal();
+submit.addEventListener('click', (e)=>{
+    modal.style.display='block';
 });
 
-closeDialog.addEventListener('click',()=>{
-    dialog.close();
+close.addEventListener('click', (e)=>{
+    modal.style.display='none';
 });
