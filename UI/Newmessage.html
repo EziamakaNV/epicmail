@@ -7,17 +7,20 @@
     <title>New Message</title>
 </head>
 <body>
-        <dialog id='Dialog-1'>
-                <p>Message Sent!</p>
-                <br>
-                <a id='close-dialog-1'>Close</a>
-            </dialog>
-    
-            <dialog id='Dialog-2'>
-                <p>Message Saved to Drafts!</p>
-                <br>
-                <a id='close-dialog-2'>Close</a>
-            </dialog>
+        <div id="send-modal" class="modal">
+                <a id="close-send-modal" class="close">Close</a>
+                <div class="modal-content">
+                    <p>Message Sent!</p>
+                    <br>
+                </div>
+            </div>
+            <div id ="draft-modal" class="modal">
+                <a id ="close-draft-modal" class="close">Close</a>
+                <div class="modal-content">
+                    <p>Message saved to drafts!</p>
+                    <br>
+                </div>
+            </div>
     <main>
             <header class="flex-wrapper">
                 <div class="dropdown">
