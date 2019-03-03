@@ -39,17 +39,22 @@
             </div>
         </header>
         <section id="draft-messages">
-                <dialog id='Dialog-1'>
+
+            <div id="send-modal" class="modal">
+                <a id="close-send-modal" class="close">Close</a>
+                <div class="modal-content">
                     <p>Message Sent!</p>
                     <br>
-                    <a id='close-dialog-1'>Close</a>
-                </dialog>
+                </div>
+            </div>
+            <div id ="delete-modal" class="modal">
+                <a id ="close-delete-modal" class="close">Close</a>
+            <div class="modal-content">
+                <p>Message Deleted!</p>
+                <br>
+            </div>
+            </div>
 
-                <dialog id='Dialog-2'>
-                    <p>Message Deleted!</p>
-                    <br>
-                    <a id='close-dialog-2'>Close</a>
-                </dialog>
                 
             <div id="">
                 <div class="flex-wrapper">
@@ -134,12 +139,13 @@
         </section>
         
         <footer>
-            <div id="contact-us">
-                <span><a href="#">Contact Us</a></span>
-            </div>
-            <div id="terms">
-                <span><a href="#">Terms</a></span>
-            </div>
+                <div id="contact-us">
+                    <span><a href="Contactus.html">Contact Us</a></span>
+                </div>
+                <div id="terms">
+                    <span><a href="Terms.html">Terms</a></span>
+                </div>
+            
         </footer>
         <script src="Js/drafts.js"></script>
     </main>

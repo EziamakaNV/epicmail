@@ -1,23 +1,40 @@
-const sendDialog = document.getElementById('Dialog-1');
-const draftDialog = document.getElementById('Dialog-2');
 const saveDraft = document.getElementById('save-draft');
-const sendMessage = document.getElementById('send');
-const closeSend = document.getElementById('close-dialog-1');
-const closeDraft = document.getElementById('close-dialog-2');
+const draftModal = document.getElementById('draft-modal');
+const closeDraftModal = document.getElementById('close-draft-modal');
 
-closeDraft.addEventListener('click',(e)=>{
-    draftDialog.close();
+const send = document.getElementById('send');
+const sendModal = document.getElementById('send-modal');
+const closeSendModal = document.getElementById('close-send-modal');
+
+
+
+closeSendModal.addEventListener('click', (e)=>{
+    sendModal.style.display = 'none'
 });
 
-closeSend.addEventListener('click',(e)=>{
-    sendDialog.close();
+send.addEventListener('click',(e)=>{
+    sendModal.style.display = "block";
+
 });
 
+
+closeDraftModal.addEventListener('click', (e)=>{
+    draftModal.style.display = 'none';
+});
 
 saveDraft.addEventListener('click',(e)=>{
-    draftDialog.showModal();
+    draftModal.style.display = 'block';
+
 });
 
-sendMessage.addEventListener('click',(e)=>{
-    sendDialog.showModal();
+
+const dropDown = document.getElementsByClassName('dropdown')[0];
+const dropDownContent= document.getElementsByClassName('dropdown-content')[0];
+
+dropDown.addEventListener('click',()=>{
+    dropDownContent.style.display="block";
+});
+
+dropDownContent.addEventListener('click',()=>{
+    dropDownContent.style.display="block";
 });

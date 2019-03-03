@@ -7,17 +7,20 @@
     <title>New Message</title>
 </head>
 <body>
-        <dialog id='Dialog-1'>
-                <p>Message Sent!</p>
-                <br>
-                <a id='close-dialog-1'>Close</a>
-            </dialog>
-    
-            <dialog id='Dialog-2'>
-                <p>Message Saved to Drafts!</p>
-                <br>
-                <a id='close-dialog-2'>Close</a>
-            </dialog>
+    <div id="send-modal" class="modal">
+        <a id="close-send-modal" class="close">Close</a>
+        <div class="modal-content">
+            <p>Message Sent!</p>
+            <br>
+        </div>
+    </div>
+    <div id ="draft-modal" class="modal">
+        <a id ="close-draft-modal" class="close">Close</a>
+        <div class="modal-content">
+            <p>Message saved to drafts!</p>
+            <br>
+        </div>
+    </div>
     <main>
             <header class="flex-wrapper">
                 <div class="dropdown">
@@ -50,7 +53,7 @@
                 </div>
             </header>
         <section id="send-message">
-            <form action="" method="post">
+            <form action="#" method="post" onsubmit="event.preventDefault()">
                 <div>
                     <input class ="input recepients" type="text" name="" id="" id="to" placeholder="To:">
                 </div>
@@ -64,15 +67,15 @@
                     <textarea id="mail-message" name="" id=""></textarea>
                 </div>
                 <div id="form-bottom" class="flex-wrapper">
-                        <div>
-                            <a id="send">Send</a>
-                        </div>
+                        <button id="send">
+                            Send
+                        </button>
                     <!-- <div>
                         <button type="submit">Send</button>
                     </div> -->
-                    <div>
-                         <a id="save-draft">Save as Draft</a>
-                    </div>
+                    <button id="save-draft">
+                         Save as Draft
+                    </button>
                     <!-- <div>
                         <button>Save as Draft</button>
                     </div> -->
@@ -82,13 +85,13 @@
         </section>
         
         <footer>
-            <div id="contact-us">
-                <span><a href="#">Contact Us</a></span>
-            </div>
-            <div id="terms">
-                <span><a href="#">Terms</a></span>
-            </div>
-        
+                <div id="contact-us">
+                    <span><a href="Contactus.html">Contact Us</a></span>
+                </div>
+                <div id="terms">
+                    <span><a href="Terms.html">Terms</a></span>
+                </div>
+            
         </footer>
 
     </main>
