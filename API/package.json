@@ -4,7 +4,7 @@
   "description": "A web app that helps people exchange messages",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha TESTS/test.js"
   },
   "repository": {
     "type": "git",
@@ -26,6 +26,9 @@
     "eslint-plugin-import": "^2.16.0"
   },
   "dependencies": {
+    "body-parser": "^1.18.3",
+    "chai": "^4.2.0",
+    "chai-http": "^4.2.1",
     "express": "^4.16.4",
     "mocha": "^6.0.2"
   }
