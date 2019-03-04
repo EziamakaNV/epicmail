@@ -1,0 +1,35 @@
+{
+  "name": "epicmail",
+  "version": "1.0.0",
+  "description": "A web app that helps people exchange messages",
+  "main": "server.js",
+  "scripts": {
+    "test": "mocha TESTS/test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/EziamakaNV/epicmail.git"
+  },
+  "keywords": [
+    "Andela",
+    "EpicMail"
+  ],
+  "author": "Nnaemeka V. Eziamaka",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/EziamakaNV/epicmail/issues"
+  },
+  "homepage": "https://github.com/EziamakaNV/epicmail#readme",
+  "devDependencies": {
+    "eslint": "^5.15.0",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-plugin-import": "^2.16.0"
+  },
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "chai": "^4.2.0",
+    "chai-http": "^4.2.1",
+    "express": "^4.16.4",
+    "mocha": "^6.0.2"
+  }
+}
