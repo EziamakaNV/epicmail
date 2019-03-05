@@ -1,0 +1,313 @@
+/* @import url('https://fonts.googleapis.com/css?family=Roboto+Condensed'); */
+
+body{
+    font-family: 'Roboto Condensed', sans-serif;
+    margin: 0;
+    height: auto;
+}
+
+header{
+    text-align: center;
+    background-color: #f80652;
+    color: white
+}
+
+#heading-message{
+    text-align: center;
+}
+
+main{
+    max-width: 800px;
+    margin:auto
+}
+
+
+section{
+    max-width: 100%;
+    width: 90vw;
+    margin: auto;
+    
+}
+
+
+.input{
+    width: 100%;
+    margin-top: 15px;
+    padding: 10px 0 10px 10px;
+    border-radius: 4px;
+    border-width: 0.5px;
+    outline: none
+}
+
+input:focus{
+    border-color: blue
+}
+
+p{
+    margin-bottom: 0;
+}
+#form-bottom{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+#form-bottom div{
+    margin:auto
+}
+
+#form-bottom div span a{
+    text-decoration: none;
+    font-size: 16px
+}
+
+button{
+    background-color: #e8f1f8;
+    border: none;
+    color: blue;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+button:hover{
+    background-color: #ADC4DC
+}
+
+footer{
+    display: flex;
+    flex-direction: row;
+    justify-content: center
+}
+footer div{
+    margin:auto
+}
+
+.flex-wrapper{
+    display: flex;
+    flex-direction: row;
+    justify-content: center
+}
+
+.flex-wrapper div{
+    margin: auto
+}
+
+.flex-wrapper #menu-bar div{
+    width: 20px;
+    background: white;
+    height: 5px;
+    margin: 2px 0px 2px 0px
+}
+
+
+.dropbtn {
+    
+    color: white;
+    padding: 16px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+  }
+  
+  /* The container <div> - needed to position the dropdown content */
+  .dropdown {
+    display: inline-block;
+  }
+  
+  /* Dropdown Content (Hidden by Default) */
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+  }
+  
+  /* Links inside the dropdown */
+  .dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+  }
+  
+  /* Change color of dropdown links on hover */
+  .dropdown-content a:hover {background-color: #f1f1f1}
+  
+  /* Show the dropdown menu on hover */
+  .dropdown:hover .dropdown-content{
+    display: block;
+  }
+  
+  /* Change the background color of the dropdown button when the dropdown content is shown */
+  .dropdown:hover .dropbtn {
+    background-color: #ADC4DC;
+  }
+
+  #messages div:hover{
+      border: 1px solid blue;
+      border-radius: 4px;
+      cursor: pointer;
+  }
+
+  hr{
+      margin:0;
+  }
+
+
+div.checkbox{
+    margin-top:20px;
+}
+
+#group-name-div{
+    width:60%;
+    margin: 20px auto 0 auto;
+}
+#group-name-div input{
+    width : 100%;
+    padding: 10px 10px 10px 10px
+}
+
+textarea {	
+    width: 100%;
+    height: 300px;
+    margin-top: 20px
+    }
+
+textarea:focus{
+    border-color: blue;
+    outline: none
+}
+
+#form-bottom a{
+    background-color: #e8f1f8;
+    border: none;
+    color: blue;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+#form-bottom a:hover{
+    background-color: #ADC4DC
+}
+
+#sent-messages div.flex-wrapper:hover{
+    border: 1px solid blue;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+#new-message-icon a{
+    position: relative;
+}
+
+span.pop-up{
+    display:none;
+    position: absolute; 
+    color: black;
+    padding: 12px 16px;
+    background-color: #f1f1f1
+  
+}
+a:hover span.pop-up{
+    display: block;
+    position: absolute
+}
+#draft-messages div.flex-wrapper:hover{
+    border: 1px solid blue;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+#message-modal{
+    display: none;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    position: fixed;
+    left: 0;
+    top: 0;
+}
+#individual-message{
+    display: block;
+    margin: 5% auto;
+    width:80%;
+    height:80%
+}
+.close{
+    float: right;
+    outline:none
+}
+
+body.message-body{
+    background-color: white;
+}
+
+#draft-messages button a{
+    text-decoration: none
+}
+
+
+.modal{
+    display: none;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    position: fixed;
+    left: 0;
+    top: 0;
+
+}
+
+.modal-content{
+    background-color: white;
+    margin: 15% auto; 
+    padding: 20px;
+    border: 1px solid #888;
+    width: 20%;
+}
+.modal a{
+    background-color: #e8f1f8;
+    border: none;
+    color: blue;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    cursor: pointer
+}
+
+.modal a:hover{
+    background-color: #ADC4DC
+}
+
+
+
+img{
+    border: 1px solid black;
+    width:35px;
+    height:35px;
+}
+
+@media(min-width:700px){
+    main{
+        margin-top: 5vh;
+        border: 1px solid gainsboro;
+        border-radius: 4px;
+        padding: 10px
+    }
+}
