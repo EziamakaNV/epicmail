@@ -132,3 +132,113 @@ describe('POST /api/v1/auth/login', () => {
     });
   });
 });
+
+describe('GET /api/v1/messages', () => {
+  describe('should fetch all received mails', () => {
+    it('on sucess it should return an object with properties status and data', (done) => {
+      chai.request(server)
+        .get('/api/v1/messages')
+        .end((err, res) => {
+          // eslint-disable-next-line no-unused-expressions
+          expect(err).to.be.null;
+          expect(res, 'response object status').to.have.status(200);
+          expect(res.body, 'response body').to.be.a('object');
+          expect(res.body, 'response body').to.haveOwnProperty('status');
+          expect(res.body.status, 'status property').to.equal(200);
+          expect(res.body, 'response body').to.haveOwnProperty('data');
+          expect(res.body.data, 'data property').to.be.a('array');
+          done();
+        });
+    });
+  });
+});
+
+describe('GET /api/v1/messages/unread', () => {
+  describe('should fetch all unread mails', () => {
+    it('on sucess it should return an object with properties status and data', (done) => {
+      chai.request(server)
+        .get('/api/v1/messages/unread')
+        .end((err, res) => {
+          // eslint-disable-next-line no-unused-expressions
+          expect(err).to.be.null;
+          expect(res, 'response object status').to.have.status(200);
+          expect(res.body, 'response body').to.be.a('object');
+          expect(res.body, 'response body').to.haveOwnProperty('status');
+          expect(res.body.status, 'status property').to.equal(200);
+          expect(res.body, 'response body').to.haveOwnProperty('data');
+          expect(res.body.data, 'data property').to.be.a('array');
+          done();
+        });
+    });
+    it('there should be no empty elements in the data array', (done) => {
+      chai.request(server)
+        .get('/api/v1/messages/unread')
+        .end((err, res) => {
+          // eslint-disable-next-line no-unused-expressions
+          expect(err).to.be.null;
+          expect(res, 'response object status').to.have.status(200);
+          expect(res.body, 'response body').to.be.a('object');
+          expect(res.body, 'response body').to.haveOwnProperty('status');
+          expect(res.body.status, 'status property').to.equal(200);
+          expect(res.body, 'response body').to.haveOwnProperty('data');
+          expect(res.body.data, 'data property').to.be.a('array');
+          let isElementEmpty = false;
+          res.body.data.forEach((element) => {
+            // eslint-disable-next-line eqeqeq
+            if (element == false) {
+              // If falsy i.e element is undefined, null, 0 etc, set isElementEmpty to true
+              isElementEmpty = true;
+            }
+          });
+          // eslint-disable-next-line no-unused-expressions
+          expect(isElementEmpty).to.be.false;
+          done();
+        });
+    });
+  });
+});
+
+describe('GET /api/v1/messages/sent', () => {
+  describe('should fetch all sent mails', () => {
+    it('on sucess it should return an object with properties status and data', (done) => {
+      chai.request(server)
+        .get('/api/v1/messages/sent')
+        .end((err, res) => {
+          // eslint-disable-next-line no-unused-expressions
+          expect(err).to.be.null;
+          expect(res, 'response object status').to.have.status(200);
+          expect(res.body, 'response body').to.be.a('object');
+          expect(res.body, 'response body').to.haveOwnProperty('status');
+          expect(res.body.status, 'status property').to.equal(200);
+          expect(res.body, 'response body').to.haveOwnProperty('data');
+          expect(res.body.data, 'data property').to.be.a('array');
+          done();
+        });
+    });
+    it('there should be no empty elements in the data array', (done) => {
+      chai.request(server)
+        .get('/api/v1/messages/sent')
+        .end((err, res) => {
+          // eslint-disable-next-line no-unused-expressions
+          expect(err).to.be.null;
+          expect(res, 'response object status').to.have.status(200);
+          expect(res.body, 'response body').to.be.a('object');
+          expect(res.body, 'response body').to.haveOwnProperty('status');
+          expect(res.body.status, 'status property').to.equal(200);
+          expect(res.body, 'response body').to.haveOwnProperty('data');
+          expect(res.body.data, 'data property').to.be.a('array');
+          let isElementEmpty = false;
+          res.body.data.forEach((element) => {
+            // eslint-disable-next-line eqeqeq
+            if (element == false) {
+              // If falsy i.e element is undefined, null, 0 etc, set isElementEmpty to true
+              isElementEmpty = true;
+            }
+          });
+          // eslint-disable-next-line no-unused-expressions
+          expect(isElementEmpty).to.be.false;
+          done();
+        });
+    });
+  });
+});
