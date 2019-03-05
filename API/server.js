@@ -20,7 +20,7 @@ const User = [{
 
 // eslint-disable-next-line no-unused-vars
 const Contacts = [{
-  id: '123',
+  id: 123,
   email: 'James@test.com',
   firstName: 'James',
   lastName: 'Dee',
@@ -113,7 +113,7 @@ const Messages = [{
 // eslint-disable-next-line no-unused-vars
 const Sent = [{
   senderId: 54646,
-  messageId: '34545',
+  messageId: 34545,
   createdOn: 'Mon Mar 04 2019 14:01:23 GMT+0100 (West Africa Standard Time)',
 }];
 
@@ -196,6 +196,30 @@ app.get('/api/v1/messages/unread', (req, res) => {
 app.get('/api/v1/messages/sent', (req, res) => {
   // Fetch sent messages
   fetchMessages('sent', req, res);
+});
+
+app.post('/api/v1/messages', (req, res) => {
+  if ((req.body.senderId) && (req.body.receiverId) && (req.body.subject) && (req.body.message)) {
+    const id = Math.floor((Math.random() * 10000)); // Generate Random Id
+    const newMessagePosition = Messages.push({
+      id,
+      createdOn: Date(),
+      subject: req.body.subject,
+      message: req.body.message,
+      senderId: Number(req.body.senderId),
+      receiverId: Number(req.body.receiverId),
+      parentMessageId: id,
+      status: 'sent',
+    });
+    res.status(200).json({ status: 200, data: Messages[newMessagePosition - 1] });
+  } else {
+    res.status(400).json({ status: 400, error: 'Missing parameters' });
+  }
+});
+
+// Executes when request path does not match any of the handlers
+app.use((req, res) => {
+  res.status(401).json({ error: 'Bad request! Endpoint does not exist!' });
 });
 
 app.listen(8080, () => {

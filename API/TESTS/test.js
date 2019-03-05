@@ -242,3 +242,54 @@ describe('GET /api/v1/messages/sent', () => {
     });
   });
 });
+
+describe('POST /api/v1/messages', () => {
+  describe('should create or send emails to individuals', () => {
+    it('when all relevant properties are sent in the POST body, on sucess it should return an object with properties status and data', (done) => {
+      chai.request(server)
+        .post('/api/v1/messages')
+        .type('form')
+        .send({
+          senderId: 12456,
+          receiverId: 23456,
+          subject: 'Test Subject',
+          message: 'Eu quo urbanitas reprehendunt. Omittam commune singulis ex sit. In facilisis honestatis pri, nonumes ponderum ius no. Cu sumo reprehendunt ius',
+        })
+        .end((err, res) => {
+          // eslint-disable-next-line no-unused-expressions
+          expect(err).to.be.null;
+          expect(res, 'response object status').to.have.status(200);
+          expect(res.body, 'response body').to.be.a('object');
+          expect(res.body, 'response body').to.haveOwnProperty('status');
+          expect(res.body.status, 'status property').to.equal(200);
+          expect(res.body, 'response body').to.haveOwnProperty('data');
+          expect(res.body.data, 'data property').to.be.a('object');
+          done();
+        });
+    });
+  });
+
+  describe('should handles missing properties in POST body', () => {
+    it('Server should respond with a 400 bad request if any of the parameters in the POST body is missing', (done) => {
+      chai.request(server)
+        .post('/api/v1/messages')
+        .type('form')
+        .send({
+          senderId: 12456,
+          subject: 'Test Subject',
+          message: 'Eu quo urbanitas reprehendunt. Omittam commune singulis ex sit. In facilisis honestatis pri, nonumes ponderum ius no. Cu sumo reprehendunt ius',
+        })
+        .end((err, res) => {
+          // eslint-disable-next-line no-unused-expressions
+          expect(err).to.be.null;
+          expect(res, 'response object status').to.have.status(400);
+          expect(res.body, 'response body').to.be.a('object');
+          expect(res.body, 'response body').to.haveOwnProperty('status');
+          expect(res.body.status, 'status property').to.equal(400);
+          expect(res.body, 'response body').to.haveOwnProperty('error');
+          expect(res.body.error, 'error property').to.be.a('string');
+          done();
+        });
+    });
+  });
+});
