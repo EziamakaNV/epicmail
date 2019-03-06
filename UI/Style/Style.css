@@ -295,6 +295,9 @@ body.message-body{
     background-color: #ADC4DC
 }
 
+#contact-us span a, #terms span a {
+    text-decoration: none
+}
 
 
 img{
