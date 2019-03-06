@@ -230,7 +230,7 @@ app.route('/api/v1/messages/:messageId')
           newMessagePosition = index;
         }
       });
-      if (newMessagePosition) { // If the message was found
+      if (newMessagePosition >= 0) { // If the message was found
         res.status(200).json({ status: 200, data: Messages[newMessagePosition] });
       } else {
         res.status(404).json({ status: 404, error: 'Message not found' });
