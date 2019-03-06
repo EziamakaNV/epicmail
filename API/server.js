@@ -217,6 +217,29 @@ app.post('/api/v1/messages', (req, res) => {
   }
 });
 
+app.route('/api/v1/messages/:messageId')
+  .get((req, res) => {
+    const reqMessageId = req.params.messageId;
+    // Check if the message Id is an interger
+    // eslint-disable-next-line no-restricted-globals
+    if (!isNaN(reqMessageId)) {
+      let newMessagePosition;
+      // Search for email using messageId
+      Messages.forEach((message, index) => {
+        if (message.id === Number(reqMessageId)) {
+          newMessagePosition = index;
+        }
+      });
+      if (newMessagePosition >= 0) { // If the message was found
+        res.status(200).json({ status: 200, data: Messages[newMessagePosition] });
+      } else {
+        res.status(404).json({ status: 404, error: 'Message not found' });
+      }
+    } else {
+      res.status(400).json({ status: 400, error: 'Bad request. Message Id must be an Integer' });
+    }
+  });
+
 // Executes when request path does not match any of the handlers
 app.use((req, res) => {
   res.status(401).json({ error: 'Bad request! Endpoint does not exist!' });

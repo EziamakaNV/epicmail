@@ -293,3 +293,53 @@ describe('POST /api/v1/messages', () => {
     });
   });
 });
+
+describe('GET /api/v1/messages/<messages-id>', () => {
+  it('the endpoint should respond with a 400 bad request if the messages-id parameter is not an integer', (done) => {
+    chai.request(server)
+      .get('/api/v1/messages/abcd')
+      .end((err, res) => {
+        // eslint-disable-next-line no-unused-expressions
+        expect(err).to.be.null;
+        expect(res, 'response status').to.have.status(400);
+        expect(res.body, 'response body').to.be.a('object');
+        expect(res.body, 'response body').to.haveOwnProperty('status');
+        expect(res.body.status, 'status property').to.equal(400);
+        expect(res.body, 'response body').to.haveOwnProperty('error');
+        expect(res.body.error, 'error property').to.be.a('string');
+        done();
+      });
+  });
+
+  it('the endpoint should respond with a 200 OK if the messages-id parameter is an integer and held in record', (done) => {
+    chai.request(server)
+      .get('/api/v1/messages/12390')
+      .end((err, res) => {
+        // eslint-disable-next-line no-unused-expressions
+        expect(err).to.be.null;
+        expect(res, 'response status').to.have.status(200);
+        expect(res.body, 'response body').to.be.a('object');
+        expect(res.body, 'response body').to.haveOwnProperty('status');
+        expect(res.body.status, 'status property').to.equal(200);
+        expect(res.body, 'response body').to.haveOwnProperty('data');
+        expect(res.body.data, 'data property').to.be.a('object');
+        done();
+      });
+  });
+
+  it('the endpoint should respond with a 404 NotFound if the messages-id parameter is an integer but not held in record', (done) => {
+    chai.request(server)
+      .get('/api/v1/messages/9999')
+      .end((err, res) => {
+        // eslint-disable-next-line no-unused-expressions
+        expect(err).to.be.null;
+        expect(res, 'response status').to.have.status(404);
+        expect(res.body, 'response body').to.be.a('object');
+        expect(res.body, 'response body').to.haveOwnProperty('status');
+        expect(res.body.status, 'status property').to.equal(404);
+        expect(res.body, 'response body').to.haveOwnProperty('error');
+        expect(res.body.error, 'error property').to.be.a('string');
+        done();
+      });
+  });
+});
