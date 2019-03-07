@@ -4,7 +4,7 @@
   "description": "A web app that helps people exchange messages",
   "main": "server.js",
   "scripts": {
-
+    "test": "jest --coverage --forceExit --coverageReporters=text-lcov | coveralls",
     "test:coveralls": "jest --coverage --forceExit --coverageReporters=text-lcov | coveralls"
   },
   "repository": {
