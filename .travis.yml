@@ -7,7 +7,7 @@ node_js:
 
 install:
   - npm ci
-  - npm run test:coveralls
+  - npm test
 
 notifications:
   emails: false
