@@ -4,7 +4,8 @@
   "description": "A web app that helps people exchange messages",
   "main": "server.js",
   "scripts": {
-    "test": "mocha TESTS/test.js"
+    "test": "jest --coverage --forceExit --coverageReporters=text-lcov | coveralls",
+    "test:coveralls": "jest --coverage --forceExit --coverageReporters=text-lcov | coveralls"
   },
   "repository": {
     "type": "git",
@@ -29,7 +30,10 @@
     "body-parser": "^1.18.3",
     "chai": "^4.2.0",
     "chai-http": "^4.2.1",
+    "coveralls": "^3.0.3",
     "express": "^4.16.4",
-    "mocha": "^6.0.2"
+    "jest": "^24.3.0",
+    "mocha": "^6.0.2",
+    "mocha-lcov-reporter": "^1.3.0"
   }
 }
