@@ -5,6 +5,10 @@ const app = express();
 
 const bodyParser = require('body-parser');
 
+const swaggerUi = require('swagger-ui-express');
+
+const swaggerDocument = require('./swagger.json');
+
 app.use(bodyParser.json());
 
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -178,7 +182,7 @@ app.post('/api/v1/auth/login', (req, res) => {
       res.status(401).json({ status: 401, error: 'Incorrect credentials' });
     }
   } else {
-    res.status(400).json({ status: 400, error: 'Missing fields' });
+    res.status(400).json({ status: 400, error: 'Missing parameter' });
   }
 });
 
@@ -262,6 +266,9 @@ app.route('/api/v1/messages/:messageId')
       res.status(400).json({ status: 400, error: 'Bad request. Message Id must be an Integer' });
     }
   });
+
+// Swagger API doc
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 // Executes when request path does not match any of the handlers
 app.use((req, res) => {
