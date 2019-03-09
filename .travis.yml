@@ -1,0 +1,13 @@
+sudo: false
+
+language: node_js
+
+node_js:
+  - node
+
+install:
+  - npm ci
+  - npm run test:coveralls
+
+notifications:
+  emails: false
