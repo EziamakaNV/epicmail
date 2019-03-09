@@ -128,7 +128,7 @@
               "properties": {
                 "email": {
                   "type": "string",
-                  "example": "example@test.com"
+                  "example": "example@epicmail.com"
                 },
                 "password": {
                   "type": "string",
