@@ -7,6 +7,10 @@ const bodyParser = require('body-parser');
 
 const swaggerUi = require('swagger-ui-express');
 
+const jwt = require('jsonwebtoken');
+
+const config = require('./config');
+
 const swaggerDocument = require('./swagger.json');
 
 app.use(bodyParser.json());
@@ -16,7 +20,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // Entity Specifications
 const User = [{
   id: 123,
-  email: 'example@test.com',
+  userName: 'example',
+  email: 'example@epicmail.com',
   firstName: 'James',
   lastName: 'Dee',
   password: 'notell',
@@ -157,10 +162,12 @@ app.post('/api/v1/auth/signup', (req, res) => {
     const position = User.push({
       firstName: req.body.firstName,
       lastName: req.body.lastName,
-      userName: req.body.userName,
+      userName: `${req.body.userName}`,
       password: req.body.password,
+      email: `${req.body.userName}@epicmail.com`,
     });
-    res.status(200).json({ status: 200, data: { position, details: User[position - 1], token: '34njnjgnkgfn5656' } });
+    const token = jwt.sign({ userName: req.body.userName }, config.secret, { expiresIn: '24h' });
+    res.status(200).json({ status: 200, data: { token, position, details: User[position - 1] } });
   } else {
     res.status(400).json({ status: 400, error: 'Missing parameter' });
   }
@@ -177,7 +184,8 @@ app.post('/api/v1/auth/login', (req, res) => {
       }
     });
     if (isAuthenticated) {
-      res.status(200).json({ status: 200, data: { token: '3dhvhdb39w839', user: User[userIndex - 1] } });
+      const token = jwt.sign({ email: req.body.email }, config.secret, { expiresIn: '24h' });
+      res.status(200).json({ status: 200, data: { token, user: User[userIndex - 1] } });
     } else {
       res.status(401).json({ status: 401, error: 'Incorrect credentials' });
     }
