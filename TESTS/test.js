@@ -71,7 +71,7 @@ describe('POST /api/v1/auth/login', () => {
         .post('/api/v1/auth/login')
         .type('form')
         .send({
-          email: 'example@test.com',
+          email: 'example@epicmail.com',
           password: 'notell',
         })
         .end((err, res) => {

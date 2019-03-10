@@ -4,8 +4,9 @@
   "description": "A web app that helps people exchange messages",
   "main": "server.js",
   "scripts": {
-    "test": "jest --coverage --forceExit --coverageReporters=text-lcov | coveralls",
-    "test:coveralls": "jest --coverage --forceExit --coverageReporters=text-lcov | coveralls"
+    "test": "NODE_ENV=test jest --coverage --coverageReporters=text-lcov | coveralls",
+    "test:coveralls": "NODE_ENV=test jest --coverage --coverageReporters=text-lcov | coveralls",
+    "test:mocha": "NODE_ENV=test mocha TESTS/test.js"
   },
   "repository": {
     "type": "git",

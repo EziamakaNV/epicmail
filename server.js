@@ -283,9 +283,14 @@ app.use((req, res) => {
   res.status(401).json({ error: 'Bad request! Endpoint does not exist!' });
 });
 
-app.listen(8080, () => {
-  console.log('App listening on port 8080');
-});
+console.log(`node_env: ${process.env.NODE_ENV}`);
+
+if (process.env.NODE_ENV !== 'test') {
+  app.listen(8080, () => {
+    console.log('App listening on port 8080');
+  });
+}
+
 
 // Export app for tests
 module.exports = app;
