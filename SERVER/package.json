@@ -4,9 +4,8 @@
   "description": "A web app that helps people exchange messages",
   "main": "server.js",
   "scripts": {
-    "test": "NODE_ENV=test jest --coverage --coverageReporters=text-lcov | coveralls",
-    "test:coveralls": "NODE_ENV=test jest --coverage --coverageReporters=text-lcov | coveralls",
-    "test:mocha": "NODE_ENV=test mocha TESTS/test.js"
+    "test": "NODE_ENV=test nyc --reporter=html --reporter=text mocha",
+    "coverage": "NODE_ENV=test nyc report --reporter=text-lcov | coveralls"
   },
   "repository": {
     "type": "git",
@@ -37,6 +36,7 @@
     "jsonwebtoken": "^8.5.0",
     "mocha": "^6.0.2",
     "mocha-lcov-reporter": "^1.3.0",
+    "nyc": "^13.3.0",
     "swagger-ui-express": "^4.0.2"
   }
 }

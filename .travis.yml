@@ -6,10 +6,12 @@ node_js:
   - node
 
 install:
-  - npm ci
+  - cd SERVER && npm ci
 
 script:
-  - npm run test:coveralls
+  - npm test
+
+after_success: npm run coverage
 
 notifications:
   emails: false
