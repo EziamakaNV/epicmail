@@ -9,7 +9,9 @@ install:
   - npm ci
 
 script:
-  - npm run test:coveralls
+  - cd SERVER && npm test
+
+after_success: npm run coverage
 
 notifications:
   emails: false
