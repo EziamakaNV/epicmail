@@ -6,10 +6,10 @@ node_js:
   - node
 
 install:
-  - npm ci
+  - cd SERVER && npm ci
 
 script:
-  - cd SERVER && npm test
+  - npm test
 
 after_success: npm run coverage
 
