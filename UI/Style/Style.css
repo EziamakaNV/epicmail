@@ -4,7 +4,7 @@ body{
     font-family: 'Roboto Condensed', sans-serif;
     margin: 0;
     height: auto;
-    background-color: #009688;
+    background-color: #FFFFFF;
 }
 
 header{
@@ -39,8 +39,6 @@ header{
 main {
     background-color: #FFFFFF;
     color: #212121;
-    border: 1px solid gainsboro;
-    border-radius: 4px;
     height: 100%
 }
 
@@ -57,6 +55,9 @@ section{
 
 section#form-section{
     max-width: 500px;
+    border: 2px solid grey;
+    border-radius: 4px;
+    padding: 20px
 }
 
 #form-section .input{
@@ -359,23 +360,16 @@ img{
     height:35px;
 }
 
-@media(min-width:700px){
-    main{
-        border: 1px solid gainsboro;
-        border-radius: 4px;
-    }
 
+@media(min-width:700px){
+    
     .dropdown{
         display: none
     }
     nav{
         display: block
     }
-}
-
-@media(max-width:700px){
-    main.landing {
-        border: 1px solid gainsboro;
-        border-radius: 4px;
+    .hide{
+        display: none
     }
 }
