@@ -10,26 +10,34 @@
     <main class='landing'>
         <header class="flex-wrapper">
             <div id="page-title">
-                <h1>
+                <h3>
                     Epic Mail
-                </h1>
+                </h3>
             </div>
+            <nav>
+                <ul>
+                    <li><a href="Forgotemail.html">Forgot Email</a></li>
+                    <li><a href="Resetpassword.html">Forgot Password</a></li>
+                    <li><a href="Signup.html">Create account</a></li>
+                </ul>
+            </nav>
+            <div></div>
         </header>
         <section id="heading-message">
-            <p>Sign In </p>
+            <h3>Sign In </h3>
         </section>
         <section id="form-section">
             <form action="" method="post">
                 <div id="email-phone-section">
                     <div id="email-phone">
                         <input class="input" type="text" name=""  placeholder="Email or Mobile Number" required>
-                        <p><a href="Forgotemail.html">Forgot Email?</a></p>
+                        <p class="hide"><a href="Forgotemail.html">Forgot Email?</a></p>
                     </div>
                 </div>
                 <div id="password-section">
                     <div id="password">
                             <input class="input" type="password" name=""  placeholder="Password" required>
-                            <p><a href="Resetpassword.html">Forgot Password?</a></p>
+                            <p class="hide"><a href="Resetpassword.html">Forgot Password?</a></p>
                     </div>
                 </div>
                 <div id="form-bottom">
@@ -40,7 +48,7 @@
                         <button type="submit">Login</button>
                     </div> -->
                 </div> 
-                <div>
+                <div class="hide">
                     <a href="Signup.html">Create account</a>
                </div>
             </form>
