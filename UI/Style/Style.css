@@ -37,12 +37,11 @@ header{
 }
 
 main {
-    margin:auto;
     background-color: #FFFFFF;
     color: #212121;
     border: 1px solid gainsboro;
     border-radius: 4px;
-    min-height: 70vh;
+    height: 100%
 }
 
 a{
@@ -54,6 +53,14 @@ section{
     width: 90vw;
     margin: auto;
     
+}
+
+section#form-section{
+    max-width: 500px;
+}
+
+#form-section .input{
+    margin-top: 15px
 }
 
 
@@ -320,6 +327,31 @@ body.message-body{
     color: black
 }
 
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  li {
+      float: left;
+  }
+
+  li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 20px 15px 0 0;
+    text-decoration: none;
+  }
+
+  li a:hover{
+      color: black
+  }
+
+  nav{
+      display: none
+  }
 
 img{
     border: 1px solid black;
@@ -329,18 +361,21 @@ img{
 
 @media(min-width:700px){
     main{
-        margin-top: 5vh;
         border: 1px solid gainsboro;
         border-radius: 4px;
-        padding: 10px
+    }
+
+    .dropdown{
+        display: none
+    }
+    nav{
+        display: block
     }
 }
 
 @media(max-width:700px){
     main.landing {
-        margin-top: 30%;
         border: 1px solid gainsboro;
         border-radius: 4px;
-        padding: 10px
     }
 }
