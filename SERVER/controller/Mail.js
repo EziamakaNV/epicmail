@@ -27,15 +27,18 @@ class MessagesController {
   }
 
   static postMessages(req, res) {
-    if ((req.body.senderId) && (req.body.receiverId) && (req.body.subject) && (req.body.message)) {
+    const {
+      senderId, receiverId, subject, message,
+    } = req.body;
+    if (senderId && receiverId && subject && message) {
       const id = Math.floor((Math.random() * 10000)); // Generate Random Id
       const newMessagePosition = Messages.push({
         id,
         createdOn: Date(),
-        subject: req.body.subject,
-        message: req.body.message,
-        senderId: Number(req.body.senderId),
-        receiverId: Number(req.body.receiverId),
+        subject,
+        message,
+        senderId: Number(senderId),
+        receiverId: Number(receiverId),
         parentMessageId: id,
         status: 'sent',
       });
