@@ -4,25 +4,54 @@ body{
     font-family: 'Roboto Condensed', sans-serif;
     margin: 0;
     height: auto;
-    background-image: url('../Images/background.jpeg')
+    background-color: #009688
 }
 
 header{
     text-align: center;
-    background-color: #f80652;
+    background-color: #00BCD4;
     color: white
+}
+
+.button{
+    margin-top: 5px;
+    background-color: #00BCD4;
+    border: none;
+    color: #FFFFFF;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    cursor: pointer;
+    margin-left: 5px;
+    margin-right: 5px
+}
+
+.button:hover{
+    color: black
 }
 
 #heading-message{
     text-align: center;
 }
 
-main{
-    max-width: 800px;
+main {
+    max-width: 500px;
     margin:auto;
-    background-color: white
+    background-color: #FFFFFF;
+    color: #212121
+}
+main.landing{
+    max-width: 500px;
+    margin-top: 5%;
+    background-color: #FFFFFF;
+    
 }
 
+a{
+    text-decoration: none
+}
 
 section{
     max-width: 100%;
@@ -63,26 +92,14 @@ p{
     font-size: 16px
 }
 
-button{
-    background-color: #e8f1f8;
-    border: none;
-    color: blue;
-    padding: 15px 32px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    cursor: pointer;
-}
-
-button:hover{
-    background-color: #ADC4DC
-}
 
 footer{
+    height: 10%;
+    background-color: #00BCD4;
     display: flex;
     flex-direction: row;
-    justify-content: center
+    justify-content: center;
+    margin-top: 5%;
 }
 footer div{
     margin:auto
@@ -139,7 +156,10 @@ footer div{
   }
   
   /* Change color of dropdown links on hover */
-  .dropdown-content a:hover {background-color: #f1f1f1}
+  .dropdown-content a:hover {
+    background-color:  #00BCD4;
+    color: #FFFFFF
+    }
   
   /* Show the dropdown menu on hover */
   .dropdown:hover .dropdown-content{
@@ -152,7 +172,7 @@ footer div{
   }
 
   #messages div:hover{
-      border: 1px solid blue;
+      border: 1px solid #BDBDBD;
       border-radius: 4px;
       cursor: pointer;
   }
@@ -187,9 +207,10 @@ textarea:focus{
 }
 
 #form-bottom a{
-    background-color: #e8f1f8;
+    margin-top: 5px;
+    background-color: #00BCD4;
     border: none;
-    color: blue;
+    color: #FFFFFF;
     padding: 15px 32px;
     text-align: center;
     text-decoration: none;
@@ -199,11 +220,11 @@ textarea:focus{
 }
 
 #form-bottom a:hover{
-    background-color: #ADC4DC
+    color: black
 }
 
 #sent-messages div.flex-wrapper:hover{
-    border: 1px solid blue;
+    border: 1px solid #BDBDBD;
     border-radius: 4px;
     cursor: pointer;
 }
@@ -224,8 +245,9 @@ a:hover span.pop-up{
     display: block;
     position: absolute
 }
+
 #draft-messages div.flex-wrapper:hover{
-    border: 1px solid blue;
+    border: 1px solid #BDBDBD;
     border-radius: 4px;
     cursor: pointer;
 }
@@ -293,12 +315,13 @@ body.message-body{
     cursor: pointer
 }
 
-.modal a:hover{
-    background-color: #ADC4DC
+#contact-us span a, #terms span a {
+    text-decoration: none;
+    color: #FFFFFF
 }
 
-#contact-us span a, #terms span a {
-    text-decoration: none
+#contact-us span a:hover, #terms span a:hover {
+    color: black
 }
 
 
@@ -311,6 +334,15 @@ img{
 @media(min-width:700px){
     main{
         margin-top: 5vh;
+        border: 1px solid gainsboro;
+        border-radius: 4px;
+        padding: 10px
+    }
+}
+
+@media(max-width:700px){
+    main.landing {
+        margin-top: 30%;
         border: 1px solid gainsboro;
         border-radius: 4px;
         padding: 10px
