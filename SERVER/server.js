@@ -14,6 +14,8 @@ const mailRoute = require('./routes/mail');
 
 const userRoute = require('./routes/user');
 
+const groupRoute = require('./routes/v2/group');
+
 app.use(bodyParser.json());
 
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -21,6 +23,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use('/api/v1/auth', userRoute);
 
 app.use('/api/v1/messages', mailRoute);
+
+app.use('/api/v2/groups', groupRoute);
 
 // Swagger API doc
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));

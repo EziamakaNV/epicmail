@@ -395,3 +395,51 @@ describe('DELETE /api/v1/messages/<messages-id>', () => {
       });
   });
 });
+
+// API V2 TESTS
+describe('POST /api/v2/groups', () => {
+  describe('should create a new group', () => {
+    it('when all relevant properties are sent in the POST body, on sucess it should return an object with properties status and data', (done) => {
+      chai.request(server)
+        .post('/api/v2/groups')
+        .type('form')
+        .send({
+          name: Math.random().toString(36).substring(7),
+          creatorId: Math.floor(Math.random() * 999999999),
+        })
+        .end((err, res) => {
+          // eslint-disable-next-line no-unused-expressions
+          expect(err).to.be.null;
+          expect(res, 'response object status').to.have.status(201);
+          expect(res.body, 'response body').to.be.a('object');
+          expect(res.body, 'response body').to.haveOwnProperty('status');
+          expect(res.body.status, 'status property').to.equal(201);
+          expect(res.body, 'response body').to.haveOwnProperty('data');
+          expect(res.body.data, 'data property').to.be.a('array');
+          done();
+        });
+    });
+  });
+
+  describe('should handle missing properties in POST body', () => {
+    it('Server should respond with a 400 bad request if any of the parameters in the POST body is missing', (done) => {
+      chai.request(server)
+        .post('/api/v2/groups')
+        .type('form')
+        .send({
+          name: Math.random().toString(36).substring(7),
+        })
+        .end((err, res) => {
+          // eslint-disable-next-line no-unused-expressions
+          expect(err).to.be.null;
+          expect(res, 'response object status').to.have.status(400);
+          expect(res.body, 'response body').to.be.a('object');
+          expect(res.body, 'response body').to.haveOwnProperty('status');
+          expect(res.body.status, 'status property').to.equal(400);
+          expect(res.body, 'response body').to.haveOwnProperty('error');
+          expect(res.body.error, 'error property').to.be.a('string');
+          done();
+        });
+    });
+  });
+});
