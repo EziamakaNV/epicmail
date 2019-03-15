@@ -19,14 +19,15 @@ header{
     background-color: #00BCD4;
     border: none;
     color: #FFFFFF;
-    padding: 15px 32px;
+    padding: 10% 10%;
     text-align: center;
     text-decoration: none;
     display: inline-block;
     font-size: 16px;
     cursor: pointer;
     margin-left: 5px;
-    margin-right: 5px
+    margin-right: 5px;
+    border-radius: 5px
 }
 
 .button:hover{
@@ -49,7 +50,14 @@ main {
     background-color: #FFFFFF;
     color: white;
     height: 100%;
+    overflow: auto;
     background-image:url('https://eziamakanv.github.io/epicmail/UI/Images/backgroundhd.jpg')
+}
+
+.card {
+    background-color: white;
+    color: black;
+    border-radius: 5px
 }
 
 .modal-content{
@@ -67,7 +75,7 @@ a{
 
 section{
     max-width: 100%;
-    width: 90vw;
+    width: 60vw;
     margin: auto;
     
 }
@@ -112,7 +120,8 @@ p{
 
 #form-bottom div span a{
     text-decoration: none;
-    font-size: 16px
+    font-size: 16px;
+    border-radius: 5px;
 }
 
 
@@ -240,6 +249,7 @@ textarea:focus{
     display: inline-block;
     font-size: 16px;
     cursor: pointer;
+    border-radius: 5px
 }
 
 #form-bottom a:hover{
