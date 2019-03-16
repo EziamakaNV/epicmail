@@ -1,8 +1,8 @@
-const express = require('express');
+import express from 'express';
+
+import MessagesController from '../controller/Mail';
 
 const router = express.Router();
-
-const MessagesController = require('../controller/Mail');
 
 router.get('/', MessagesController.getMessages);
 
@@ -16,4 +16,4 @@ router.route('/:messageId')
   .get(MessagesController.getMessageId)
   .delete(MessagesController.deleteMessageId);
 
-module.exports = router;
+export default router;

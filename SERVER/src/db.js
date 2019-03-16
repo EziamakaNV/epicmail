@@ -1,6 +1,7 @@
 /* eslint-disable no-console */
-const { Pool } = require('pg');
-const dotenv = require('dotenv');
+import { Pool } from 'pg';
+
+import dotenv from 'dotenv';
 
 dotenv.config();
 
@@ -15,12 +16,12 @@ pool.on('connect', () => {
 /**
  * Create Tables
  */
-const createTables = () => {
+
+const createGroups = () => {
   const queryText = `CREATE TABLE IF NOT EXISTS
       groups(
-        id INT PRIMARY KEY,
+        id PRIMARY KEY SERIAL,
         name TEXT NOT NULL,
-        role TEXT NOT NULL,
         creatorId INT NOT NULL
       )`;
 
@@ -35,10 +36,12 @@ const createTables = () => {
     });
 };
 
+
 /**
  * Drop Tables
  */
-const dropTables = () => {
+
+const dropGroups = () => {
   const queryText = 'DROP TABLE IF EXISTS groups';
   pool.query(queryText)
     .then((res) => {
@@ -56,9 +59,10 @@ pool.on('remove', () => {
   process.exit(0);
 });
 
-module.exports = {
-  createTables,
-  dropTables,
+export default {
+  createGroups,
+  dropGroups,
 };
 
-require('make-runnable');
+// eslint-disable-next-line import/first
+import 'make-runnable';

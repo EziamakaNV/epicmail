@@ -1,4 +1,6 @@
-const { Messages } = require('../model/entities');
+import entities from '../model/entities';
+
+const { Messages } = entities;
 
 class MessagesController {
   static getMessages(req, res) {
@@ -53,14 +55,14 @@ class MessagesController {
     // Check if the message Id is an interger
     // eslint-disable-next-line no-restricted-globals
     if (!isNaN(reqMessageId)) {
-      let newMessagePosition;
+      let newMessagePosition = null;
       // Search for email using messageId
       Messages.forEach((message, index) => {
         if (message.id === Number(reqMessageId)) {
           newMessagePosition = index;
         }
       });
-      if (newMessagePosition >= 0) { // If the message was found
+      if (newMessagePosition !== null) { // If the message was found
         res.status(200).json({ status: 200, data: Messages[newMessagePosition] });
       } else {
         res.status(404).json({ status: 404, error: 'Message not found' });
@@ -95,4 +97,4 @@ class MessagesController {
   }
 }
 
-module.exports = MessagesController;
+export default MessagesController;

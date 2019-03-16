@@ -1,16 +1,23 @@
 // Entity Specifications
 const User = [{
-  id: 123,
+  id: 1,
   userName: 'example',
   email: 'example@epicmail.com',
   firstName: 'James',
   lastName: 'Dee',
   password: 'notell',
+}, {
+  id: 2,
+  userName: 'Mekus',
+  email: 'Mekus@epicmail.com',
+  firstName: 'Emeka',
+  lastName: 'Chidelu',
+  password: 'pass',
 }];
 
 // eslint-disable-next-line no-unused-vars
 const Contacts = [{
-  id: 123,
+  id: 1,
   email: 'James@test.com',
   firstName: 'James',
   lastName: 'Dee',
@@ -18,7 +25,7 @@ const Contacts = [{
 
 // eslint-disable-next-line no-unused-vars
 const Messages = [{
-  id: 3434,
+  id: 1,
   createdOn: 'Mon Mar 04 2019 14:01:23 GMT+0100 (West Africa Standard Time)',
   subject: 'Subject',
   message: 'lofmifigifng  djkdskinaidpo jnjdnfjndf',
@@ -27,7 +34,7 @@ const Messages = [{
   parentMessageId: 34545,
   status: 'sent', // draft, sent or read
 }, {
-  id: 1234,
+  id: 2,
   createdOn: 'Tue Mar 04 2019 14:01:23 GMT+0100 (West Africa Standard Time)',
   subject: 'lorem Ipsum',
   message: 'Vivamus nec dolor est. In tellus ex, aliquet sed ipsum sed, cursus porta nisl. Phasellus id orci arcu. Maecenas quis posuere nisl, nec suscipit mi. Aenean faucibus, diam in efficitur feugiat, neque neque elementum ex, sit amet bibendum erat massa nec dolor. Integer sagittis, ',
@@ -36,7 +43,7 @@ const Messages = [{
   parentMessageId: 2345,
   status: 'draft',
 }, {
-  id: 1235,
+  id: 3,
   createdOn: 'Wed Mar 04 2019 14:01:23 GMT+0100 (West Africa Standard Time)',
   subject: 'Ipsum lorem',
   message: 'Phasellus orci ante, euismod vitae quam sit amet, semper pulvinar risus. In augue velit, laoreet condimentum lacinia posuere, placerat eu quam. Donec sit amet ante est. Donec sed ante odio. Nullam bibendum tellus at velit vehicula rhoncus. Cras auctor placerat finibus. Sed ',
@@ -45,7 +52,7 @@ const Messages = [{
   parentMessageId: 9763,
   status: 'read',
 }, {
-  id: 1239,
+  id: 4,
   createdOn: 'Thur Mar 04 2019 14:01:23 GMT+0100 (West Africa Standard Time)',
   subject: 'Ipsum lorem',
   message: 'Phasellus orci ante, euismod vitae quam sit amet, semper pulvinar risus. In augue velit, laoreet condimentum lacinia posuere, placerat eu quam. Donec sit amet ante est. Donec sed ante odio. Nullam bibendum tellus at velit vehicula rhoncus. Cras auctor placerat finibus. Sed ',
@@ -54,7 +61,7 @@ const Messages = [{
   parentMessageId: 9763,
   status: 'read',
 }, {
-  id: 1238,
+  id: 5,
   createdOn: 'Fri Mar 04 2019 14:01:23 GMT+0100 (West Africa Standard Time)',
   subject: 'Ipsum lorem',
   message: 'Phasellus orci ante, euismod vitae quam sit amet, semper pulvinar risus. In augue velit, laoreet condimentum lacinia posuere, placerat eu quam. Donec sit amet ante est. Donec sed ante odio. Nullam bibendum tellus at velit vehicula rhoncus. Cras auctor placerat finibus. Sed ',
@@ -63,7 +70,7 @@ const Messages = [{
   parentMessageId: 9763,
   status: 'draft',
 }, {
-  id: 1267,
+  id: 6,
   createdOn: 'Sat Mar 04 2019 14:01:23 GMT+0100 (West Africa Standard Time)',
   subject: 'Ipsum lorem',
   message: 'Phasellus orci ante, euismod vitae quam sit amet, semper pulvinar risus. In augue velit, laoreet condimentum lacinia posuere, placerat eu quam. Donec sit amet ante est. Donec sed ante odio. Nullam bibendum tellus at velit vehicula rhoncus. Cras auctor placerat finibus. Sed ',
@@ -72,7 +79,7 @@ const Messages = [{
   parentMessageId: 9763,
   status: 'sent',
 }, {
-  id: 12390,
+  id: 7,
   createdOn: 'Sun Mar 04 2019 14:01:23 GMT+0100 (West Africa Standard Time)',
   subject: 'Ipsum lorem',
   message: 'Phasellus orci ante, euismod vitae quam sit amet, semper pulvinar risus. In augue velit, laoreet condimentum lacinia posuere, placerat eu quam. Donec sit amet ante est. Donec sed ante odio. Nullam bibendum tellus at velit vehicula rhoncus. Cras auctor placerat finibus. Sed ',
@@ -81,7 +88,7 @@ const Messages = [{
   parentMessageId: 9763,
   status: 'unread',
 }, {
-  id: 14653,
+  id: 8,
   createdOn: 'Mon Mar 04 2019 14:01:23 GMT+0100 (West Africa Standard Time)',
   subject: 'Ipsum lorem',
   message: 'Phasellus orci ante, euismod vitae quam sit amet, semper pulvinar risus. In augue velit, laoreet condimentum lacinia posuere, placerat eu quam. Donec sit amet ante est. Donec sed ante odio. Nullam bibendum tellus at velit vehicula rhoncus. Cras auctor placerat finibus. Sed ',
@@ -90,7 +97,7 @@ const Messages = [{
   parentMessageId: 9763,
   status: 'unread',
 }, {
-  id: 1345,
+  id: 9,
   createdOn: 'Tue Mar 04 2019 14:01:23 GMT+0100 (West Africa Standard Time)',
   subject: 'Ipsum lorem',
   message: 'Phasellus orci ante, euismod vitae quam sit amet, semper pulvinar risus. In augue velit, laoreet condimentum lacinia posuere, placerat eu quam. Donec sit amet ante est. Donec sed ante odio. Nullam bibendum tellus at velit vehicula rhoncus. Cras auctor placerat finibus. Sed ',
@@ -116,7 +123,7 @@ const Inbox = [{
 
 // eslint-disable-next-line no-unused-vars
 const Groups = [{
-  id: 2690,
+  id: 1,
   name: 'Group 1',
 }];
 
@@ -126,7 +133,7 @@ const GroupMembers = [{
   memberId: 56563,
 }];
 
-module.exports = {
+const entities = {
   User,
   Contacts,
   Messages,
@@ -135,3 +142,5 @@ module.exports = {
   Groups,
   GroupMembers,
 };
+
+export default entities;

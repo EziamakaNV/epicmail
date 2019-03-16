@@ -1,6 +1,4 @@
-[![Build Status](https://travis-ci.org/EziamakaNV/epicmail.svg?branch=ft-Implement-travis-ci-and-coveralls-164464671)](https://travis-ci.org/EziamakaNV/epicmail)
-
-[![Coverage Status](https://coveralls.io/repos/github/EziamakaNV/epicmail/badge.svg?branch=develop)](https://coveralls.io/github/EziamakaNV/epicmail?branch=develop)
+[![Build Status](https://travis-ci.org/EziamakaNV/epicmail.svg?branch=ft-Implement-travis-ci-and-coveralls-164464671)](https://travis-ci.org/EziamakaNV/epicmail) [![Coverage Status](https://coveralls.io/repos/github/EziamakaNV/epicmail/badge.svg?branch=develop)](https://coveralls.io/github/EziamakaNV/epicmail?branch=develop)
 
 Project Overview
 The internet is increasingly becoming an integral part of lives. Ever since the invention of

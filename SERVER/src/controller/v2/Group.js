@@ -1,20 +1,19 @@
-const db = require('../../model/v2/db');
+import db from '../../model/v2/db';
 
 class Group {
   static createGroup(req, res) {
-    const { name, creatorId } = req.body;
+    const { name } = req.body;
+    const creatorId = req.user.id;
 
     if (name && creatorId) {
       const text = `INSERT INTO
-    groups(id, name, role, creatorId)
-    VALUES($1, $2, $3, $4)
+    groups(name, creatorId)
+    VALUES($1, $2)
     returning *`;
-      const id = Math.floor(Math.random() * 999999999); // Generate Id
 
       const values = [
-        id,
         name,
-        'owner',
+        'admin',
         creatorId,
       ];
       db.query(text, values).then((result) => {
@@ -22,7 +21,7 @@ class Group {
         res.status(201).json({
           status: 201,
           data: [{
-            id, name, role: 'owner', rows: rows[0],
+            name, role: 'admin', rows: rows[0],
           }],
         });
       }, (error) => {
@@ -34,4 +33,4 @@ class Group {
   }
 }
 
-module.exports = Group;
+export default Group;

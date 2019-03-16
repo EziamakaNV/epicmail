@@ -1,20 +1,20 @@
 /* eslint-disable no-console */
-const express = require('express');
+import express from 'express';
+
+import bodyParser from 'body-parser';
+
+import swaggerUi from 'swagger-ui-express';
+
+// Importing routes
+import mailRoute from './routes/mail';
+
+import userRoute from './routes/user';
+
+import groupRoute from './routes/v2/group';
 
 const app = express();
 
-const bodyParser = require('body-parser');
-
-const swaggerUi = require('swagger-ui-express');
-
 const swaggerDocument = require('./swagger.json');
-
-// Importing routes
-const mailRoute = require('./routes/mail');
-
-const userRoute = require('./routes/user');
-
-const groupRoute = require('./routes/v2/group');
 
 app.use(bodyParser.json());
 
@@ -44,4 +44,4 @@ if (process.env.NODE_ENV !== 'test') {
 
 
 // Export app for tests
-module.exports = app;
+export default app;

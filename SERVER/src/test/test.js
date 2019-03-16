@@ -1,9 +1,9 @@
 /* eslint-disable no-undef */
-const chai = require('chai');
+import chai from 'chai';
 
-const chaiHttp = require('chai-http');
+import chaiHttp from 'chai-http';
 
-const server = require('../server');
+import server from '../server';
 
 const { expect } = chai;
 
@@ -34,6 +34,55 @@ describe('POST /api/v1/auth/signup', () => {
           expect(res.body.status).to.equal(200);
           expect(res.body).to.haveOwnProperty('data');
           expect(res.body.data).to.be.a('object');
+          done();
+        });
+    });
+
+    // eslint-disable-next-line no-undef
+    it('should return an error if the username already exists', (done) => { // Mocha done callback for asynchronous tests
+      chai.request(server)
+        .post('/api/v1/auth/signup')
+        .type('form')
+        .send({
+          firstName: 'John',
+          lastName: 'Doe',
+          userName: 'Mekus',
+          password: 'secret',
+        })
+        .end((err, res) => {
+          // eslint-disable-next-line no-unused-expressions
+          expect(err).to.be.null;
+          expect(res).to.have.status(409);
+          // eslint-disable-next-line no-unused-expressions
+          expect(res.body).to.be.a('object');
+          expect(res.body).to.haveOwnProperty('status');
+          expect(res.body.status).to.equal(409);
+          expect(res.body).to.haveOwnProperty('error');
+          expect(res.body.error).to.be.a('string');
+          done();
+        });
+    });
+
+    it('should return an error if any of the provided parameters does not have a character range between 2-10', (done) => { // Mocha done callback for asynchronous tests
+      chai.request(server)
+        .post('/api/v1/auth/signup')
+        .type('form')
+        .send({
+          firstName: 'John',
+          lastName: 'Doe',
+          userName: 'Mekusjfjbdfjdbfjbddjbfjdfbjdbjbd',
+          password: 'secret',
+        })
+        .end((err, res) => {
+          // eslint-disable-next-line no-unused-expressions
+          expect(err).to.be.null;
+          expect(res).to.have.status(400);
+          // eslint-disable-next-line no-unused-expressions
+          expect(res.body).to.be.a('object');
+          expect(res.body).to.haveOwnProperty('status');
+          expect(res.body.status).to.equal(400);
+          expect(res.body).to.haveOwnProperty('error');
+          expect(res.body.error).to.be.a('string');
           done();
         });
     });
@@ -313,7 +362,7 @@ describe('GET /api/v1/messages/<messages-id>', () => {
 
   it('the endpoint should respond with a 200 OK if the messages-id parameter is an integer and held in record', (done) => {
     chai.request(server)
-      .get('/api/v1/messages/12390')
+      .get('/api/v1/messages/1')
       .end((err, res) => {
         // eslint-disable-next-line no-unused-expressions
         expect(err).to.be.null;
@@ -363,7 +412,7 @@ describe('DELETE /api/v1/messages/<messages-id>', () => {
 
   it('the endpoint should respond with a 200 OK if the messages-id parameter is an integer and held in record', (done) => {
     chai.request(server)
-      .delete('/api/v1/messages/12390')
+      .delete('/api/v1/messages/1')
       .end((err, res) => {
         // eslint-disable-next-line no-unused-expressions
         expect(err).to.be.null;
