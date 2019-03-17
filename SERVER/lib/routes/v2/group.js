@@ -17,6 +17,7 @@ const router = _express.default.Router();
 
 router.post('/', _auth.default.verifyToken, _Group.default.createGroup);
 router.get('/', _auth.default.verifyToken, _Group.default.getAllGroups);
+router.patch('/:groupId/:name', _auth.default.verifyToken, _Group.default.patchGroup);
 var _default = router; // Export group router
 
 exports.default = _default;

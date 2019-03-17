@@ -10,4 +10,6 @@ router.post('/', Authentication.verifyToken, groupController.createGroup);
 
 router.get('/', Authentication.verifyToken, groupController.getAllGroups);
 
+router.patch('/:groupId/:name', Authentication.verifyToken, groupController.patchGroup);
+
 export default router; // Export group router
