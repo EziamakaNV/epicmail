@@ -14,4 +14,6 @@ router.patch('/:groupId/:name', Authentication.verifyToken, groupController.patc
 
 router.delete('/:groupId', Authentication.verifyToken, groupController.deleteGroup);
 
+router.post('/:groupId/users', Authentication.verifyToken, groupController.addUser);
+
 export default router; // Export group router

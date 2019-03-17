@@ -110,6 +110,37 @@ class Group {
         res.status(400).json({ status: 400, error });
       });
   }
+
+  static addUser(req, res) {
+    const userId = req.user.id;
+    const { groupId } = req.params;
+    const newMember = req.body.user; // New user to be added
+    const queryText = `SELECT creatorid FROM groups WHERE id = $1`;
+    const values = [groupId];
+
+    db.query(queryText, values) // Check if the User owns the group
+      .then((result) => {
+        const { rows } = result;
+        if (rows[0].creatorid === userId) { // If the user owns the group, update the name
+          const addQuery = `INSERT INTO groupMembers(groupId, memberId, role)
+          VALUES($1, $2, $3) RETURNING *`;
+          const addValues = [groupId, newMember, 'member'];
+          db.query(addQuery, addValues) // Add the new user
+            // eslint-disable-next-line no-unused-vars
+            .then((addResult) => {
+              // const updatedRows = updateResult.rows;
+              // updatedRows[0].role = 'admin';
+              res.status(201).json({ status: 201, data: [...addResult.rows] });
+            }, (error) => {
+              res.status(500).json({ status: 500, error });
+            });
+        } else {
+          res.status(403).json({ status: 403, error: 'You do not own this group' });
+        }
+      }, (error) => {
+        res.status(400).json({ status: 400, error });
+      });
+  }
 }
 
 export default Group;
