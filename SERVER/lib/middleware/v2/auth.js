@@ -28,14 +28,13 @@ class Authentication {
       // eslint-disable-next-line consistent-return
       _jsonwebtoken.default.verify(token, _config.default.secret, (err, result) => {
         // Get userId from decoded token
-        if (err) return res.status(500).json({
-          status: 500,
-          error: 'dunno'
+        if (err) return res.status(400).json({
+          status: 400,
+          error: 'Incorrect credentials'
         }); // eslint-disable-next-line quotes
 
         const queryText = `SELECT * FROM users WHERE id = $1;`;
         const value = [result.userId];
-        console.log(result.userId);
 
         _db.default.query(queryText, value) // Check DB if userId exists
         .then(response => {

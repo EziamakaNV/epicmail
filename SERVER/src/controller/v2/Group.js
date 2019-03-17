@@ -34,7 +34,7 @@ class Group {
   }
 
   static getAllGroups(req, res) {
-    const queryText = `SELECT * FROM groups WHERE creatorId = $1 RETURNING *`; // Get all rows where creatorId = userId
+    const queryText = `SELECT * FROM groups WHERE creatorId = $1`; // Get all rows where creatorId = userId
     const values = [req.user.id];
 
 
