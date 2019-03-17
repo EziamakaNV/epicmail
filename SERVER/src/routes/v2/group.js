@@ -16,4 +16,6 @@ router.delete('/:groupId', Authentication.verifyToken, groupController.deleteGro
 
 router.post('/:groupId/users', Authentication.verifyToken, groupController.addUser);
 
+router.delete('/:groupId/users/:userId', Authentication.verifyToken, groupController.deleteUser);
+
 export default router; // Export group router

@@ -141,6 +141,36 @@ class Group {
         res.status(400).json({ status: 400, error });
       });
   }
+
+  static deleteUser(req, res) {
+    const userId = req.user.id;
+    const { groupId } = req.params;
+    const memberToDelete = req.params.userId; // member to be Deleted
+    const queryText = `SELECT creatorid FROM groups WHERE id = $1`;
+    const values = [groupId];
+
+    db.query(queryText, values) // Check if the User owns the group
+      .then((result) => {
+        const { rows } = result;
+        if (rows[0].creatorid === userId) { // If the user owns the group, update the name
+          const deleteQuery = `DELETE FROM groupMembers WHERE groupId = $1 AND memberId = $2`;
+          const deleteValues = [groupId, memberToDelete];
+          db.query(deleteQuery, deleteValues) // Add the new user
+          // eslint-disable-next-line no-unused-vars
+            .then((addResult) => {
+              // const updatedRows = updateResult.rows;
+              // updatedRows[0].role = 'admin';
+              res.status(201).json({ status: 200, data: [{ message: 'User deleted' }] });
+            }, (error) => {
+              res.status(500).json({ status: 500, error });
+            });
+        } else {
+          res.status(403).json({ status: 403, error: 'You do not own this group' });
+        }
+      }, (error) => {
+        res.status(400).json({ status: 400, error });
+      });
+  }
 }
 
 export default Group;
