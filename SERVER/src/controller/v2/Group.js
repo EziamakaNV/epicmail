@@ -13,7 +13,6 @@ class Group {
 
       const values = [
         name,
-        'admin',
         creatorId,
       ];
       db.query(text, values).then((result) => {
@@ -21,7 +20,7 @@ class Group {
         res.status(201).json({
           status: 201,
           data: [{
-            name, role: 'admin', rows: rows[0],
+            id: rows[0].id, name, role: 'admin',
           }],
         });
       }, (error) => {

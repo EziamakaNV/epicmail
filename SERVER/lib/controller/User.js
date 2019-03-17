@@ -59,10 +59,9 @@ class UserController {
           });
 
           const token = _jsonwebtoken.default.sign({
-            userName,
-            userId
+            userId: 1
           }, _config.default.secret, {
-            expiresIn: '24h'
+            expiresIn: '500h'
           }); // eslint-disable-next-line max-len
 
 

@@ -40,7 +40,7 @@ class UserController {
             password,
             email: `${userName}@epicmail.com`,
           });
-          const token = jwt.sign({ userName, userId }, config.secret, { expiresIn: '24h' });
+          const token = jwt.sign({ userId: 1 }, config.secret, { expiresIn: '500h' });
           // eslint-disable-next-line max-len
           res.status(200).json({ status: 200, data: { token, position, details: User[position - 1] } });
         }
