@@ -465,19 +465,4 @@ describe('PATCH /api/v2/groups/:groupId/:name', () => {
       });
     });
   });
-  describe('should handle missing token in header', () => {
-    it('Server should respond with a 400 bad request if the token is missing', done => {
-      _chai.default.request(_server.default).get('/api/v2/groups').end((err, res) => {
-        // eslint-disable-next-line no-unused-expressions
-        expect(err).to.be.null;
-        expect(res, 'response object status').to.have.status(400);
-        expect(res.body, 'response body').to.be.a('object');
-        expect(res.body, 'response body').to.haveOwnProperty('status');
-        expect(res.body.status, 'status property').to.equal(400);
-        expect(res.body, 'response body').to.haveOwnProperty('error');
-        expect(res.body.error, 'error property').to.be.a('string');
-        done();
-      });
-    });
-  });
 });
