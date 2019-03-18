@@ -451,10 +451,10 @@ describe('POST /api/v2/groups', () => {
     it('when all relevant properties are sent in the POST body, on sucess it should return an object with properties status and data', (done) => {
       chai.request(server)
         .post('/api/v2/groups')
+        .set('x-access-token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU1Mjc3Mjc1NiwiZXhwIjoxNTU0NTcyNzU2fQ.81A8zZezFPu43iMvzNOX948y-6tRAoGdzc4FNOnBRZY')
         .type('form')
         .send({
-          name: Math.random().toString(36).substring(7),
-          creatorId: Math.floor(Math.random() * 999999999),
+          name: 'testingchai',
         })
         .end((err, res) => {
           // eslint-disable-next-line no-unused-expressions
@@ -471,7 +471,7 @@ describe('POST /api/v2/groups', () => {
   });
 
   describe('should handle missing properties in POST body', () => {
-    it('Server should respond with a 400 bad request if any of the parameters in the POST body is missing', (done) => {
+    it('Server should respond with a 400 bad request token in the header is missing', (done) => {
       chai.request(server)
         .post('/api/v2/groups')
         .type('form')
@@ -487,6 +487,66 @@ describe('POST /api/v2/groups', () => {
           expect(res.body.status, 'status property').to.equal(400);
           expect(res.body, 'response body').to.haveOwnProperty('error');
           expect(res.body.error, 'error property').to.be.a('string');
+          done();
+        });
+    });
+  });
+});
+
+describe('GET /api/v2/groups', () => {
+  describe('should get all groups', () => {
+    it('should return all groups', (done) => {
+      chai.request(server)
+        .get('/api/v2/groups')
+        .set('x-access-token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU1Mjc3Mjc1NiwiZXhwIjoxNTU0NTcyNzU2fQ.81A8zZezFPu43iMvzNOX948y-6tRAoGdzc4FNOnBRZY')
+        .end((err, res) => {
+          // eslint-disable-next-line no-unused-expressions
+          expect(err).to.be.null;
+          expect(res, 'response object status').to.have.status(200);
+          expect(res.body, 'response body').to.be.a('object');
+          expect(res.body, 'response body').to.haveOwnProperty('status');
+          expect(res.body.status, 'status property').to.equal(200);
+          expect(res.body, 'response body').to.haveOwnProperty('data');
+          expect(res.body.data, 'data property').to.be.a('array');
+          done();
+        });
+    });
+  });
+
+  describe('should handle missing token in header', () => {
+    it('Server should respond with a 400 bad request if the token is missing', (done) => {
+      chai.request(server)
+        .get('/api/v2/groups')
+        .end((err, res) => {
+          // eslint-disable-next-line no-unused-expressions
+          expect(err).to.be.null;
+          expect(res, 'response object status').to.have.status(400);
+          expect(res.body, 'response body').to.be.a('object');
+          expect(res.body, 'response body').to.haveOwnProperty('status');
+          expect(res.body.status, 'status property').to.equal(400);
+          expect(res.body, 'response body').to.haveOwnProperty('error');
+          expect(res.body.error, 'error property').to.be.a('string');
+          done();
+        });
+    });
+  });
+});
+
+describe('PATCH /api/v2/groups/:groupId/:name', () => {
+  describe('should get all groups', () => {
+    it('should return all groups', (done) => {
+      chai.request(server)
+        .patch('/api/v2/groups/1/chaipatchtest')
+        .set('x-access-token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU1Mjc3Mjc1NiwiZXhwIjoxNTU0NTcyNzU2fQ.81A8zZezFPu43iMvzNOX948y-6tRAoGdzc4FNOnBRZY')
+        .end((err, res) => {
+          // eslint-disable-next-line no-unused-expressions
+          expect(err).to.be.null;
+          expect(res, 'response object status').to.have.status(200);
+          expect(res.body, 'response body').to.be.a('object');
+          expect(res.body, 'response body').to.haveOwnProperty('status');
+          expect(res.body.status, 'status property').to.equal(200);
+          expect(res.body, 'response body').to.haveOwnProperty('data');
+          expect(res.body.data, 'data property').to.be.a('array');
           done();
         });
     });
