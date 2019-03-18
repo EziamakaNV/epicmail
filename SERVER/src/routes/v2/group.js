@@ -8,4 +8,6 @@ const router = express.Router();
 
 router.post('/', Authentication.verifyToken, groupController.createGroup);
 
+router.get('/', Authentication.verifyToken, groupController.getAllGroups);
+
 export default router; // Export group router

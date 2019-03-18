@@ -16,6 +16,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 const router = _express.default.Router();
 
 router.post('/', _auth.default.verifyToken, _Group.default.createGroup);
+router.get('/', _auth.default.verifyToken, _Group.default.getAllGroups);
 var _default = router; // Export group router
 
 exports.default = _default;

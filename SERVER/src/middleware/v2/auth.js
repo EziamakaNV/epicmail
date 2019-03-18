@@ -6,7 +6,7 @@ import db from '../../model/v2/db';
 
 class Authentication {
   static verifyToken(req, res, next) {
-    const { token } = req.body; // Check for token in the body
+    const token = req.headers['x-access-token']; // Check for token in the body
     if (!token) { // If token is not supplied
       res.status(400).json({ status: 400, error: 'Missing token' });
     } else { // Token exists
