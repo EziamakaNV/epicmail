@@ -385,8 +385,8 @@ describe('POST /api/v2/groups', () => {
   describe('should create a new group', () => {
     it('when all relevant properties are sent in the POST body, on sucess it should return an object with properties status and data', done => {
       _chai.default.request(_server.default).post('/api/v2/groups').type('form').send({
-        name: Math.random().toString(36).substring(7),
-        creatorId: Math.floor(Math.random() * 999999999)
+        name: 'ChaiTestGroup',
+        token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU1Mjc3Mjc1NiwiZXhwIjoxNTU0NTcyNzU2fQ.81A8zZezFPu43iMvzNOX948y-6tRAoGdzc4FNOnBRZY'
       }).end((err, res) => {
         // eslint-disable-next-line no-unused-expressions
         expect(err).to.be.null;
