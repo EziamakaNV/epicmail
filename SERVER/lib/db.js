@@ -1,22 +1,13 @@
 "use strict";
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _pg = require("pg");
-
-var _dotenv = _interopRequireDefault(require("dotenv"));
-
-require("make-runnable");
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
 /* eslint-disable no-console */
-_dotenv.default.config();
+const _require = require('pg'),
+      Pool = _require.Pool;
 
-const pool = new _pg.Pool({
+const dotenv = require('dotenv');
+
+dotenv.config();
+const pool = new Pool({
   connectionString: process.env.DATABASE_URL
 });
 pool.on('connect', () => {
@@ -26,13 +17,31 @@ pool.on('connect', () => {
  * Create Tables
  */
 
-const createTables = () => {
+const createGroups = () => {
   const queryText = `CREATE TABLE IF NOT EXISTS
       groups(
-        id INT PRIMARY KEY,
+        id PRIMARY KEY SERIAL,
         name TEXT NOT NULL,
-        role TEXT NOT NULL,
         creatorId INT NOT NULL
+      )`;
+  console.log(process.env.DATABASE_URI);
+  pool.query(queryText).then(res => {
+    console.log(res);
+    pool.end();
+  }).catch(err => {
+    console.log(err);
+    pool.end();
+  });
+};
+
+const createUsers = () => {
+  const queryText = `CREATE TABLE IF NOT EXISTS
+      users(
+        id PRIMARY KEY SERIAL,
+        email TEXT NOT NULL,
+        firstName TEXT NOT NULL,
+        lastName TEXT NOT NULL,
+        password TEXT NOT NULL
       )`;
   pool.query(queryText).then(res => {
     console.log(res);
@@ -47,7 +56,7 @@ const createTables = () => {
  */
 
 
-const dropTables = () => {
+const dropGroups = () => {
   const queryText = 'DROP TABLE IF EXISTS groups';
   pool.query(queryText).then(res => {
     console.log(res);
@@ -62,9 +71,27 @@ pool.on('remove', () => {
   console.log('client removed');
   process.exit(0);
 });
-var _default = {
-  createTables,
-  dropTables
+
+const dropUsers = () => {
+  const queryText = 'DROP TABLE IF EXISTS users';
+  pool.query(queryText).then(res => {
+    console.log(res);
+    pool.end();
+  }).catch(err => {
+    console.log(err);
+    pool.end();
+  });
+};
+
+pool.on('remove', () => {
+  console.log('client removed');
+  process.exit(0);
+});
+module.exports = {
+  createGroups,
+  dropGroups,
+  createUsers,
+  dropUsers
 }; // eslint-disable-next-line import/first
 
-exports.default = _default;
+require('make-runnable');

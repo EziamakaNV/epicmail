@@ -11,28 +11,24 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 class Group {
   static createGroup(req, res) {
-    const _req$body = req.body,
-          name = _req$body.name,
-          creatorId = _req$body.creatorId;
+    const name = req.body.name;
+    const creatorId = req.user.id;
 
     if (name && creatorId) {
       const text = `INSERT INTO
-    groups(id, name, role, creatorId)
-    VALUES($1, $2, $3, $4)
+    groups(name, creatorId)
+    VALUES($1, $2)
     returning *`;
-      const id = Math.floor(Math.random() * 999999999); // Generate Id
-
-      const values = [id, name, 'owner', creatorId];
+      const values = [name, creatorId];
 
       _db.default.query(text, values).then(result => {
         const rows = result.rows;
         res.status(201).json({
           status: 201,
           data: [{
-            id,
+            id: rows[0].id,
             name,
-            role: 'owner',
-            rows: rows[0]
+            role: 'admin'
           }]
         });
       }, error => {
@@ -44,7 +40,7 @@ class Group {
     } else {
       res.status(400).json({
         status: 400,
-        error: 'Missing parameters'
+        error: 'Missing parameters.'
       });
     }
   }

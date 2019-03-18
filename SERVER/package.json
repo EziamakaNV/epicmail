@@ -4,8 +4,10 @@
   "description": "A web app that helps people exchange messages",
   "main": "server.js",
   "scripts": {
-    "test": "NODE_ENV=test nyc --reporter=html --reporter=text mocha --timeout 50000",
-    "coverage": "NODE_ENV=test nyc report --reporter=text-lcov | coveralls"
+    "test": "NODE_ENV=test nyc --reporter=html --reporter=text mocha lib/test/test.js --timeout 50000",
+    "coverage": "NODE_ENV=test nyc report --reporter=text-lcov | coveralls",
+    "build": "npx babel src --out-dir lib",
+    "start": "npm run build && node lib/server.js"
   },
   "repository": {
     "type": "git",
