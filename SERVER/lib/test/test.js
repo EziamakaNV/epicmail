@@ -384,8 +384,9 @@ describe('DELETE /api/v1/messages/<messages-id>', () => {
 describe('POST /api/v2/groups', () => {
   describe('should create a new group', () => {
     it('when all relevant properties are sent in the POST body, on sucess it should return an object with properties status and data', done => {
+      ft-Implement-get-all-groups-164681197
       _chai.default.request(_server.default).post('/api/v2/groups').set('x-access-token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU1Mjc3Mjc1NiwiZXhwIjoxNTU0NTcyNzU2fQ.81A8zZezFPu43iMvzNOX948y-6tRAoGdzc4FNOnBRZY').type('form').send({
-        name: 'testingchai'
+        name: 'testingchai,
       }).end((err, res) => {
         // eslint-disable-next-line no-unused-expressions
         expect(err).to.be.null;
