@@ -5,14 +5,20 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = void 0;
 
+require("core-js/modules/web.dom.iterable");
+
+var _moment = _interopRequireDefault(require("moment"));
+
 var _db = _interopRequireDefault(require("../../model/v2/db"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+/* eslint-disable max-len */
+
 /* eslint-disable no-plusplus */
 
 /* eslint-disable quotes */
-class Group {
+class GroupController {
   static createGroup(req, res) {
     const name = req.body.name;
     const creatorId = req.user.id;
@@ -264,7 +270,102 @@ class Group {
     });
   }
 
+  static async sendMessageToGroup(req, res) {
+    const subject = req.body.subject;
+    const message = req.body.message;
+
+    if (subject && message) {
+      // If subject and message parameters exist
+      const userId = req.user.id;
+      const groupId = req.params.groupId;
+      const queryText = `SELECT creatorid FROM groups WHERE id = $1`;
+      const values = [groupId];
+
+      _db.default.query(queryText, values) // Check if the User owns the group
+      .then(result => {
+        const rows = result.rows;
+
+        if (rows[0].creatorid === userId) {
+          // If the user owns the group, first insert the message in "messages" table
+          const createdOn = (0, _moment.default)(new Date()); // Timeestamp for message
+
+          const insertMessageQuery = `INSERT INTO messages (createdOn, subject, message, status)
+              VALUES($1, $2, $3, $4) RETURNING id`; // Return messageId
+
+          const insertMessageValues = [createdOn, subject, message, 'sent'];
+
+          _db.default.query(insertMessageQuery, insertMessageValues) // Query to insert into "messages"
+          // eslint-disable-next-line no-unused-vars
+          .then(messageResult => {
+            const messagesRows = messageResult.rows;
+            const messagesId = messagesRows[0].id; // Insert the message into sents using the returned messagesId
+
+            const insertSentQuery = `INSERT INTO sents (senderId, messageId, createdOn)
+                  VALUES ($1, $2, $3)`;
+            const insertSentValues = [userId, messagesId, createdOn]; // The sender is the user
+
+            _db.default.query(insertSentQuery, insertSentValues) // Update the "sents" table
+            // eslint-disable-next-line no-unused-vars
+            .then(sentResult => {
+              // On sucess update the inbox table to make sure all recipients get the message
+              // Get all the id's of the receiver
+              const receiverQuery = `SELECT memberId FROM groupMembers WHERE groupId = $1`;
+              const receiverValues = [groupId];
+
+              _db.default.query(receiverQuery, receiverValues).then(receiverResult => {
+                const receiverIds = [];
+                const receiverRows = receiverResult.rows;
+                receiverRows.forEach(receiver => {
+                  // Go through the returned result to get all receiver Id's
+                  receiverIds.push(receiver.memberId); // Store Id's in receiverId array.
+                });
+
+                for (let i = 0; i < receiverIds.length; i++) {
+                  // Update "Inbox" table for all recepients in the group
+                  const inboxQuery = `INSERT INTO inboxes (receiverId, messageId, createdOn)`;
+                  const inboxValue = [receiverIds[i], messagesId, createdOn];
+
+                  _db.default.query(inboxQuery, inboxValue);
+                }
+              }, error => {
+                res.status(500).json({
+                  status: 500,
+                  error
+                });
+              });
+            }, error => {
+              res.status(500).json({
+                status: 500,
+                error
+              });
+            });
+          }, error => {
+            res.status(500).json({
+              status: 500,
+              error
+            });
+          });
+        } else {
+          res.status(403).json({
+            status: 403,
+            error: 'You do not own this group'
+          });
+        }
+      }, error => {
+        res.status(400).json({
+          status: 400,
+          error
+        });
+      });
+    } else {
+      res.status(400).json({
+        status: 400,
+        error: 'Missing Parameters'
+      });
+    }
+  }
+
 }
 
-var _default = Group;
+var _default = GroupController;
 exports.default = _default;

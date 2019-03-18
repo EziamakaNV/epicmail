@@ -21,6 +21,7 @@ router.patch('/:groupId/:name', _auth.default.verifyToken, _Group.default.patchG
 router.delete('/:groupId', _auth.default.verifyToken, _Group.default.deleteGroup);
 router.post('/:groupId/users', _auth.default.verifyToken, _Group.default.addUser);
 router.delete('/:groupId/users/:userId', _auth.default.verifyToken, _Group.default.deleteUser);
+router.post('/:groupId/messages', _auth.default.verifyToken, _Group.default.sendMessageToGroup);
 var _default = router; // Export group router
 
 exports.default = _default;
