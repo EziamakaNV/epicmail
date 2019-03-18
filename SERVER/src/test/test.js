@@ -531,3 +531,25 @@ describe('GET /api/v2/groups', () => {
     });
   });
 });
+
+
+describe('PATCH /api/v2/groups/:groupId/:name', () => {
+  describe('should get all groups', () => {
+    it('should return all groups', (done) => {
+      chai.request(server)
+        .patch('/api/v2/groups/1/chaipatchtest')
+        .set('x-access-token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU1Mjc3Mjc1NiwiZXhwIjoxNTU0NTcyNzU2fQ.81A8zZezFPu43iMvzNOX948y-6tRAoGdzc4FNOnBRZY')
+        .end((err, res) => {
+          // eslint-disable-next-line no-unused-expressions
+          expect(err).to.be.null;
+          expect(res, 'response object status').to.have.status(200);
+          expect(res.body, 'response body').to.be.a('object');
+          expect(res.body, 'response body').to.haveOwnProperty('status');
+          expect(res.body.status, 'status property').to.equal(200);
+          expect(res.body, 'response body').to.haveOwnProperty('data');
+          expect(res.body.data, 'data property').to.be.a('array');
+          done();
+        });
+    });
+  });
+});
