@@ -43,7 +43,7 @@ class Group {
     } else {
       res.status(400).json({
         status: 400,
-        error: 'Missing parameters'
+        error: 'Missing parameters.'
       });
     }
   }

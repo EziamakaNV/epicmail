@@ -532,6 +532,7 @@ describe('GET /api/v2/groups', () => {
   });
 });
 
+
 describe('PATCH /api/v2/groups/:groupId/:name', () => {
   describe('should get all groups', () => {
     it('should return all groups', (done) => {
