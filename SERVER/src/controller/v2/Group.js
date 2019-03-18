@@ -29,7 +29,7 @@ class Group {
         res.status(500).json({ status: 500, error: `${error}` });
       });
     } else {
-      res.status(400).json({ status: 400, error: 'Missing parameters' });
+      res.status(400).json({ status: 400, error: 'Missing parameters.' });
     }
   }
 

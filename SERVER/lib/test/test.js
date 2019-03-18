@@ -449,6 +449,7 @@ describe('GET /api/v2/groups', () => {
     });
   });
 });
+
 describe('PATCH /api/v2/groups/:groupId/:name', () => {
   describe('should change the name of a group', () => {
     it('name should change', done => {
@@ -465,6 +466,7 @@ describe('PATCH /api/v2/groups/:groupId/:name', () => {
       });
     });
   });
+
 });
 describe('DELETE /api/v2/groups/:groupId', () => {
   describe('should delete group', () => {
@@ -482,4 +484,5 @@ describe('DELETE /api/v2/groups/:groupId', () => {
       });
     });
   });
+
 });
