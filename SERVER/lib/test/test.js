@@ -4,15 +4,20 @@ require("core-js/modules/es6.regexp.to-string");
 
 require("core-js/modules/web.dom.iterable");
 
+var _mocha = _interopRequireDefault(require("mocha"));
+
 var _chai = _interopRequireDefault(require("chai"));
 
 var _chaiHttp = _interopRequireDefault(require("chai-http"));
 
 var _server = _interopRequireDefault(require("../server"));
 
+var _db = _interopRequireDefault(require("../model/db"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /* eslint-disable no-undef */
+// eslint-disable-next-line no-unused-vars
 const expect = _chai.default.expect;
 
 _chai.default.use(_chaiHttp.default); // eslint-disable-next-line no-undef
@@ -384,7 +389,7 @@ describe('POST /api/v1/groups', () => {
   describe('should create a new group', () => {
     it('when all relevant properties are sent in the POST body, on sucess it should return an object with properties status and data', done => {
       _chai.default.request(_server.default).post('/api/v1/groups').set('x-access-token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU1Mjc3Mjc1NiwiZXhwIjoxNTU0NTcyNzU2fQ.81A8zZezFPu43iMvzNOX948y-6tRAoGdzc4FNOnBRZY').type('form').send({
-        name: 'testingchai'
+        name: `Testingchai${Math.floor(Math.random(200))}`
       }).end((err, res) => {
         // eslint-disable-next-line no-unused-expressions
         expect(err).to.be.null;
@@ -467,8 +472,26 @@ describe('PATCH /api/v1/groups/:groupId/:name', () => {
 });
 describe('DELETE /api/v1/groups/:groupId', () => {
   describe('should delete group', () => {
+    let id;
+    before(done => {
+      // Populate db before deleting
+      const text = `INSERT INTO
+    groups(name, creatorId)
+    VALUES($1, $2)
+    returning id`;
+      const values = ['mochaTestGroup', 1];
+
+      _db.default.query(text, values).then(result => {
+        const rows = result.rows; // eslint-disable-next-line prefer-destructuring
+
+        id = rows[0].id;
+        done();
+      }).catch(() => {
+        done();
+      });
+    });
     it('should delete group owned by user', done => {
-      _chai.default.request(_server.default).delete('/api/v1/groups/11').set('x-access-token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU1Mjc3Mjc1NiwiZXhwIjoxNTU0NTcyNzU2fQ.81A8zZezFPu43iMvzNOX948y-6tRAoGdzc4FNOnBRZY').end((err, res) => {
+      _chai.default.request(_server.default).delete(`/api/v1/groups/${id}`).set('x-access-token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU1Mjc3Mjc1NiwiZXhwIjoxNTU0NTcyNzU2fQ.81A8zZezFPu43iMvzNOX948y-6tRAoGdzc4FNOnBRZY').end((err, res) => {
         // eslint-disable-next-line no-unused-expressions
         expect(err).to.be.null;
         expect(res, 'response object status').to.have.status(200);
@@ -503,8 +526,40 @@ describe('POST /api/v1/groups/:groupId/user', () => {
 });
 describe('DELETE /api/v1/groups/:groupId/users/:userId', () => {
   describe('should delete a user from a group', () => {
+    before(done => {
+      // Populate db before deleting
+      const text = `INSERT INTO groupMembers(groupId, memberId, role)
+      VALUES($1, $2, $3) RETURNING id`;
+      const values = [7, 2, 'member'];
+
+      _db.default.query(text, values).then(() => {
+        done();
+      }).catch(() => {
+        done();
+      });
+    });
     it('should delete a user from a group owned by user', done => {
-      _chai.default.request(_server.default).delete('/api/v1/groups/7/users/5').set('x-access-token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU1Mjc3Mjc1NiwiZXhwIjoxNTU0NTcyNzU2fQ.81A8zZezFPu43iMvzNOX948y-6tRAoGdzc4FNOnBRZY').end((err, res) => {
+      _chai.default.request(_server.default).delete('/api/v1/groups/7/users/2').set('x-access-token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU1Mjc3Mjc1NiwiZXhwIjoxNTU0NTcyNzU2fQ.81A8zZezFPu43iMvzNOX948y-6tRAoGdzc4FNOnBRZY').end((err, res) => {
+        // eslint-disable-next-line no-unused-expressions
+        expect(err).to.be.null;
+        expect(res, 'response object status').to.have.status(200);
+        expect(res.body, 'response body').to.be.a('object');
+        expect(res.body, 'response body').to.haveOwnProperty('status');
+        expect(res.body.status, 'status property').to.equal(200);
+        expect(res.body, 'response body').to.haveOwnProperty('data');
+        expect(res.body.data, 'data property').to.be.a('array');
+        done();
+      });
+    });
+  });
+});
+describe('POST /api/v1/groups/:groupId/messages', () => {
+  describe('send a message to a group', () => {
+    it('should send a message to a group', done => {
+      _chai.default.request(_server.default).post('/api/v1/groups/7/messages').type('form').set('x-access-token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU1Mjc3Mjc1NiwiZXhwIjoxNTU0NTcyNzU2fQ.81A8zZezFPu43iMvzNOX948y-6tRAoGdzc4FNOnBRZY').send({
+        subject: `${Math.floor(Math.random(300))} test send message`,
+        message: `${Math.floor(Math.random(300))} 4th lorem ipsum test message`
+      }).end((err, res) => {
         // eslint-disable-next-line no-unused-expressions
         expect(err).to.be.null;
         expect(res, 'response object status').to.have.status(200);
