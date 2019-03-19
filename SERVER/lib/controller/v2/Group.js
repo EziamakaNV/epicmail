@@ -238,7 +238,7 @@ class Group {
         .then(addResult => {
           // const updatedRows = updateResult.rows;
           // updatedRows[0].role = 'admin';
-          res.status(201).json({
+          res.status(200).json({
             status: 200,
             data: [{
               message: 'User deleted'

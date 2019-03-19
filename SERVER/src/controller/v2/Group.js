@@ -160,7 +160,7 @@ class Group {
             .then((addResult) => {
               // const updatedRows = updateResult.rows;
               // updatedRows[0].role = 'admin';
-              res.status(201).json({ status: 200, data: [{ message: 'User deleted' }] });
+              res.status(200).json({ status: 200, data: [{ message: 'User deleted' }] });
             }, (error) => {
               res.status(500).json({ status: 500, error });
             });
