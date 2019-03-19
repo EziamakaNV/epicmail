@@ -449,6 +449,7 @@ describe('GET /api/v2/groups', () => {
     });
   });
 });
+
 describe('PATCH /api/v2/groups/:groupId/:name', () => {
   describe('should change the name of a group', () => {
     it('name should change', done => {
