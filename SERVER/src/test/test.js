@@ -574,7 +574,6 @@ describe('DELETE /api/v2/groups/:groupId', () => {
   });
 });
 
-
 describe('POST /api/v2/groups/:groupId/user', () => {
   describe('should add a user to a group', () => {
     it('adds a user to a group', (done) => {
