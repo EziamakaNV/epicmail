@@ -130,8 +130,8 @@ describe('POST /api/v1/auth/login', () => {
         .post('/api/v1/auth/login')
         .type('form')
         .send({
-          email: 'example@epicmail.com',
-          password: 'notell',
+          email: 'TDD@epicmail.com',
+          password: 'overtest',
         })
         .end((err, res) => {
           // eslint-disable-next-line no-unused-expressions
@@ -175,7 +175,7 @@ describe('POST /api/v1/auth/login', () => {
         .post('/api/v1/auth/login')
         .type('form')
         .send({
-          email: 'example@test.com',
+          email: 'TDD@epicmail.com',
         })
         .end((err, res) => {
           // eslint-disable-next-line no-unused-expressions
