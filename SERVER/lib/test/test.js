@@ -32,7 +32,7 @@ describe('POST /api/v1/auth/signup', () => {
       _chai.default.request(_server.default).post('/api/v1/auth/signup').type('form').send({
         firstName: 'John',
         lastName: 'Doe',
-        userName: 'johnnyDoe',
+        userName: 'chayoyo',
         password: 'secret'
       }).end((err, res) => {
         // eslint-disable-next-line no-unused-expressions
@@ -43,7 +43,7 @@ describe('POST /api/v1/auth/signup', () => {
         expect(res.body).to.haveOwnProperty('status');
         expect(res.body.status).to.equal(200);
         expect(res.body).to.haveOwnProperty('data');
-        expect(res.body.data).to.be.a('object');
+        expect(res.body.data).to.be.a('array');
         done();
       });
     }); // eslint-disable-next-line no-undef
@@ -53,7 +53,7 @@ describe('POST /api/v1/auth/signup', () => {
       _chai.default.request(_server.default).post('/api/v1/auth/signup').type('form').send({
         firstName: 'John',
         lastName: 'Doe',
-        userName: 'Mekus',
+        userName: 'chayoyo',
         password: 'secret'
       }).end((err, res) => {
         // eslint-disable-next-line no-unused-expressions
@@ -107,6 +107,11 @@ describe('POST /api/v1/auth/signup', () => {
         done();
       });
     });
+  });
+  after(done => {
+    _db.default.query(`DELETE FROM users WHERE email = $1`, ['chayoyo@epicmail.com']);
+
+    done();
   });
 });
 describe('POST /api/v1/auth/login', () => {

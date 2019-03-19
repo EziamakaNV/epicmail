@@ -2,12 +2,14 @@ import jwt from 'jsonwebtoken';
 
 import config from '../config';
 
+import db from '../model/db';
+
 import entities from '../model/entities';
 
 const { User } = entities;
 
 class UserController {
-  static signup(req, res) {
+  static async signup(req, res) {
     const {
       firstName, lastName, userName, password,
     } = req.body;
@@ -20,29 +22,22 @@ class UserController {
       const passwordLength = password.length > 2 && password.length < 10;
 
       if (firstNameLength && lastNameLength && userNameLength && passwordLength) {
-        // Check if username already exists
-      // Create a variable to store a boolean stating if the username exists
-        let userExists = false;
-        User.forEach((user) => {
-          if (user.userName === userName) {
-            userExists = true;
+        try { // Check if username exists
+          const text = `SELECT * FROM users WHERE email = $1 `;
+          const value = [`${userName}@epicmail.com`];
+          const emailExists = await db.query(text, value);
+          console.log(emailExists);
+          if (emailExists.rows.length === 0) {
+            const insertText = `INSERT INTO users (email, firstname, lastname, password) VALUES ($1, $2, $3, $4) returning id`;
+            const insertValues = [`${userName}@epicmail.com`, firstName, lastName, password];
+            const user = await db.query(insertText, insertValues); // Insert details into databse and get id
+            const token = jwt.sign({ userId: user.rows[0].id }, config.secret, { expiresIn: '500h' });
+            res.status(200).json({ status: 200, data: [{ token }] });
+          } else {
+            res.status(409).json({ status: 409, error: 'Username already exists' });
           }
-        });
-        if (userExists) {
-          res.status(409).json({ status: 409, error: 'Username already exists' });
-        } else {
-          const userId = User.length + 1;
-          const position = User.push({
-            id: userId,
-            firstName,
-            lastName,
-            userName,
-            password,
-            email: `${userName}@epicmail.com`,
-          });
-          const token = jwt.sign({ userId: 1 }, config.secret, { expiresIn: '500h' });
-          // eslint-disable-next-line max-len
-          res.status(200).json({ status: 200, data: { token, position, details: User[position - 1] } });
+        } catch (e) {
+          res.status(500).json({ status: 500, error: e });
         }
       } else {
         res.status(400).json({ status: 400, error: 'Parameters supplied should be between 2 and 10 characters' });

@@ -26,7 +26,7 @@ describe('POST /api/v1/auth/signup', () => {
         .send({
           firstName: 'John',
           lastName: 'Doe',
-          userName: 'johnnyDoe',
+          userName: 'chayoyo',
           password: 'secret',
         })
         .end((err, res) => {
@@ -38,7 +38,7 @@ describe('POST /api/v1/auth/signup', () => {
           expect(res.body).to.haveOwnProperty('status');
           expect(res.body.status).to.equal(200);
           expect(res.body).to.haveOwnProperty('data');
-          expect(res.body.data).to.be.a('object');
+          expect(res.body.data).to.be.a('array');
           done();
         });
     });
@@ -51,7 +51,7 @@ describe('POST /api/v1/auth/signup', () => {
         .send({
           firstName: 'John',
           lastName: 'Doe',
-          userName: 'Mekus',
+          userName: 'chayoyo',
           password: 'secret',
         })
         .end((err, res) => {
@@ -115,6 +115,11 @@ describe('POST /api/v1/auth/signup', () => {
           done();
         });
     });
+  });
+
+  after((done) => {
+    db.query(`DELETE FROM users WHERE email = $1`, ['chayoyo@epicmail.com']);
+    done();
   });
 });
 
