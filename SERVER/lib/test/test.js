@@ -471,13 +471,32 @@ describe('PATCH /api/v2/groups/:groupId/:name', () => {
 describe('DELETE /api/v2/groups/:groupId', () => {
   describe('should delete group', () => {
     it('should delete group owned by user', done => {
-      _chai.default.request(_server.default).delete('/api/v2/groups/3').set('x-access-token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU1Mjc3Mjc1NiwiZXhwIjoxNTU0NTcyNzU2fQ.81A8zZezFPu43iMvzNOX948y-6tRAoGdzc4FNOnBRZY').end((err, res) => {
+      _chai.default.request(_server.default).delete('/api/v2/groups/10').set('x-access-token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU1Mjc3Mjc1NiwiZXhwIjoxNTU0NTcyNzU2fQ.81A8zZezFPu43iMvzNOX948y-6tRAoGdzc4FNOnBRZY').end((err, res) => {
         // eslint-disable-next-line no-unused-expressions
         expect(err).to.be.null;
         expect(res, 'response object status').to.have.status(200);
         expect(res.body, 'response body').to.be.a('object');
         expect(res.body, 'response body').to.haveOwnProperty('status');
         expect(res.body.status, 'status property').to.equal(200);
+        expect(res.body, 'response body').to.haveOwnProperty('data');
+        expect(res.body.data, 'data property').to.be.a('array');
+        done();
+      });
+    });
+  });
+});
+describe('POST /api/v2/groups/:groupId/user', () => {
+  describe('should add a user to a group', () => {
+    it('adds a user to a group', done => {
+      _chai.default.request(_server.default).post('/api/v2/groups/7/users').type('form').send({
+        user: 5
+      }).set('x-access-token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU1Mjc3Mjc1NiwiZXhwIjoxNTU0NTcyNzU2fQ.81A8zZezFPu43iMvzNOX948y-6tRAoGdzc4FNOnBRZY').end((err, res) => {
+        // eslint-disable-next-line no-unused-expressions
+        expect(err).to.be.null;
+        expect(res, 'response object status').to.have.status(201);
+        expect(res.body, 'response body').to.be.a('object');
+        expect(res.body, 'response body').to.haveOwnProperty('status');
+        expect(res.body.status, 'status property').to.equal(201);
         expect(res.body, 'response body').to.haveOwnProperty('data');
         expect(res.body.data, 'data property').to.be.a('array');
         done();
