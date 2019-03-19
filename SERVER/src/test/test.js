@@ -1,9 +1,14 @@
 /* eslint-disable no-undef */
+// eslint-disable-next-line no-unused-vars
+import mocha from 'mocha';
+
 import chai from 'chai';
 
 import chaiHttp from 'chai-http';
 
 import server from '../server';
+
+import db from '../model/db';
 
 const { expect } = chai;
 
@@ -454,7 +459,7 @@ describe('POST /api/v1/groups', () => {
         .set('x-access-token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU1Mjc3Mjc1NiwiZXhwIjoxNTU0NTcyNzU2fQ.81A8zZezFPu43iMvzNOX948y-6tRAoGdzc4FNOnBRZY')
         .type('form')
         .send({
-          name: 'testingchai',
+          name: `Testingchai${Math.floor(Math.random(200))}`,
         })
         .end((err, res) => {
           // eslint-disable-next-line no-unused-expressions
@@ -555,9 +560,31 @@ describe('PATCH /api/v1/groups/:groupId/:name', () => {
 
 describe('DELETE /api/v1/groups/:groupId', () => {
   describe('should delete group', () => {
+    let id;
+    before((done) => {
+      // Populate db before deleting
+      const text = `INSERT INTO
+    groups(name, creatorId)
+    VALUES($1, $2)
+    returning id`;
+
+      const values = [
+        'mochaTestGroup',
+        1,
+      ];
+      db.query(text, values)
+        .then((result) => {
+          const { rows } = result;
+          // eslint-disable-next-line prefer-destructuring
+          id = rows[0].id;
+          done();
+        }).catch(() => {
+          done();
+        });
+    });
     it('should delete group owned by user', (done) => {
       chai.request(server)
-        .delete('/api/v1/groups/11')
+        .delete(`/api/v1/groups/${id}`)
         .set('x-access-token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU1Mjc3Mjc1NiwiZXhwIjoxNTU0NTcyNzU2fQ.81A8zZezFPu43iMvzNOX948y-6tRAoGdzc4FNOnBRZY')
         .end((err, res) => {
           // eslint-disable-next-line no-unused-expressions
@@ -602,10 +629,53 @@ describe('POST /api/v1/groups/:groupId/user', () => {
 
 describe('DELETE /api/v1/groups/:groupId/users/:userId', () => {
   describe('should delete a user from a group', () => {
+    before((done) => {
+      // Populate db before deleting
+      const text = `INSERT INTO groupMembers(groupId, memberId, role)
+      VALUES($1, $2, $3) RETURNING id`;
+
+      const values = [
+        7,
+        2,
+        'member',
+      ];
+      db.query(text, values)
+        .then(() => {
+          done();
+        }).catch(() => {
+          done();
+        });
+    });
     it('should delete a user from a group owned by user', (done) => {
       chai.request(server)
-        .delete('/api/v1/groups/7/users/5')
+        .delete('/api/v1/groups/7/users/2')
         .set('x-access-token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU1Mjc3Mjc1NiwiZXhwIjoxNTU0NTcyNzU2fQ.81A8zZezFPu43iMvzNOX948y-6tRAoGdzc4FNOnBRZY')
+        .end((err, res) => {
+          // eslint-disable-next-line no-unused-expressions
+          expect(err).to.be.null;
+          expect(res, 'response object status').to.have.status(200);
+          expect(res.body, 'response body').to.be.a('object');
+          expect(res.body, 'response body').to.haveOwnProperty('status');
+          expect(res.body.status, 'status property').to.equal(200);
+          expect(res.body, 'response body').to.haveOwnProperty('data');
+          expect(res.body.data, 'data property').to.be.a('array');
+          done();
+        });
+    });
+  });
+});
+
+describe('POST /api/v1/groups/:groupId/messages', () => {
+  describe('send a message to a group', () => {
+    it('should send a message to a group', (done) => {
+      chai.request(server)
+        .post('/api/v1/groups/7/messages')
+        .type('form')
+        .set('x-access-token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU1Mjc3Mjc1NiwiZXhwIjoxNTU0NTcyNzU2fQ.81A8zZezFPu43iMvzNOX948y-6tRAoGdzc4FNOnBRZY')
+        .send({
+          subject: `${Math.floor(Math.random(300))} test send message`,
+          message: `${Math.floor(Math.random(300))} 4th lorem ipsum test message`,
+        })
         .end((err, res) => {
           // eslint-disable-next-line no-unused-expressions
           expect(err).to.be.null;

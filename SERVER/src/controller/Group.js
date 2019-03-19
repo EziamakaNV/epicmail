@@ -164,7 +164,7 @@ class GroupController {
             .then((addResult) => {
               // const updatedRows = updateResult.rows;
               // updatedRows[0].role = 'admin';
-              res.status(201).json({ status: 200, data: [{ message: 'User deleted' }] });
+              res.status(200).json({ status: 200, data: [{ message: 'User deleted' }] });
             }, (error) => {
               res.status(500).json({ status: 500, error });
             });
@@ -220,12 +220,10 @@ class GroupController {
                             VALUES ($1, $2, $3)`;
                           const inboxValue = [receiverIds[i], messagesId, createdOn];
                           db.query(inboxQuery, inboxValue)
-                            .then((success) => {
-                              // eslint-disable-next-line no-console
-                              console.log(success);
-                            }).catch((error) => {
-                              // eslint-disable-next-line no-console
-                              console.log(error);
+                            .then(() => {
+
+                            }).catch(() => {
+
                             });
                         }
                         res.status(200).json({ status: 200, data: [messagesRows[0]] });
@@ -245,7 +243,7 @@ class GroupController {
           res.status(400).json({ status: 400, error });
         });
     } else {
-      res.status(400).json({ status: 400, error: 'Missing Parameters' });
+      res.status(400).json({ status: 400, error: 'Missing Parameters.' });
     }
   }
 }
