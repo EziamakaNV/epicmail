@@ -10,7 +10,7 @@ import mailRoute from './routes/mail';
 
 import userRoute from './routes/user';
 
-import groupRoute from './routes/v2/group';
+import groupRoute from './routes/group';
 
 const app = express();
 
@@ -24,7 +24,7 @@ app.use('/api/v1/auth', userRoute);
 
 app.use('/api/v1/messages', mailRoute);
 
-app.use('/api/v2/groups', groupRoute);
+app.use('/api/v1/groups', groupRoute);
 
 // Swagger API doc
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));

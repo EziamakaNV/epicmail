@@ -1,8 +1,8 @@
 import express from 'express';
 
-import GroupController from '../../controller/v2/Group';
+import GroupController from '../controller/Group';
 
-import Authentication from '../../middleware/v2/auth';
+import Authentication from '../middleware/auth';
 
 const router = express.Router();
 

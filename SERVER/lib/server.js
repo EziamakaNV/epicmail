@@ -15,7 +15,7 @@ var _mail = _interopRequireDefault(require("./routes/mail"));
 
 var _user = _interopRequireDefault(require("./routes/user"));
 
-var _group = _interopRequireDefault(require("./routes/v2/group"));
+var _group = _interopRequireDefault(require("./routes/group"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -31,7 +31,7 @@ app.use(_bodyParser.default.urlencoded({
 }));
 app.use('/api/v1/auth', _user.default);
 app.use('/api/v1/messages', _mail.default);
-app.use('/api/v2/groups', _group.default); // Swagger API doc
+app.use('/api/v1/groups', _group.default); // Swagger API doc
 
 app.use('/api-docs', _swaggerUiExpress.default.serve, _swaggerUiExpress.default.setup(swaggerDocument)); // Executes when request path does not match any of the handlers
 

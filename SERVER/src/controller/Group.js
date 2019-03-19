@@ -4,7 +4,7 @@
 
 import moment from 'moment';
 
-import db from '../../model/v2/db';
+import db from '../model/db';
 
 class GroupController {
   static createGroup(req, res) {
