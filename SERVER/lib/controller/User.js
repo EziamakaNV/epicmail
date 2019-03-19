@@ -11,6 +11,8 @@ var _jsonwebtoken = _interopRequireDefault(require("jsonwebtoken"));
 
 var _config = _interopRequireDefault(require("../config"));
 
+var _db = _interopRequireDefault(require("../model/db"));
+
 var _entities = _interopRequireDefault(require("../model/entities"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -18,7 +20,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 const User = _entities.default.User;
 
 class UserController {
-  static signup(req, res) {
+  static async signup(req, res) {
     const _req$body = req.body,
           firstName = _req$body.firstName,
           lastName = _req$body.lastName,
@@ -33,45 +35,40 @@ class UserController {
       const passwordLength = password.length > 2 && password.length < 10;
 
       if (firstNameLength && lastNameLength && userNameLength && passwordLength) {
-        // Check if username already exists
-        // Create a variable to store a boolean stating if the username exists
-        let userExists = false;
-        User.forEach(user => {
-          if (user.userName === userName) {
-            userExists = true;
+        try {
+          // Check if username exists
+          const text = `SELECT * FROM users WHERE email = $1 `;
+          const value = [`${userName}@epicmail.com`];
+          const emailExists = await _db.default.query(text, value);
+          console.log(emailExists);
+
+          if (emailExists.rows.length === 0) {
+            const insertText = `INSERT INTO users (email, firstname, lastname, password) VALUES ($1, $2, $3, $4) returning id`;
+            const insertValues = [`${userName}@epicmail.com`, firstName, lastName, password];
+            const user = await _db.default.query(insertText, insertValues); // Insert details into databse and get id
+
+            const token = _jsonwebtoken.default.sign({
+              userId: user.rows[0].id
+            }, _config.default.secret, {
+              expiresIn: '500h'
+            });
+
+            res.status(200).json({
+              status: 200,
+              data: [{
+                token
+              }]
+            });
+          } else {
+            res.status(409).json({
+              status: 409,
+              error: 'Username already exists'
+            });
           }
-        });
-
-        if (userExists) {
-          res.status(409).json({
-            status: 409,
-            error: 'Username already exists'
-          });
-        } else {
-          const userId = User.length + 1;
-          const position = User.push({
-            id: userId,
-            firstName,
-            lastName,
-            userName,
-            password,
-            email: `${userName}@epicmail.com`
-          });
-
-          const token = _jsonwebtoken.default.sign({
-            userId: 1
-          }, _config.default.secret, {
-            expiresIn: '500h'
-          }); // eslint-disable-next-line max-len
-
-
-          res.status(200).json({
-            status: 200,
-            data: {
-              token,
-              position,
-              details: User[position - 1]
-            }
+        } catch (e) {
+          res.status(500).json({
+            status: 500,
+            error: e
           });
         }
       } else {
