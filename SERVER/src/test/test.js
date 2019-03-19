@@ -445,12 +445,12 @@ describe('DELETE /api/v1/messages/<messages-id>', () => {
   });
 });
 
-// API V2 TESTS
-describe('POST /api/v2/groups', () => {
+
+describe('POST /api/v1/groups', () => {
   describe('should create a new group', () => {
     it('when all relevant properties are sent in the POST body, on sucess it should return an object with properties status and data', (done) => {
       chai.request(server)
-        .post('/api/v2/groups')
+        .post('/api/v1/groups')
         .set('x-access-token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU1Mjc3Mjc1NiwiZXhwIjoxNTU0NTcyNzU2fQ.81A8zZezFPu43iMvzNOX948y-6tRAoGdzc4FNOnBRZY')
         .type('form')
         .send({
@@ -473,7 +473,7 @@ describe('POST /api/v2/groups', () => {
   describe('should handle missing properties in POST body', () => {
     it('Server should respond with a 400 bad request token in the header is missing', (done) => {
       chai.request(server)
-        .post('/api/v2/groups')
+        .post('/api/v1/groups')
         .type('form')
         .send({
           name: Math.random().toString(36).substring(7),
@@ -493,11 +493,11 @@ describe('POST /api/v2/groups', () => {
   });
 });
 
-describe('GET /api/v2/groups', () => {
+describe('GET /api/v1/groups', () => {
   describe('should get all groups', () => {
     it('should return all groups', (done) => {
       chai.request(server)
-        .get('/api/v2/groups')
+        .get('/api/v1/groups')
         .set('x-access-token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU1Mjc3Mjc1NiwiZXhwIjoxNTU0NTcyNzU2fQ.81A8zZezFPu43iMvzNOX948y-6tRAoGdzc4FNOnBRZY')
         .end((err, res) => {
           // eslint-disable-next-line no-unused-expressions
@@ -516,7 +516,7 @@ describe('GET /api/v2/groups', () => {
   describe('should handle missing token in header', () => {
     it('Server should respond with a 400 bad request if the token is missing', (done) => {
       chai.request(server)
-        .get('/api/v2/groups')
+        .get('/api/v1/groups')
         .end((err, res) => {
           // eslint-disable-next-line no-unused-expressions
           expect(err).to.be.null;
@@ -532,11 +532,11 @@ describe('GET /api/v2/groups', () => {
   });
 });
 
-describe('PATCH /api/v2/groups/:groupId/:name', () => {
+describe('PATCH /api/v1/groups/:groupId/:name', () => {
   describe('should change the name of a group', () => {
     it('name should change', (done) => {
       chai.request(server)
-        .patch('/api/v2/groups/1/chaipatchtest')
+        .patch('/api/v1/groups/1/chaipatchtest')
         .set('x-access-token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU1Mjc3Mjc1NiwiZXhwIjoxNTU0NTcyNzU2fQ.81A8zZezFPu43iMvzNOX948y-6tRAoGdzc4FNOnBRZY')
         .end((err, res) => {
           // eslint-disable-next-line no-unused-expressions
@@ -553,11 +553,11 @@ describe('PATCH /api/v2/groups/:groupId/:name', () => {
   });
 });
 
-describe('DELETE /api/v2/groups/:groupId', () => {
+describe('DELETE /api/v1/groups/:groupId', () => {
   describe('should delete group', () => {
     it('should delete group owned by user', (done) => {
       chai.request(server)
-        .delete('/api/v2/groups/12')
+        .delete('/api/v1/groups/11')
         .set('x-access-token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU1Mjc3Mjc1NiwiZXhwIjoxNTU0NTcyNzU2fQ.81A8zZezFPu43iMvzNOX948y-6tRAoGdzc4FNOnBRZY')
         .end((err, res) => {
           // eslint-disable-next-line no-unused-expressions
@@ -575,11 +575,11 @@ describe('DELETE /api/v2/groups/:groupId', () => {
 });
 
 
-describe('POST /api/v2/groups/:groupId/user', () => {
+describe('POST /api/v1/groups/:groupId/user', () => {
   describe('should add a user to a group', () => {
     it('adds a user to a group', (done) => {
       chai.request(server)
-        .post('/api/v2/groups/7/users')
+        .post('/api/v1/groups/7/users')
         .type('form')
         .send({
           user: 2,
@@ -600,11 +600,11 @@ describe('POST /api/v2/groups/:groupId/user', () => {
   });
 });
 
-describe('DELETE /api/v2/groups/:groupId/users/:userId', () => {
+describe('DELETE /api/v1/groups/:groupId/users/:userId', () => {
   describe('should delete a user from a group', () => {
     it('should delete a user from a group owned by user', (done) => {
       chai.request(server)
-        .delete('/api/v2/groups/7/users/4')
+        .delete('/api/v1/groups/7/users/5')
         .set('x-access-token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU1Mjc3Mjc1NiwiZXhwIjoxNTU0NTcyNzU2fQ.81A8zZezFPu43iMvzNOX948y-6tRAoGdzc4FNOnBRZY')
         .end((err, res) => {
           // eslint-disable-next-line no-unused-expressions

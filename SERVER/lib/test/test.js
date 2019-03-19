@@ -379,12 +379,11 @@ describe('DELETE /api/v1/messages/<messages-id>', () => {
       done();
     });
   });
-}); // API V2 TESTS
-
-describe('POST /api/v2/groups', () => {
+});
+describe('POST /api/v1/groups', () => {
   describe('should create a new group', () => {
     it('when all relevant properties are sent in the POST body, on sucess it should return an object with properties status and data', done => {
-      _chai.default.request(_server.default).post('/api/v2/groups').set('x-access-token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU1Mjc3Mjc1NiwiZXhwIjoxNTU0NTcyNzU2fQ.81A8zZezFPu43iMvzNOX948y-6tRAoGdzc4FNOnBRZY').type('form').send({
+      _chai.default.request(_server.default).post('/api/v1/groups').set('x-access-token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU1Mjc3Mjc1NiwiZXhwIjoxNTU0NTcyNzU2fQ.81A8zZezFPu43iMvzNOX948y-6tRAoGdzc4FNOnBRZY').type('form').send({
         name: 'testingchai'
       }).end((err, res) => {
         // eslint-disable-next-line no-unused-expressions
@@ -401,7 +400,7 @@ describe('POST /api/v2/groups', () => {
   });
   describe('should handle missing properties in POST body', () => {
     it('Server should respond with a 400 bad request token in the header is missing', done => {
-      _chai.default.request(_server.default).post('/api/v2/groups').type('form').send({
+      _chai.default.request(_server.default).post('/api/v1/groups').type('form').send({
         name: Math.random().toString(36).substring(7)
       }).end((err, res) => {
         // eslint-disable-next-line no-unused-expressions
@@ -417,10 +416,10 @@ describe('POST /api/v2/groups', () => {
     });
   });
 });
-describe('GET /api/v2/groups', () => {
+describe('GET /api/v1/groups', () => {
   describe('should get all groups', () => {
     it('should return all groups', done => {
-      _chai.default.request(_server.default).get('/api/v2/groups').set('x-access-token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU1Mjc3Mjc1NiwiZXhwIjoxNTU0NTcyNzU2fQ.81A8zZezFPu43iMvzNOX948y-6tRAoGdzc4FNOnBRZY').end((err, res) => {
+      _chai.default.request(_server.default).get('/api/v1/groups').set('x-access-token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU1Mjc3Mjc1NiwiZXhwIjoxNTU0NTcyNzU2fQ.81A8zZezFPu43iMvzNOX948y-6tRAoGdzc4FNOnBRZY').end((err, res) => {
         // eslint-disable-next-line no-unused-expressions
         expect(err).to.be.null;
         expect(res, 'response object status').to.have.status(200);
@@ -435,7 +434,7 @@ describe('GET /api/v2/groups', () => {
   });
   describe('should handle missing token in header', () => {
     it('Server should respond with a 400 bad request if the token is missing', done => {
-      _chai.default.request(_server.default).get('/api/v2/groups').end((err, res) => {
+      _chai.default.request(_server.default).get('/api/v1/groups').end((err, res) => {
         // eslint-disable-next-line no-unused-expressions
         expect(err).to.be.null;
         expect(res, 'response object status').to.have.status(400);
@@ -449,10 +448,10 @@ describe('GET /api/v2/groups', () => {
     });
   });
 });
-describe('PATCH /api/v2/groups/:groupId/:name', () => {
+describe('PATCH /api/v1/groups/:groupId/:name', () => {
   describe('should change the name of a group', () => {
     it('name should change', done => {
-      _chai.default.request(_server.default).patch('/api/v2/groups/1/chaipatchtest').set('x-access-token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU1Mjc3Mjc1NiwiZXhwIjoxNTU0NTcyNzU2fQ.81A8zZezFPu43iMvzNOX948y-6tRAoGdzc4FNOnBRZY').end((err, res) => {
+      _chai.default.request(_server.default).patch('/api/v1/groups/1/chaipatchtest').set('x-access-token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU1Mjc3Mjc1NiwiZXhwIjoxNTU0NTcyNzU2fQ.81A8zZezFPu43iMvzNOX948y-6tRAoGdzc4FNOnBRZY').end((err, res) => {
         // eslint-disable-next-line no-unused-expressions
         expect(err).to.be.null;
         expect(res, 'response object status').to.have.status(200);
@@ -466,10 +465,10 @@ describe('PATCH /api/v2/groups/:groupId/:name', () => {
     });
   });
 });
-describe('DELETE /api/v2/groups/:groupId', () => {
+describe('DELETE /api/v1/groups/:groupId', () => {
   describe('should delete group', () => {
     it('should delete group owned by user', done => {
-      _chai.default.request(_server.default).delete('/api/v2/groups/12').set('x-access-token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU1Mjc3Mjc1NiwiZXhwIjoxNTU0NTcyNzU2fQ.81A8zZezFPu43iMvzNOX948y-6tRAoGdzc4FNOnBRZY').end((err, res) => {
+      _chai.default.request(_server.default).delete('/api/v1/groups/11').set('x-access-token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU1Mjc3Mjc1NiwiZXhwIjoxNTU0NTcyNzU2fQ.81A8zZezFPu43iMvzNOX948y-6tRAoGdzc4FNOnBRZY').end((err, res) => {
         // eslint-disable-next-line no-unused-expressions
         expect(err).to.be.null;
         expect(res, 'response object status').to.have.status(200);
@@ -483,10 +482,10 @@ describe('DELETE /api/v2/groups/:groupId', () => {
     });
   });
 });
-describe('POST /api/v2/groups/:groupId/user', () => {
+describe('POST /api/v1/groups/:groupId/user', () => {
   describe('should add a user to a group', () => {
     it('adds a user to a group', done => {
-      _chai.default.request(_server.default).post('/api/v2/groups/7/users').type('form').send({
+      _chai.default.request(_server.default).post('/api/v1/groups/7/users').type('form').send({
         user: 2
       }).set('x-access-token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU1Mjc3Mjc1NiwiZXhwIjoxNTU0NTcyNzU2fQ.81A8zZezFPu43iMvzNOX948y-6tRAoGdzc4FNOnBRZY').end((err, res) => {
         // eslint-disable-next-line no-unused-expressions
@@ -502,10 +501,10 @@ describe('POST /api/v2/groups/:groupId/user', () => {
     });
   });
 });
-describe('DELETE /api/v2/groups/:groupId/users/:userId', () => {
+describe('DELETE /api/v1/groups/:groupId/users/:userId', () => {
   describe('should delete a user from a group', () => {
     it('should delete a user from a group owned by user', done => {
-      _chai.default.request(_server.default).delete('/api/v2/groups/7/users/4').set('x-access-token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU1Mjc3Mjc1NiwiZXhwIjoxNTU0NTcyNzU2fQ.81A8zZezFPu43iMvzNOX948y-6tRAoGdzc4FNOnBRZY').end((err, res) => {
+      _chai.default.request(_server.default).delete('/api/v1/groups/7/users/5').set('x-access-token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU1Mjc3Mjc1NiwiZXhwIjoxNTU0NTcyNzU2fQ.81A8zZezFPu43iMvzNOX948y-6tRAoGdzc4FNOnBRZY').end((err, res) => {
         // eslint-disable-next-line no-unused-expressions
         expect(err).to.be.null;
         expect(res, 'response object status').to.have.status(200);

@@ -290,7 +290,7 @@ class GroupController {
           const createdOn = (0, _moment.default)(new Date()); // Timeestamp for message
 
           const insertMessageQuery = `INSERT INTO messages (createdOn, subject, message, status)
-              VALUES($1, $2, $3, $4) RETURNING id`; // Return messageId
+              VALUES($1, $2, $3, $4) RETURNING *`; // Return messageId
 
           const insertMessageValues = [createdOn, subject, message, 'sent'];
 
@@ -317,16 +317,28 @@ class GroupController {
                 const receiverRows = receiverResult.rows;
                 receiverRows.forEach(receiver => {
                   // Go through the returned result to get all receiver Id's
-                  receiverIds.push(receiver.memberId); // Store Id's in receiverId array.
+                  receiverIds.push(receiver.memberid); // Store Id's in receiverId array.
                 });
 
                 for (let i = 0; i < receiverIds.length; i++) {
                   // Update "Inbox" table for all recepients in the group
-                  const inboxQuery = `INSERT INTO inboxes (receiverId, messageId, createdOn)`;
+                  const inboxQuery = `INSERT INTO inboxes (receiverId, messageId, createdOn)
+                            VALUES ($1, $2, $3)`;
                   const inboxValue = [receiverIds[i], messagesId, createdOn];
 
-                  _db.default.query(inboxQuery, inboxValue);
+                  _db.default.query(inboxQuery, inboxValue).then(success => {
+                    // eslint-disable-next-line no-console
+                    console.log(success);
+                  }).catch(error => {
+                    // eslint-disable-next-line no-console
+                    console.log(error);
+                  });
                 }
+
+                res.status(200).json({
+                  status: 200,
+                  data: [messagesRows[0]]
+                });
               }, error => {
                 res.status(500).json({
                   status: 500,

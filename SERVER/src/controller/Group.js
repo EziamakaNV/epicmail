@@ -191,7 +191,7 @@ class GroupController {
           if (rows[0].creatorid === userId) { // If the user owns the group, first insert the message in "messages" table
             const createdOn = moment(new Date()); // Timeestamp for message
             const insertMessageQuery = `INSERT INTO messages (createdOn, subject, message, status)
-              VALUES($1, $2, $3, $4) RETURNING id`; // Return messageId
+              VALUES($1, $2, $3, $4) RETURNING *`; // Return messageId
             const insertMessageValues = [createdOn, subject, message, 'sent'];
             db.query(insertMessageQuery, insertMessageValues) // Query to insert into "messages"
             // eslint-disable-next-line no-unused-vars
@@ -213,13 +213,22 @@ class GroupController {
                         const receiverIds = [];
                         const receiverRows = receiverResult.rows;
                         receiverRows.forEach((receiver) => { // Go through the returned result to get all receiver Id's
-                          receiverIds.push(receiver.memberId); // Store Id's in receiverId array.
+                          receiverIds.push(receiver.memberid); // Store Id's in receiverId array.
                         });
                         for (let i = 0; i < receiverIds.length; i++) { // Update "Inbox" table for all recepients in the group
-                          const inboxQuery = `INSERT INTO inboxes (receiverId, messageId, createdOn)`;
+                          const inboxQuery = `INSERT INTO inboxes (receiverId, messageId, createdOn)
+                            VALUES ($1, $2, $3)`;
                           const inboxValue = [receiverIds[i], messagesId, createdOn];
-                          db.query(inboxQuery, inboxValue);
+                          db.query(inboxQuery, inboxValue)
+                            .then((success) => {
+                              // eslint-disable-next-line no-console
+                              console.log(success);
+                            }).catch((error) => {
+                              // eslint-disable-next-line no-console
+                              console.log(error);
+                            });
                         }
+                        res.status(200).json({ status: 200, data: [messagesRows[0]] });
                       }, (error) => {
                         res.status(500).json({ status: 500, error });
                       });
