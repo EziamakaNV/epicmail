@@ -270,7 +270,7 @@ class GroupController {
     });
   }
 
-  static async sendMessageToGroup(req, res) {
+  static sendMessageToGroup(req, res) {
     const subject = req.body.subject;
     const message = req.body.message;
 

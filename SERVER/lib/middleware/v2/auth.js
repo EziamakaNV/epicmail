@@ -15,7 +15,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 class Authentication {
   static verifyToken(req, res, next) {
-    const token = req.body.token; // Check for token in the body
+    const token = req.headers['x-access-token']; // Check for token in the body
 
     if (!token) {
       // If token is not supplied
