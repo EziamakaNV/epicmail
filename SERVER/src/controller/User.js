@@ -47,28 +47,26 @@ class UserController {
     }
   }
 
-  static login(req, res) {
+  static async login(req, res) {
     const {
       email, password,
     } = req.body;
 
     if (email && password) {
-      let isAuthenticated = false;
-      let userId;
-      let userName;
-      User.forEach((user) => {
-        if ((email === user.email) && (password === user.password)) {
-          isAuthenticated = true;
-          userId = user.id;
-          // eslint-disable-next-line prefer-destructuring
-          userName = user.userName;
+      const text = `SELECT * FROM users WHERE email = $1 AND password = $2`;
+      const values = [email, password];
+      try {
+        const credentials = await db.query(text, values);
+        const { id } = credentials.rows;
+        console.log(credentials);
+        if (credentials.rows.length === 0) {
+          res.status(401).json({ status: 401, error: 'Incorrect credentials' });
+        } else {
+          const token = jwt.sign({ id }, config.secret, { expiresIn: '24h' });
+          res.status(200).json({ status: 200, data: { token } });
         }
-      });
-      if (isAuthenticated) {
-        const token = jwt.sign({ userName, userId }, config.secret, { expiresIn: '24h' });
-        res.status(200).json({ status: 200, data: { token } });
-      } else {
-        res.status(401).json({ status: 401, error: 'Incorrect credentials' });
+      } catch (e) {
+        res.status(500).json({ status: 500, error: e });
       }
     } else {
       res.status(400).json({ status: 400, error: 'Missing parameter' });

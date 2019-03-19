@@ -118,8 +118,8 @@ describe('POST /api/v1/auth/login', () => {
   describe('handles valid input (POST body properties)', () => {
     it('if user has an account, it should respond with a property status of 200 and a data property with a token', done => {
       _chai.default.request(_server.default).post('/api/v1/auth/login').type('form').send({
-        email: 'example@epicmail.com',
-        password: 'notell'
+        email: 'TDD@epicmail.com',
+        password: 'overtest'
       }).end((err, res) => {
         // eslint-disable-next-line no-unused-expressions
         expect(err).to.be.null;
@@ -153,7 +153,7 @@ describe('POST /api/v1/auth/login', () => {
   describe('handles invalid input ((POST body properties))', () => {
     it('should not be able to log in if all parameters are not present', done => {
       _chai.default.request(_server.default).post('/api/v1/auth/login').type('form').send({
-        email: 'example@test.com'
+        email: 'TDD@epicmail.com'
       }).end((err, res) => {
         // eslint-disable-next-line no-unused-expressions
         expect(err).to.be.null;

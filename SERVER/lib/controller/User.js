@@ -5,8 +5,6 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = void 0;
 
-require("core-js/modules/web.dom.iterable");
-
 var _jsonwebtoken = _interopRequireDefault(require("jsonwebtoken"));
 
 var _config = _interopRequireDefault(require("../config"));
@@ -85,42 +83,43 @@ class UserController {
     }
   }
 
-  static login(req, res) {
+  static async login(req, res) {
     const _req$body2 = req.body,
           email = _req$body2.email,
           password = _req$body2.password;
 
     if (email && password) {
-      let isAuthenticated = false;
-      let userId;
-      let userName;
-      User.forEach(user => {
-        if (email === user.email && password === user.password) {
-          isAuthenticated = true;
-          userId = user.id; // eslint-disable-next-line prefer-destructuring
+      const text = `SELECT * FROM users WHERE email = $1 AND password = $2`;
+      const values = [email, password];
 
-          userName = user.userName;
+      try {
+        const credentials = await _db.default.query(text, values);
+        const id = credentials.rows.id;
+        console.log(credentials);
+
+        if (credentials.rows.length === 0) {
+          res.status(401).json({
+            status: 401,
+            error: 'Incorrect credentials'
+          });
+        } else {
+          const token = _jsonwebtoken.default.sign({
+            id
+          }, _config.default.secret, {
+            expiresIn: '24h'
+          });
+
+          res.status(200).json({
+            status: 200,
+            data: {
+              token
+            }
+          });
         }
-      });
-
-      if (isAuthenticated) {
-        const token = _jsonwebtoken.default.sign({
-          userName,
-          userId
-        }, _config.default.secret, {
-          expiresIn: '24h'
-        });
-
-        res.status(200).json({
-          status: 200,
-          data: {
-            token
-          }
-        });
-      } else {
-        res.status(401).json({
-          status: 401,
-          error: 'Incorrect credentials'
+      } catch (e) {
+        res.status(500).json({
+          status: 500,
+          error: e
         });
       }
     } else {
