@@ -26,24 +26,32 @@ class UserController {
           const text = `SELECT * FROM users WHERE email = $1 `;
           const value = [`${userName}@epicmail.com`];
           const emailExists = await db.query(text, value);
-          console.log(emailExists);
           if (emailExists.rows.length === 0) {
             const insertText = `INSERT INTO users (email, firstname, lastname, password) VALUES ($1, $2, $3, $4) returning id`;
             const insertValues = [`${userName}@epicmail.com`, firstName, lastName, password];
             const user = await db.query(insertText, insertValues); // Insert details into databse and get id
             const token = jwt.sign({ userId: user.rows[0].id }, config.secret, { expiresIn: '500h' });
-            res.status(200).json({ status: 200, data: [{ token }] });
+            res.status(200).json({
+              status: 200,
+              data: [{
+                token,
+                email: `${userName}@epicmail.com`,
+                firstName,
+                lastName,
+              }],
+              success: true,
+            });
           } else {
-            res.status(409).json({ status: 409, error: 'Username already exists' });
+            res.status(409).json({ status: 409, error: 'Username already exists', success: false });
           }
         } catch (e) {
-          res.status(500).json({ status: 500, error: e });
+          res.status(500).json({ status: 500, error: e, success: false });
         }
       } else {
-        res.status(400).json({ status: 400, error: 'Parameters supplied should be between 2 and 10 characters' });
+        res.status(400).json({ status: 400, error: 'Parameters supplied should be between 2 and 10 characters', success: false });
       }
     } else {
-      res.status(400).json({ status: 400, error: 'Missing parameter' });
+      res.status(400).json({ status: 400, error: 'Missing parameter', success: false });
     }
   }
 
@@ -58,18 +66,17 @@ class UserController {
       try {
         const credentials = await db.query(text, values);
         const { id } = credentials.rows;
-        console.log(credentials);
         if (credentials.rows.length === 0) {
-          res.status(401).json({ status: 401, error: 'Incorrect credentials' });
+          res.status(401).json({ status: 401, error: 'Incorrect credentials', success: false });
         } else {
           const token = jwt.sign({ id }, config.secret, { expiresIn: '24h' });
-          res.status(200).json({ status: 200, data: { token } });
+          res.status(200).json({ status: 200, data: { token }, success: true });
         }
       } catch (e) {
-        res.status(500).json({ status: 500, error: e });
+        res.status(500).json({ status: 500, error: e, success: false });
       }
     } else {
-      res.status(400).json({ status: 400, error: 'Missing parameter' });
+      res.status(400).json({ status: 400, error: 'Missing parameter', success: false });
     }
   }
 }

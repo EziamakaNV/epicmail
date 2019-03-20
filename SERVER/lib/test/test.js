@@ -16,6 +16,8 @@ var _db = _interopRequireDefault(require("../model/db"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+/* eslint-disable max-len */
+
 /* eslint-disable no-undef */
 // eslint-disable-next-line no-unused-vars
 const expect = _chai.default.expect;
@@ -171,7 +173,7 @@ describe('POST /api/v1/auth/login', () => {
 describe('GET /api/v1/messages', () => {
   describe('should fetch all received mails', () => {
     it('on sucess it should return an object with properties status and data', done => {
-      _chai.default.request(_server.default).get('/api/v1/messages').end((err, res) => {
+      _chai.default.request(_server.default).get('/api/v1/messages').set('x-access-token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU1Mjc3Mjc1NiwiZXhwIjoxNTU0NTcyNzU2fQ.81A8zZezFPu43iMvzNOX948y-6tRAoGdzc4FNOnBRZY').end((err, res) => {
         // eslint-disable-next-line no-unused-expressions
         expect(err).to.be.null;
         expect(res, 'response object status').to.have.status(200);
@@ -188,7 +190,7 @@ describe('GET /api/v1/messages', () => {
 describe('GET /api/v1/messages/unread', () => {
   describe('should fetch all unread mails', () => {
     it('on sucess it should return an object with properties status and data', done => {
-      _chai.default.request(_server.default).get('/api/v1/messages/unread').end((err, res) => {
+      _chai.default.request(_server.default).get('/api/v1/messages/unread').set('x-access-token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU1Mjc3Mjc1NiwiZXhwIjoxNTU0NTcyNzU2fQ.81A8zZezFPu43iMvzNOX948y-6tRAoGdzc4FNOnBRZY').end((err, res) => {
         // eslint-disable-next-line no-unused-expressions
         expect(err).to.be.null;
         expect(res, 'response object status').to.have.status(200);
@@ -201,7 +203,7 @@ describe('GET /api/v1/messages/unread', () => {
       });
     });
     it('there should be no empty elements in the data array', done => {
-      _chai.default.request(_server.default).get('/api/v1/messages/unread').end((err, res) => {
+      _chai.default.request(_server.default).get('/api/v1/messages/unread').set('x-access-token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU1Mjc3Mjc1NiwiZXhwIjoxNTU0NTcyNzU2fQ.81A8zZezFPu43iMvzNOX948y-6tRAoGdzc4FNOnBRZY').end((err, res) => {
         // eslint-disable-next-line no-unused-expressions
         expect(err).to.be.null;
         expect(res, 'response object status').to.have.status(200);
@@ -268,9 +270,8 @@ describe('GET /api/v1/messages/sent', () => {
 describe('POST /api/v1/messages', () => {
   describe('should create or send emails to individuals', () => {
     it('when all relevant properties are sent in the POST body, on sucess it should return an object with properties status and data', done => {
-      _chai.default.request(_server.default).post('/api/v1/messages').type('form').send({
-        senderId: 12456,
-        receiverId: 23456,
+      _chai.default.request(_server.default).post('/api/v1/messages').set('x-access-token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU1Mjc3Mjc1NiwiZXhwIjoxNTU0NTcyNzU2fQ.81A8zZezFPu43iMvzNOX948y-6tRAoGdzc4FNOnBRZY').type('form').send({
+        receiverEmail: 'Mekus@epicmail.com',
         subject: 'Test Subject',
         message: 'Eu quo urbanitas reprehendunt. Omittam commune singulis ex sit. In facilisis honestatis pri, nonumes ponderum ius no. Cu sumo reprehendunt ius'
       }).end((err, res) => {
@@ -281,28 +282,28 @@ describe('POST /api/v1/messages', () => {
         expect(res.body, 'response body').to.haveOwnProperty('status');
         expect(res.body.status, 'status property').to.equal(200);
         expect(res.body, 'response body').to.haveOwnProperty('data');
-        expect(res.body.data, 'data property').to.be.a('object');
+        expect(res.body.data, 'data property').to.be.a('array');
         done();
       });
     });
   });
-  describe('should handles missing properties in POST body', () => {
-    it('Server should respond with a 400 bad request if any of the parameters in the POST body is missing', done => {
-      _chai.default.request(_server.default).post('/api/v1/messages').type('form').send({
-        senderId: 12456,
-        subject: 'Test Subject',
-        message: 'Eu quo urbanitas reprehendunt. Omittam commune singulis ex sit. In facilisis honestatis pri, nonumes ponderum ius no. Cu sumo reprehendunt ius'
-      }).end((err, res) => {
-        // eslint-disable-next-line no-unused-expressions
-        expect(err).to.be.null;
-        expect(res, 'response object status').to.have.status(400);
-        expect(res.body, 'response body').to.be.a('object');
-        expect(res.body, 'response body').to.haveOwnProperty('status');
-        expect(res.body.status, 'status property').to.equal(400);
-        expect(res.body, 'response body').to.haveOwnProperty('error');
-        expect(res.body.error, 'error property').to.be.a('string');
-        done();
-      });
+});
+describe('should handles missing properties in POST body', () => {
+  it('Server should respond with a 400 bad request if any of the parameters in the POST body is missing', done => {
+    _chai.default.request(_server.default).post('/api/v1/messages').type('form').send({
+      senderId: 12456,
+      subject: 'Test Subject',
+      message: 'Eu quo urbanitas reprehendunt. Omittam commune singulis ex sit. In facilisis honestatis pri, nonumes ponderum ius no. Cu sumo reprehendunt ius'
+    }).end((err, res) => {
+      // eslint-disable-next-line no-unused-expressions
+      expect(err).to.be.null;
+      expect(res, 'response object status').to.have.status(400);
+      expect(res.body, 'response body').to.be.a('object');
+      expect(res.body, 'response body').to.haveOwnProperty('status');
+      expect(res.body.status, 'status property').to.equal(400);
+      expect(res.body, 'response body').to.haveOwnProperty('error');
+      expect(res.body.error, 'error property').to.be.a('string');
+      done();
     });
   });
 });

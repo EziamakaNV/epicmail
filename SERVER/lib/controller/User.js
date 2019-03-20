@@ -95,7 +95,6 @@ class UserController {
       try {
         const credentials = await _db.default.query(text, values);
         const id = credentials.rows.id;
-        console.log(credentials);
 
         if (credentials.rows.length === 0) {
           res.status(401).json({

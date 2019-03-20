@@ -31,7 +31,7 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 // Executes when request path does not match any of the handlers
 app.use((req, res) => {
-  res.status(401).json({ error: 'Bad request! Endpoint does not exist!' });
+  res.status(401).json({ error: 'Bad request! Endpoint does not exist!', success: false });
 });
 
 
