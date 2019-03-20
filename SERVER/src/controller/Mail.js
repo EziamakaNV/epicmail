@@ -1,52 +1,128 @@
+/* eslint-disable quotes */
+/* eslint-disable max-len */
+import moment from 'moment';
+
 import entities from '../model/entities';
+
+import db from '../model/db';
 
 const { Messages } = entities;
 
 class MessagesController {
-  static getMessages(req, res) {
-    const messagesResponse = Messages.map(message => message);
-    res.status(200).json({ status: 200, data: [...messagesResponse] });
+  static async getMessages(req, res) { // Fetch all receive messages
+    const userId = req.user.id;
+    try {
+      // Query to fetch all received messages in inbox.
+      const query = `SELECT messages.id, messages.createdon, messages.subject, messages.message,
+      inboxes.receiverid, sents.senderid, messages.parentmessageid, inboxes.status FROM messages INNER JOIN inboxes ON inboxes.messageid = messages.id INNER JOIN sents ON messages.id = sents.messageid 
+      WHERE inboxes.receiverid = $1`;
+      const value = [userId];
+      const messagesResults = await db.query(query, value);
+      const messageRows = messagesResults.rows;
+      res.status(200).json({ status: 200, data: [...messageRows], success: true });
+    } catch (e) {
+      res.status(500).json({ status: 500, error: 'Issue with fetching messge', success: false });
+    }
   }
 
-  static getUnread(req, res) {
-    const messagesResponse = Messages.map((message) => {
-      if (message.status === 'unread') {
-        return message;
-      }
-      return undefined;
-    }).filter(message => message !== undefined); // Remove empty elements from array
-    return res.status(200).json({ status: 200, data: [...messagesResponse] });
+  static async getUnread(req, res) { // Fetch all unread received messages
+    const userId = req.user.id;
+    try {
+      // Query to fetch all received messages in inbox.
+      const query = `SELECT messages.id, messages.createdon, messages.subject, messages.message,
+      inboxes.receiverid, sents.senderid, messages.parentmessageid, inboxes.status FROM messages INNER JOIN inboxes ON inboxes.messageid = messages.id INNER JOIN sents ON messages.id = sents.messageid 
+      WHERE inboxes.receiverid = $1 AND inboxes.status = $2`;
+      const value = [userId, 'unread'];
+      const messagesResults = await db.query(query, value);
+      const messageRows = messagesResults.rows;
+      res.status(200).json({ status: 200, data: [...messageRows], success: true });
+    } catch (e) {
+      res.status(500).json({ status: 500, error: 'Issue with fetching received messages', success: false });
+    }
   }
 
-  static getSent(req, res) {
-    const messagesResponse = Messages.map((message) => {
-      if (message.status === 'sent') {
-        return message;
-      }
-      return undefined;
-    }).filter(message => message !== undefined); // Remove empty elements from array
-    return res.status(200).json({ status: 200, data: [...messagesResponse] });
+  static async getSent(req, res) {
+    const userId = req.user.id;
+    try {
+      // Query to fetch all received messages in inbox.
+      const query = `SELECT messages.id, messages.createdon, messages.subject, messages.message,
+      inboxes.receiverid, sents.senderid, messages.parentmessageid, messages.status FROM messages INNER JOIN sents ON sents.messageid = messages.id INNER JOIN inboxes ON messages.id = inboxes.messageid 
+      WHERE sents.senderid = $1  AND messages.status = $2`;
+      const value = [userId, 'sent'];
+      const messagesResults = await db.query(query, value);
+      const messageRows = messagesResults.rows;
+      res.status(200).json({ status: 200, data: [...messageRows], success: true });
+    } catch (e) {
+      res.status(500).json({ status: 500, error: 'Issue with fetching inbox', success: false });
+    }
   }
 
-  static postMessages(req, res) {
+  static async postMessages(req, res) {
+    // Ensure that all parameters are validated
+    // Save in messages then save in inbox and sent
+    // Check if email to be sent is in the
     const {
-      senderId, receiverId, subject, message,
+      receiverEmail, subject, message,
     } = req.body;
-    if (senderId && receiverId && subject && message) {
-      const id = Math.floor((Math.random() * 10000)); // Generate Random Id
-      const newMessagePosition = Messages.push({
-        id,
-        createdOn: Date(),
-        subject,
-        message,
-        senderId: Number(senderId),
-        receiverId: Number(receiverId),
-        parentMessageId: id,
-        status: 'sent',
-      });
-      res.status(200).json({ status: 200, data: Messages[newMessagePosition - 1] });
+    const senderId = req.user.id;
+    let query; let value; let receiverResult; let receiverRowCount; let receiverId;
+    if (receiverEmail && subject && message) {
+      try { // Check if receiver email is on record
+        query = `SELECT * FROM users WHERE email = $1`;
+        value = [receiverEmail];
+        receiverResult = await db.query(query, value);
+        receiverRowCount = receiverResult.rowCount;
+      } catch (e) {
+        res.status(500).json({ status: 500, error: 'Problem verifying receiver email', success: false });
+      }
+      if (receiverRowCount === 0) {
+        res.status(404).json({ status: 404, error: 'Receiver email not found', success: false });
+      } else {
+        let messageId; // Message Id
+        const createdOn = moment(new Date()); // Timeestamp for message
+        // Get reciever ID
+        receiverId = receiverResult.rows[0].id;
+
+        // Insert into messages
+        try {
+          const insertMessageQuery = `INSERT INTO messages (createdOn, subject, message, status)
+            VALUES($1, $2, $3, $4) RETURNING *`; // Return messageId
+          const insertMessageValues = [createdOn, subject, message, 'sent'];
+          const messageResult = await db.query(insertMessageQuery, insertMessageValues); // Query to insert into "messages" getting the id
+          messageId = messageResult.rows[0].id;
+        } catch (e) {
+          res.status(500).json({ status: 500, error: 'Issue with saving message', success: false });
+        }
+
+        // Insert into sents
+        try {
+          const insertSentQuery = `INSERT INTO sents (senderId, messageId, createdOn)
+                  VALUES ($1, $2, $3)`;
+          const insertSentValues = [senderId, messageId, createdOn]; // The sender is the user
+          await db.query(insertSentQuery, insertSentValues); // Update the "sents" table
+        } catch (e) {
+          res.status(500).json({ status: 500, error: 'Issues with saving to sents', success: false });
+        }
+
+        // Insert into inboxes
+        try {
+          const inboxQuery = `INSERT INTO inboxes (receiverId, messageId, createdOn, status)
+                            VALUES ($1, $2, $3, $4)`;
+          const inboxValue = [receiverId, messageId, createdOn, 'unread'];
+          await db.query(inboxQuery, inboxValue);
+          res.status(200).json({
+            status: 200,
+            data: [{
+              id: messageId, createdOn, subject, message, parentMessageId: null, status: 'sent',
+            }],
+            success: true,
+          });
+        } catch (e) {
+          res.status(500).json({ status: 500, error: 'Issues with saving to sents', success: false });
+        }
+      }
     } else {
-      res.status(400).json({ status: 400, error: 'Missing parameters' });
+      res.status(400).json({ status: 400, error: 'Missing parameters', success: false });
     }
   }
 

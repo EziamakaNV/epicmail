@@ -37,7 +37,8 @@ app.use('/api-docs', _swaggerUiExpress.default.serve, _swaggerUiExpress.default.
 
 app.use((req, res) => {
   res.status(401).json({
-    error: 'Bad request! Endpoint does not exist!'
+    error: 'Bad request! Endpoint does not exist!',
+    success: false
   });
 });
 

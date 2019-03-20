@@ -38,7 +38,6 @@ class UserController {
           const text = `SELECT * FROM users WHERE email = $1 `;
           const value = [`${userName}@epicmail.com`];
           const emailExists = await _db.default.query(text, value);
-          console.log(emailExists);
 
           if (emailExists.rows.length === 0) {
             const insertText = `INSERT INTO users (email, firstname, lastname, password) VALUES ($1, $2, $3, $4) returning id`;
@@ -54,31 +53,39 @@ class UserController {
             res.status(200).json({
               status: 200,
               data: [{
-                token
-              }]
+                token,
+                email: `${userName}@epicmail.com`,
+                firstName,
+                lastName
+              }],
+              success: true
             });
           } else {
             res.status(409).json({
               status: 409,
-              error: 'Username already exists'
+              error: 'Username already exists',
+              success: false
             });
           }
         } catch (e) {
           res.status(500).json({
             status: 500,
-            error: e
+            error: e,
+            success: false
           });
         }
       } else {
         res.status(400).json({
           status: 400,
-          error: 'Parameters supplied should be between 2 and 10 characters'
+          error: 'Parameters supplied should be between 2 and 10 characters',
+          success: false
         });
       }
     } else {
       res.status(400).json({
         status: 400,
-        error: 'Missing parameter'
+        error: 'Missing parameter',
+        success: false
       });
     }
   }
@@ -95,12 +102,12 @@ class UserController {
       try {
         const credentials = await _db.default.query(text, values);
         const id = credentials.rows.id;
-        console.log(credentials);
 
         if (credentials.rows.length === 0) {
           res.status(401).json({
             status: 401,
-            error: 'Incorrect credentials'
+            error: 'Incorrect credentials',
+            success: false
           });
         } else {
           const token = _jsonwebtoken.default.sign({
@@ -113,19 +120,22 @@ class UserController {
             status: 200,
             data: {
               token
-            }
+            },
+            success: true
           });
         }
       } catch (e) {
         res.status(500).json({
           status: 500,
-          error: e
+          error: e,
+          success: false
         });
       }
     } else {
       res.status(400).json({
         status: 400,
-        error: 'Missing parameter'
+        error: 'Missing parameter',
+        success: false
       });
     }
   }

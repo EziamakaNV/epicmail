@@ -26,14 +26,17 @@ class GroupController {
         res.status(201).json({
           status: 201,
           data: [{
-            id: rows[0].id, name, role: 'admin',
+            id: rows[0].id,
+            name,
+            role: 'admin',
+            success: true,
           }],
         });
       }, (error) => {
-        res.status(500).json({ status: 500, error: `${error}` });
+        res.status(500).json({ status: 500, error: `${error}`, success: false });
       });
     } else {
-      res.status(400).json({ status: 400, error: 'Missing parameters' });
+      res.status(400).json({ status: 400, error: 'Missing parameters', success: false });
     }
   }
 
@@ -50,9 +53,9 @@ class GroupController {
         for (let i = 0; i < rows.length; ++i) { // Since we get the groups that the user created, the role will always be admin
           rows[i].role = 'admin';
         }
-        res.status(200).json({ status: 200, data: [...rows] });
+        res.status(200).json({ status: 200, data: [...rows], success: true });
       }, (error) => {
-        res.status(500).json({ status: 500, error });
+        res.status(500).json({ status: 500, error, success: false });
       });
   }
 
@@ -74,15 +77,15 @@ class GroupController {
             .then((updateResult) => {
               // const updatedRows = updateResult.rows;
               // updatedRows[0].role = 'admin';
-              res.status(200).json({ status: 200, data: [{ id: groupId, name, role: 'admin' }] });
+              res.status(200).json({ status: 200, data: [{ id: groupId, name, role: 'admin' }], success: true });
             }, (error) => {
-              res.status(500).json({ status: 500, error });
+              res.status(500).json({ status: 500, error, success: false });
             });
         } else {
-          res.status(403).json({ status: 403, error: 'You do not own this group' });
+          res.status(403).json({ status: 403, error: 'You do not own this group', success: false });
         }
       }, (error) => {
-        res.status(400).json({ status: 400, error });
+        res.status(400).json({ status: 400, error, success: false });
       });
   }
 
@@ -103,15 +106,15 @@ class GroupController {
             .then((updateResult) => {
               // const updatedRows = updateResult.rows;
               // updatedRows[0].role = 'admin';
-              res.status(200).json({ status: 200, data: [{ message: 'Group deleted.' }] });
+              res.status(200).json({ status: 200, data: [{ message: 'Group deleted.' }], success: true });
             }, (error) => {
-              res.status(500).json({ status: 500, error });
+              res.status(500).json({ status: 500, error, success: false });
             });
         } else {
-          res.status(403).json({ status: 403, error: 'You do not own this group' });
+          res.status(403).json({ status: 403, error: 'You do not own this group', success: false });
         }
       }, (error) => {
-        res.status(400).json({ status: 400, error });
+        res.status(400).json({ status: 400, error, success: false });
       });
   }
 
@@ -134,15 +137,15 @@ class GroupController {
             .then((addResult) => {
               // const updatedRows = updateResult.rows;
               // updatedRows[0].role = 'admin';
-              res.status(201).json({ status: 201, data: [...addResult.rows] });
+              res.status(201).json({ status: 201, data: [...addResult.rows], success: true });
             }, (error) => {
-              res.status(500).json({ status: 500, error });
+              res.status(500).json({ status: 500, error, success: false });
             });
         } else {
-          res.status(403).json({ status: 403, error: 'You do not own this group' });
+          res.status(403).json({ status: 403, error: 'You do not own this group', success: false });
         }
       }, (error) => {
-        res.status(400).json({ status: 400, error });
+        res.status(400).json({ status: 400, error, success: false });
       });
   }
 
@@ -164,15 +167,15 @@ class GroupController {
             .then((addResult) => {
               // const updatedRows = updateResult.rows;
               // updatedRows[0].role = 'admin';
-              res.status(200).json({ status: 200, data: [{ message: 'User deleted' }] });
+              res.status(200).json({ status: 200, data: [{ message: 'User deleted' }], success: true });
             }, (error) => {
-              res.status(500).json({ status: 500, error });
+              res.status(500).json({ status: 500, error, success: false });
             });
         } else {
-          res.status(403).json({ status: 403, error: 'You do not own this group' });
+          res.status(403).json({ status: 403, error: 'You do not own this group', success: false });
         }
       }, (error) => {
-        res.status(400).json({ status: 400, error });
+        res.status(400).json({ status: 400, error, success: false });
       });
   }
 
@@ -226,24 +229,24 @@ class GroupController {
 
                             });
                         }
-                        res.status(200).json({ status: 200, data: [messagesRows[0]] });
+                        res.status(200).json({ status: 200, data: [messagesRows[0]], success: true });
                       }, (error) => {
-                        res.status(500).json({ status: 500, error });
+                        res.status(500).json({ status: 500, error, success: false });
                       });
                   }, (error) => {
-                    res.status(500).json({ status: 500, error });
+                    res.status(500).json({ status: 500, error, success: false });
                   });
               }, (error) => {
-                res.status(500).json({ status: 500, error });
+                res.status(500).json({ status: 500, error, success: false });
               });
           } else {
-            res.status(403).json({ status: 403, error: 'You do not own this group' });
+            res.status(403).json({ status: 403, error: 'You do not own this group', success: false });
           }
         }, (error) => {
-          res.status(400).json({ status: 400, error });
+          res.status(400).json({ status: 400, error, success: false });
         });
     } else {
-      res.status(400).json({ status: 400, error: 'Missing Parameters.' });
+      res.status(400).json({ status: 400, error: 'Missing Parameters.', success: false });
     }
   }
 }
