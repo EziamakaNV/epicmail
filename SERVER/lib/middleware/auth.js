@@ -21,7 +21,8 @@ class Authentication {
       // If token is not supplied
       res.status(400).json({
         status: 400,
-        error: 'Missing token'
+        error: 'Missing token',
+        success: false
       });
     } else {
       // Token exists
@@ -30,7 +31,8 @@ class Authentication {
         // Get userId from decoded token
         if (err) return res.status(400).json({
           status: 400,
-          error: 'Incorrect credentials'
+          error: 'Incorrect credentials',
+          success: false
         }); // eslint-disable-next-line quotes
 
         const queryText = `SELECT * FROM users WHERE id = $1;`;
@@ -39,10 +41,6 @@ class Authentication {
         _db.default.query(queryText, value) // Check DB if userId exists
         .then(response => {
           // Create user property in request and set the Id
-          // eslint-disable-next-line no-console
-          console.log(response); // eslint-disable-next-line no-console
-
-          console.log('user exits');
           req.user = {
             id: result.userId
           };
@@ -50,7 +48,8 @@ class Authentication {
         }, error => {
           res.status(400).json({
             status: 400,
-            error
+            error,
+            success: false
           });
         });
       });

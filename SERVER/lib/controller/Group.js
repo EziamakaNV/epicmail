@@ -37,19 +37,22 @@ class GroupController {
           data: [{
             id: rows[0].id,
             name,
-            role: 'admin'
+            role: 'admin',
+            success: true
           }]
         });
       }, error => {
         res.status(500).json({
           status: 500,
-          error: `${error}`
+          error: `${error}`,
+          success: false
         });
       });
     } else {
       res.status(400).json({
         status: 400,
-        error: 'Missing parameters'
+        error: 'Missing parameters',
+        success: false
       });
     }
   }
@@ -70,12 +73,14 @@ class GroupController {
 
       res.status(200).json({
         status: 200,
-        data: [...rows]
+        data: [...rows],
+        success: true
       });
     }, error => {
       res.status(500).json({
         status: 500,
-        error
+        error,
+        success: false
       });
     });
   }
@@ -107,24 +112,28 @@ class GroupController {
               id: groupId,
               name,
               role: 'admin'
-            }]
+            }],
+            success: true
           });
         }, error => {
           res.status(500).json({
             status: 500,
-            error
+            error,
+            success: false
           });
         });
       } else {
         res.status(403).json({
           status: 403,
-          error: 'You do not own this group'
+          error: 'You do not own this group',
+          success: false
         });
       }
     }, error => {
       res.status(400).json({
         status: 400,
-        error
+        error,
+        success: false
       });
     });
   }
@@ -153,24 +162,28 @@ class GroupController {
             status: 200,
             data: [{
               message: 'Group deleted.'
-            }]
+            }],
+            success: true
           });
         }, error => {
           res.status(500).json({
             status: 500,
-            error
+            error,
+            success: false
           });
         });
       } else {
         res.status(403).json({
           status: 403,
-          error: 'You do not own this group'
+          error: 'You do not own this group',
+          success: false
         });
       }
     }, error => {
       res.status(400).json({
         status: 400,
-        error
+        error,
+        success: false
       });
     });
   }
@@ -200,24 +213,28 @@ class GroupController {
           // updatedRows[0].role = 'admin';
           res.status(201).json({
             status: 201,
-            data: [...addResult.rows]
+            data: [...addResult.rows],
+            success: true
           });
         }, error => {
           res.status(500).json({
             status: 500,
-            error
+            error,
+            success: false
           });
         });
       } else {
         res.status(403).json({
           status: 403,
-          error: 'You do not own this group'
+          error: 'You do not own this group',
+          success: false
         });
       }
     }, error => {
       res.status(400).json({
         status: 400,
-        error
+        error,
+        success: false
       });
     });
   }
@@ -248,24 +265,28 @@ class GroupController {
             status: 200,
             data: [{
               message: 'User deleted'
-            }]
+            }],
+            success: true
           });
         }, error => {
           res.status(500).json({
             status: 500,
-            error
+            error,
+            success: false
           });
         });
       } else {
         res.status(403).json({
           status: 403,
-          error: 'You do not own this group'
+          error: 'You do not own this group',
+          success: false
         });
       }
     }, error => {
       res.status(400).json({
         status: 400,
-        error
+        error,
+        success: false
       });
     });
   }
@@ -331,42 +352,49 @@ class GroupController {
 
                 res.status(200).json({
                   status: 200,
-                  data: [messagesRows[0]]
+                  data: [messagesRows[0]],
+                  success: true
                 });
               }, error => {
                 res.status(500).json({
                   status: 500,
-                  error
+                  error,
+                  success: false
                 });
               });
             }, error => {
               res.status(500).json({
                 status: 500,
-                error
+                error,
+                success: false
               });
             });
           }, error => {
             res.status(500).json({
               status: 500,
-              error
+              error,
+              success: false
             });
           });
         } else {
           res.status(403).json({
             status: 403,
-            error: 'You do not own this group'
+            error: 'You do not own this group',
+            success: false
           });
         }
       }, error => {
         res.status(400).json({
           status: 400,
-          error
+          error,
+          success: false
         });
       });
     } else {
       res.status(400).json({
         status: 400,
-        error: 'Missing Parameters.'
+        error: 'Missing Parameters.',
+        success: false
       });
     }
   }
