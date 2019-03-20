@@ -1,5 +1,7 @@
 import jwt from 'jsonwebtoken';
 
+import validation from '../middleware/validation';
+
 import config from '../config';
 
 import db from '../model/db';
@@ -13,7 +15,7 @@ class UserController {
     const {
       firstName, lastName, userName, password,
     } = req.body;
-
+    const { error } = validation(req.body);
     if (firstName && lastName && userName && password) {
       // Ensure firstName, lastName, userName and password length is bewteen 2 and 10
       const firstNameLength = firstName.length > 2 && firstName.length < 10;
