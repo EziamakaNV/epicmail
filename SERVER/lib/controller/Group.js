@@ -9,6 +9,8 @@ require("core-js/modules/web.dom.iterable");
 
 var _moment = _interopRequireDefault(require("moment"));
 
+var _Validation = _interopRequireDefault(require("../middleware/Validation"));
+
 var _db = _interopRequireDefault(require("../model/db"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -22,6 +24,21 @@ class GroupController {
   static createGroup(req, res) {
     const name = req.body.name;
     const creatorId = req.user.id;
+    const validationObject = {
+      name,
+      creatorId
+    };
+
+    const _Validation$createGro = _Validation.default.createGroup(validationObject),
+          error = _Validation$createGro.error;
+
+    if (error) {
+      return res.status(400).json({
+        status: 400,
+        error: 'Check parameters',
+        success: false
+      });
+    }
 
     if (name && creatorId) {
       const text = `INSERT INTO
@@ -41,10 +58,10 @@ class GroupController {
             success: true
           }]
         });
-      }, error => {
+      }, err => {
         res.status(500).json({
           status: 500,
-          error: `${error}`,
+          error: `${err}`,
           success: false
         });
       });
@@ -89,6 +106,22 @@ class GroupController {
     const userId = req.user.id;
     const groupId = req.params.groupId;
     const name = req.params.name;
+    const validationObject = {
+      groupId,
+      name
+    };
+
+    const _Validation$patchGrou = _Validation.default.patchGroup(validationObject),
+          error = _Validation$patchGrou.error;
+
+    if (error) {
+      return res.status(400).json({
+        status: 400,
+        error: 'Check parameters',
+        success: false
+      });
+    }
+
     const queryText = `SELECT creatorId FROM groups WHERE id = $1`;
     const values = [groupId];
 
@@ -141,6 +174,21 @@ class GroupController {
   static deleteGroup(req, res) {
     const userId = req.user.id;
     const groupId = req.params.groupId;
+    const validationObject = {
+      groupId
+    };
+
+    const _Validation$deleteGro = _Validation.default.deleteGroup(validationObject),
+          error = _Validation$deleteGro.error;
+
+    if (error) {
+      return res.status(400).json({
+        status: 400,
+        error: 'Check parameters',
+        success: false
+      });
+    }
+
     const queryText = `SELECT creatorid FROM groups WHERE id = $1`;
     const values = [groupId];
 
@@ -193,6 +241,22 @@ class GroupController {
     const groupId = req.params.groupId;
     const newMember = req.body.user; // New user to be added
 
+    const validationObject = {
+      groupId,
+      newMember
+    };
+
+    const _Validation$addGroup = _Validation.default.addGroup(validationObject),
+          error = _Validation$addGroup.error;
+
+    if (error) {
+      return res.status(400).json({
+        status: 400,
+        error: 'Check parameters',
+        success: false
+      });
+    }
+
     const queryText = `SELECT creatorid FROM groups WHERE id = $1`;
     const values = [groupId];
 
@@ -243,6 +307,22 @@ class GroupController {
     const userId = req.user.id;
     const groupId = req.params.groupId;
     const memberToDelete = req.params.userId; // member to be Deleted
+
+    const validationObject = {
+      groupId,
+      userId
+    };
+
+    const _Validation$deleteGro2 = _Validation.default.deleteGroupMember(validationObject),
+          error = _Validation$deleteGro2.error;
+
+    if (error) {
+      return res.status(400).json({
+        status: 400,
+        error: 'Check parameters',
+        success: false
+      });
+    }
 
     const queryText = `SELECT creatorid FROM groups WHERE id = $1`;
     const values = [groupId];

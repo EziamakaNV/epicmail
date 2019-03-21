@@ -6,7 +6,8 @@ import entities from '../model/entities';
 
 import db from '../model/db';
 
-const { Messages } = entities;
+import Validation from '../middleware/Validation';
+
 
 class MessagesController {
   static async getMessages(req, res) { // Fetch all receive messages
@@ -126,49 +127,65 @@ class MessagesController {
     }
   }
 
-  static getMessageId(req, res) {
-    const reqMessageId = req.params.messageId;
-    // Check if the message Id is an interger
-    // eslint-disable-next-line no-restricted-globals
-    if (!isNaN(reqMessageId)) {
-      let newMessagePosition = null;
-      // Search for email using messageId
-      Messages.forEach((message, index) => {
-        if (message.id === Number(reqMessageId)) {
-          newMessagePosition = index;
-        }
-      });
-      if (newMessagePosition !== null) { // If the message was found
-        res.status(200).json({ status: 200, data: Messages[newMessagePosition] });
-      } else {
-        res.status(404).json({ status: 404, error: 'Message not found' });
-      }
+  static async getMessageId(req, res) {
+    const userId = req.user.id;
+    const { messageId } = req.params;
+    const validationObject = { messageId };
+    const { error } = Validation.messageId(validationObject);
+    if (error) {
+      res.status(400).json({ status: 400, error: error.message, success: false });
     } else {
-      res.status(400).json({ status: 400, error: 'Bad request. Message Id must be an Integer' });
+      // Only get messages that relate to the user
+      // The query fetches messages only relating to the user be it semt or received
+      const query = `SELECT messages.id, messages.createdon, messages.subject, messages.message, 
+      inboxes.receiverid, sents.senderid, messages.parentmessageid FROM messages INNER JOIN inboxes 
+      ON messages.id = inboxes.messageid INNER JOIN sents ON sents.messageid = messages.id 
+      WHERE (sents.senderid = $1 OR inboxes.receiverid = $1) AND messages.id = $2`;
+      const values = [userId, messageId];
+
+      try {
+        const result = await db.query(query, values);
+        const { rows } = result;
+        if (rows.length === 0) {
+          res.status(400).json({ status: 400, error: 'Message not found', success: false });
+        } else {
+          res.status(200).json({ status: 200, data: [...rows], success: true });
+        }
+      } catch (e) {
+        res.status(500).json({ status: 500, error: 'Issues with fetching message(s)' });
+      }
     }
   }
 
-  static deleteMessageId(req, res) {
-    const reqMessageId = req.params.messageId;
-    // Check if the message Id is an interger
-    // eslint-disable-next-line no-restricted-globals
-    if (!isNaN(reqMessageId)) {
-      let newMessagePosition;
-      // Search for email using messageId
-      Messages.forEach((message, index) => {
-        if (message.id === Number(reqMessageId)) {
-          newMessagePosition = index;
-        }
-      });
-      if (newMessagePosition >= 0) { // If the message was found
-        const { message } = Messages[newMessagePosition];// Retrieve the message propery
-        Messages.splice(newMessagePosition, 1); // Then delete the message record
-        res.status(200).json({ status: 200, data: { message } });
-      } else {
-        res.status(404).json({ status: 404, error: 'Message not found' });
-      }
+  static async deleteMessageId(req, res) {
+    const userId = req.user.id;
+    const { messageId } = req.params;
+    const validationObject = { messageId };
+    const { error } = Validation.messageId(validationObject);
+    // User should only be able to delete messages they sent themselves
+    if (error) {
+      res.status(400).json({ status: 400, error: error.message, success: false });
     } else {
-      res.status(400).json({ status: 400, error: 'Bad request. Message Id must be an Integer' });
+      const query = `SELECT messages.id, messages.message, sents.senderid FROM messages 
+      INNER JOIN sents ON messages.id = sents.messageid WHERE senderid = $1 AND messages.id = $2`;
+      const values = [userId, messageId];
+      // Run query to verify that message being deleted is owned by the user
+      try {
+        const result = await db.query(query, values);
+        if (result.rowCount === 0) {
+          res.status(400).json({ status: 400, error: 'You do not have permission to delete this message', success: false });
+        } else {
+          const { message } = result.rows[0];
+          // Query to delete all rows referencing the table
+          const deleteValue = [messageId];
+          await db.query(`DELETE FROM sents WHERE sents.messageid = $1`, deleteValue);
+          await db.query(`DELETE FROM inboxes WHERE inboxes.messageid = $1`, deleteValue);
+          await db.query(`DELETE FROM messages WHERE messages.id = $1 RETURNING messages.message`, deleteValue);
+          res.status(200).json({ status: 200, data: [{ message }], success: true });
+        }
+      } catch (e) {
+        res.status(500).json({ status: 500, error: 'Issues querying messages', success: false });
+      }
     }
   }
 }

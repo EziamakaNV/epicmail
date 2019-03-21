@@ -10,7 +10,6 @@ class Authentication {
     if (!token) { // If token is not supplied
       res.status(400).json({ status: 400, error: 'Missing token', success: false });
     } else { // Token exists
-    // eslint-disable-next-line consistent-return
       jwt.verify(token, jwtConfig.secret, (err, result) => { // Get userId from decoded token
         if (err) return res.status(400).json({ status: 400, error: 'Incorrect credentials', success: false });
         // eslint-disable-next-line quotes

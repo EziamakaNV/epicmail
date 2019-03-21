@@ -4,12 +4,20 @@
 
 import moment from 'moment';
 
+import Validation from '../middleware/Validation';
+
 import db from '../model/db';
 
 class GroupController {
   static createGroup(req, res) {
     const { name } = req.body;
     const creatorId = req.user.id;
+    const validationObject = { name, creatorId };
+    const { error } = Validation.createGroup(validationObject);
+
+    if (error) {
+      return res.status(400).json({ status: 400, error: 'Check parameters', success: false });
+    }
 
     if (name && creatorId) {
       const text = `INSERT INTO
@@ -32,8 +40,8 @@ class GroupController {
             success: true,
           }],
         });
-      }, (error) => {
-        res.status(500).json({ status: 500, error: `${error}`, success: false });
+      }, (err) => {
+        res.status(500).json({ status: 500, error: `${err}`, success: false });
       });
     } else {
       res.status(400).json({ status: 400, error: 'Missing parameters', success: false });
@@ -63,6 +71,12 @@ class GroupController {
     const userId = req.user.id;
     const { groupId } = req.params;
     const { name } = req.params;
+    const validationObject = { groupId, name };
+    const { error } = Validation.patchGroup(validationObject);
+    if (error) {
+      return res.status(400).json({ status: 400, error: 'Check parameters', success: false });
+    }
+
     const queryText = `SELECT creatorId FROM groups WHERE id = $1`;
     const values = [groupId];
 
@@ -92,6 +106,11 @@ class GroupController {
   static deleteGroup(req, res) {
     const userId = req.user.id;
     const { groupId } = req.params;
+    const validationObject = { groupId };
+    const { error } = Validation.deleteGroup(validationObject);
+    if (error) {
+      return res.status(400).json({ status: 400, error: 'Check parameters', success: false });
+    }
     const queryText = `SELECT creatorid FROM groups WHERE id = $1`;
     const values = [groupId];
 
@@ -122,6 +141,11 @@ class GroupController {
     const userId = req.user.id;
     const { groupId } = req.params;
     const newMember = req.body.user; // New user to be added
+    const validationObject = { groupId, newMember };
+    const { error } = Validation.addGroup(validationObject);
+    if (error) {
+      return res.status(400).json({ status: 400, error: 'Check parameters', success: false });
+    }
     const queryText = `SELECT creatorid FROM groups WHERE id = $1`;
     const values = [groupId];
 
@@ -153,6 +177,11 @@ class GroupController {
     const userId = req.user.id;
     const { groupId } = req.params;
     const memberToDelete = req.params.userId; // member to be Deleted
+    const validationObject = { groupId, userId };
+    const { error } = Validation.deleteGroupMember(validationObject);
+    if (error) {
+      return res.status(400).json({ status: 400, error: 'Check parameters', success: false });
+    }
     const queryText = `SELECT creatorid FROM groups WHERE id = $1`;
     const values = [groupId];
 
