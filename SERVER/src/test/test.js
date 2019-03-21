@@ -15,11 +15,8 @@ const { expect } = chai;
 
 chai.use(chaiHttp);
 
-// eslint-disable-next-line no-undef
 describe('POST /api/v1/auth/signup', () => {
-  // eslint-disable-next-line no-undef
   describe('handle valid input (POST body properties)', () => {
-    // eslint-disable-next-line no-undef
     it('should return an object with properties "status" and "data" on sucess', (done) => { // Mocha done callback for asynchronous tests
       chai.request(server)
         .post('/api/v1/auth/signup')
@@ -132,7 +129,7 @@ describe('POST /api/v1/auth/login', () => {
         .type('form')
         .send({
           email: 'TDD@epicmail.com',
-          password: 'overtest',
+          password: 'secret',
         })
         .end((err, res) => {
           // eslint-disable-next-line no-unused-expressions
@@ -359,107 +356,132 @@ describe('should handles missing properties in POST body', () => {
   });
 });
 
-// describe('GET /api/v1/messages/<messages-id>', () => {
-//   it('the endpoint should respond with a 400 bad request if the messages-id parameter is not an integer', (done) => {
-//     chai.request(server)
-//       .get('/api/v1/messages/abcd')
-//       .end((err, res) => {
-//         // eslint-disable-next-line no-unused-expressions
-//         expect(err).to.be.null;
-//         expect(res, 'response status').to.have.status(400);
-//         expect(res.body, 'response body').to.be.a('object');
-//         expect(res.body, 'response body').to.haveOwnProperty('status');
-//         expect(res.body.status, 'status property').to.equal(400);
-//         expect(res.body, 'response body').to.haveOwnProperty('error');
-//         expect(res.body.error, 'error property').to.be.a('string');
-//         done();
-//       });
-//   });
+describe('GET /api/v1/messages/<messages-id>', () => {
+  it('the endpoint should respond with a 400 bad request if the messages-id parameter is not an integer', (done) => {
+    chai.request(server)
+      .get('/api/v1/messages/abcd')
+      .set('x-access-token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU1Mjc3Mjc1NiwiZXhwIjoxNTU0NTcyNzU2fQ.81A8zZezFPu43iMvzNOX948y-6tRAoGdzc4FNOnBRZY')
+      .end((err, res) => {
+        // eslint-disable-next-line no-unused-expressions
+        expect(err).to.be.null;
+        expect(res, 'response status').to.have.status(400);
+        expect(res.body, 'response body').to.be.a('object');
+        expect(res.body, 'response body').to.haveOwnProperty('status');
+        expect(res.body.status, 'status property').to.equal(400);
+        expect(res.body, 'response body').to.haveOwnProperty('error');
+        expect(res.body.error, 'error property').to.be.a('string');
+        done();
+      });
+  });
 
-//   it('the endpoint should respond with a 200 OK if the messages-id parameter is an integer and held in record', (done) => {
-//     chai.request(server)
-//       .get('/api/v1/messages/1')
-//       .end((err, res) => {
-//         // eslint-disable-next-line no-unused-expressions
-//         expect(err).to.be.null;
-//         expect(res, 'response status').to.have.status(200);
-//         expect(res.body, 'response body').to.be.a('object');
-//         expect(res.body, 'response body').to.haveOwnProperty('status');
-//         expect(res.body.status, 'status property').to.equal(200);
-//         expect(res.body, 'response body').to.haveOwnProperty('data');
-//         expect(res.body.data, 'data property').to.be.a('object');
-//         done();
-//       });
-//   });
+  it('the endpoint should respond with a 200 OK if the messages-id parameter is an integer and held in record', (done) => {
+    chai.request(server)
+      .get('/api/v1/messages/1')
+      .set('x-access-token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU1Mjc3Mjc1NiwiZXhwIjoxNTU0NTcyNzU2fQ.81A8zZezFPu43iMvzNOX948y-6tRAoGdzc4FNOnBRZY')
+      .end((err, res) => {
+        // eslint-disable-next-line no-unused-expressions
+        expect(err).to.be.null;
+        expect(res, 'response status').to.have.status(200);
+        expect(res.body, 'response body').to.be.a('object');
+        expect(res.body, 'response body').to.haveOwnProperty('status');
+        expect(res.body.status, 'status property').to.equal(200);
+        expect(res.body, 'response body').to.haveOwnProperty('data');
+        expect(res.body.data, 'data property').to.be.a('array');
+        done();
+      });
+  });
 
-//   it('the endpoint should respond with a 404 NotFound if the messages-id parameter is an integer but not held in record', (done) => {
-//     chai.request(server)
-//       .get('/api/v1/messages/9999')
-//       .end((err, res) => {
-//         // eslint-disable-next-line no-unused-expressions
-//         expect(err).to.be.null;
-//         expect(res, 'response status').to.have.status(404);
-//         expect(res.body, 'response body').to.be.a('object');
-//         expect(res.body, 'response body').to.haveOwnProperty('status');
-//         expect(res.body.status, 'status property').to.equal(404);
-//         expect(res.body, 'response body').to.haveOwnProperty('error');
-//         expect(res.body.error, 'error property').to.be.a('string');
-//         done();
-//       });
-//   });
-// });
+  it('the endpoint should respond with a 404 NotFound if the messages-id parameter is an integer but not held in record', (done) => {
+    chai.request(server)
+      .get('/api/v1/messages/9999')
+      .set('x-access-token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU1Mjc3Mjc1NiwiZXhwIjoxNTU0NTcyNzU2fQ.81A8zZezFPu43iMvzNOX948y-6tRAoGdzc4FNOnBRZY').set('x-access-token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU1Mjc3Mjc1NiwiZXhwIjoxNTU0NTcyNzU2fQ.81A8zZezFPu43iMvzNOX948y-6tRAoGdzc4FNOnBRZY')
+      .end((err, res) => {
+        // eslint-disable-next-line no-unused-expressions
+        expect(err).to.be.null;
+        expect(res, 'response status').to.have.status(400);
+        expect(res.body, 'response body').to.be.a('object');
+        expect(res.body, 'response body').to.haveOwnProperty('status');
+        expect(res.body.status, 'status property').to.equal(400);
+        expect(res.body, 'response body').to.haveOwnProperty('error');
+        expect(res.body.error, 'error property').to.be.a('string');
+        done();
+      });
+  });
+});
 
-// describe('DELETE /api/v1/messages/<messages-id>', () => {
-//   it('the endpoint should respond with a 400 bad request if the messages-id parameter is not an integer', (done) => {
-//     chai.request(server)
-//       .delete('/api/v1/messages/abcd')
-//       .end((err, res) => {
-//         // eslint-disable-next-line no-unused-expressions
-//         expect(err).to.be.null;
-//         expect(res, 'response status').to.have.status(400);
-//         expect(res.body, 'response body').to.be.a('object');
-//         expect(res.body, 'response body').to.haveOwnProperty('status');
-//         expect(res.body.status, 'status property').to.equal(400);
-//         expect(res.body, 'response body').to.haveOwnProperty('error');
-//         expect(res.body.error, 'error property').to.be.a('string');
-//         done();
-//       });
-//   });
+describe('DELETE /api/v1/messages/<messages-id>', () => {
+  it('the endpoint should respond with a 400 bad request if the messages-id parameter is not an integer', (done) => {
+    chai.request(server)
+      .delete('/api/v1/messages/abcd')
+      .set('x-access-token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU1Mjc3Mjc1NiwiZXhwIjoxNTU0NTcyNzU2fQ.81A8zZezFPu43iMvzNOX948y-6tRAoGdzc4FNOnBRZY')
+      .end((err, res) => {
+        // eslint-disable-next-line no-unused-expressions
+        expect(err).to.be.null;
+        expect(res, 'response status').to.have.status(400);
+        expect(res.body, 'response body').to.be.a('object');
+        expect(res.body, 'response body').to.haveOwnProperty('status');
+        expect(res.body.status, 'status property').to.equal(400);
+        expect(res.body, 'response body').to.haveOwnProperty('error');
+        expect(res.body.error, 'error property').to.be.a('string');
+        done();
+      });
+  });
 
-//   it('the endpoint should respond with a 200 OK if the messages-id parameter is an integer and held in record', (done) => {
-//     chai.request(server)
-//       .delete('/api/v1/messages/1')
-//       .end((err, res) => {
-//         // eslint-disable-next-line no-unused-expressions
-//         expect(err).to.be.null;
-//         expect(res, 'response status').to.have.status(200);
-//         expect(res.body, 'response body').to.be.a('object');
-//         expect(res.body, 'response body').to.haveOwnProperty('status');
-//         expect(res.body.status, 'status property').to.equal(200);
-//         expect(res.body, 'response body').to.haveOwnProperty('data');
-//         expect(res.body.data, 'data property').to.be.a('object');
-//         expect(res.body.data, 'data property').to.haveOwnProperty('message');
-//         expect(res.body.data.message, 'message property').to.be.a('string');
-//         done();
-//       });
-//   });
+  it('the endpoint should respond with a 200 OK if the messages-id parameter is an integer and held in record', (done) => {
+    chai.request(server)
+      .delete('/api/v1/messages/1')
+      .set('x-access-token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU1Mjc3Mjc1NiwiZXhwIjoxNTU0NTcyNzU2fQ.81A8zZezFPu43iMvzNOX948y-6tRAoGdzc4FNOnBRZY')
+      .end((err, res) => {
+        // eslint-disable-next-line no-unused-expressions
+        expect(err).to.be.null;
+        expect(res, 'response status').to.have.status(200);
+        expect(res.body, 'response body').to.be.a('object');
+        expect(res.body, 'response body').to.haveOwnProperty('status');
+        expect(res.body.status, 'status property').to.equal(200);
+        expect(res.body, 'response body').to.haveOwnProperty('data');
+        expect(res.body.data, 'data property').to.be.a('array');
+        done();
+      });
+  });
 
-//   it('the endpoint should respond with a 404 NotFound if the messages-id parameter is an integer but not held in record', (done) => {
-//     chai.request(server)
-//       .delete('/api/v1/messages/9999')
-//       .end((err, res) => {
-//         // eslint-disable-next-line no-unused-expressions
-//         expect(err).to.be.null;
-//         expect(res, 'response status').to.have.status(404);
-//         expect(res.body, 'response body').to.be.a('object');
-//         expect(res.body, 'response body').to.haveOwnProperty('status');
-//         expect(res.body.status, 'status property').to.equal(404);
-//         expect(res.body, 'response body').to.haveOwnProperty('error');
-//         expect(res.body.error, 'error property').to.be.a('string');
-//         done();
-//       });
-//   });
-// });
+  after((done) => {
+    // Add data back after deleting
+    const query1 = `INSERT INTO messages(id, createdon, subject, message, status)
+    VALUES($1, $2, $3, $4, $5 )`;
+    const query2 = `INSERT INTO sents(senderid, messageid, createdon)
+    VALUES($1, $2, $3)`;
+    const query3 = `INSERT INTO inboxes (receiverid, messageid, createdon, status) 
+    VALUES($1,$2,$3,$4) RETURNING *;`;
+    const value1 = [1, '2019-03-19 14:05:19 +0000', 'reinsert', 'reinsertmessage', 'sent'];
+    const value2 = [1, 1, '2019-03-19 14:05:19 +0000'];
+    const value3 = [1, 1, 'Wed Mar 20 2019', 'read'];
+    db.query(query1, value1)
+      .then(() => {
+        db.query(query2, value2)
+          .then(() => {
+            db.query(query3, value3);
+          });
+      });
+    done();
+  });
+
+  it('the endpoint should respond with a 400 if the messages-id parameter is an integer but not held in record', (done) => {
+    chai.request(server)
+      .delete('/api/v1/messages/9999')
+      .set('x-access-token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU1Mjc3Mjc1NiwiZXhwIjoxNTU0NTcyNzU2fQ.81A8zZezFPu43iMvzNOX948y-6tRAoGdzc4FNOnBRZY')
+      .end((err, res) => {
+        // eslint-disable-next-line no-unused-expressions
+        expect(err).to.be.null;
+        expect(res, 'response status').to.have.status(400);
+        expect(res.body, 'response body').to.be.a('object');
+        expect(res.body, 'response body').to.haveOwnProperty('status');
+        expect(res.body.status, 'status property').to.equal(400);
+        expect(res.body, 'response body').to.haveOwnProperty('error');
+        expect(res.body.error, 'error property').to.be.a('string');
+        done();
+      });
+  });
+});
 
 
 describe('POST /api/v1/groups', () => {
@@ -470,7 +492,7 @@ describe('POST /api/v1/groups', () => {
         .set('x-access-token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU1Mjc3Mjc1NiwiZXhwIjoxNTU0NTcyNzU2fQ.81A8zZezFPu43iMvzNOX948y-6tRAoGdzc4FNOnBRZY')
         .type('form')
         .send({
-          name: `Testingchai${Math.floor(Math.random(200))}`,
+          name: `Testingchai${Math.floor(Math.random() * 4000)}`,
         })
         .end((err, res) => {
           // eslint-disable-next-line no-unused-expressions

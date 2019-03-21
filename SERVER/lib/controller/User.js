@@ -7,15 +7,15 @@ exports.default = void 0;
 
 var _jsonwebtoken = _interopRequireDefault(require("jsonwebtoken"));
 
+var _bcrypt = _interopRequireDefault(require("bcrypt"));
+
+var _Validation = _interopRequireDefault(require("../middleware/Validation"));
+
 var _config = _interopRequireDefault(require("../config"));
 
 var _db = _interopRequireDefault(require("../model/db"));
 
-var _entities = _interopRequireDefault(require("../model/entities"));
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-const User = _entities.default.User;
 
 class UserController {
   static async signup(req, res) {
@@ -24,8 +24,17 @@ class UserController {
           lastName = _req$body.lastName,
           userName = _req$body.userName,
           password = _req$body.password;
+    const validationObject = {
+      firstName,
+      lastName,
+      userName,
+      password
+    };
 
-    if (firstName && lastName && userName && password) {
+    const _Validation$signupVal = _Validation.default.signupValidation(validationObject),
+          error = _Validation$signupVal.error;
+
+    if (!error) {
       // Ensure firstName, lastName, userName and password length is bewteen 2 and 10
       const firstNameLength = firstName.length > 2 && firstName.length < 10;
       const lastNameLength = lastName.length > 2 && lastName.length < 10;
@@ -40,8 +49,10 @@ class UserController {
           const emailExists = await _db.default.query(text, value);
 
           if (emailExists.rows.length === 0) {
+            const hashedP = await _bcrypt.default.hash(password, 10);
+            console.log(`hashedP: ${hashedP}`);
             const insertText = `INSERT INTO users (email, firstname, lastname, password) VALUES ($1, $2, $3, $4) returning id`;
-            const insertValues = [`${userName}@epicmail.com`, firstName, lastName, password];
+            const insertValues = [`${userName}@epicmail.com`, firstName, lastName, hashedP];
             const user = await _db.default.query(insertText, insertValues); // Insert details into databse and get id
 
             const token = _jsonwebtoken.default.sign({
@@ -70,7 +81,7 @@ class UserController {
         } catch (e) {
           res.status(500).json({
             status: 500,
-            error: e,
+            error: 'Issues fetching credentials',
             success: false
           });
         }
@@ -94,39 +105,57 @@ class UserController {
     const _req$body2 = req.body,
           email = _req$body2.email,
           password = _req$body2.password;
+    const validationObject = {
+      email,
+      password
+    };
 
-    if (email && password) {
-      const text = `SELECT * FROM users WHERE email = $1 AND password = $2`;
-      const values = [email, password];
+    const _Validation$loginVali = _Validation.default.loginValidation(validationObject),
+          error = _Validation$loginVali.error;
+
+    if (!error) {
+      const query = `SELECT * FROM users WHERE email = $1`;
+      const value = [email];
 
       try {
-        const credentials = await _db.default.query(text, values);
-        const id = credentials.rows.id;
+        const credentials = await _db.default.query(query, value);
 
-        if (credentials.rows.length === 0) {
+        if (credentials.rowCount === 0) {
           res.status(401).json({
             status: 401,
-            error: 'Incorrect credentials',
+            error: 'Email does not exist',
             success: false
           });
         } else {
-          const token = _jsonwebtoken.default.sign({
-            id
-          }, _config.default.secret, {
-            expiresIn: '24h'
-          });
+          const id = credentials.rows[0].id;
+          const hashedPassword = credentials.rows[0].password;
+          const match = await _bcrypt.default.compare(password, hashedPassword); // Compare against hashed password
 
-          res.status(200).json({
-            status: 200,
-            data: {
-              token
-            },
-            success: true
-          });
+          if (match) {
+            const token = _jsonwebtoken.default.sign({
+              id
+            }, _config.default.secret, {
+              expiresIn: '24h'
+            });
+
+            res.status(200).json({
+              status: 200,
+              data: {
+                token
+              },
+              success: true
+            });
+          } else {
+            res.status(401).json({
+              status: 401,
+              error: 'Incorrect credentials',
+              success: false
+            });
+          }
         }
       } catch (e) {
-        res.status(500).json({
-          status: 500,
+        res.status(400).json({
+          status: 400,
           error: e,
           success: false
         });
@@ -134,7 +163,7 @@ class UserController {
     } else {
       res.status(400).json({
         status: 400,
-        error: 'Missing parameter',
+        error: 'Check parameters supplied',
         success: false
       });
     }

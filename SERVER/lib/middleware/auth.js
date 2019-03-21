@@ -26,7 +26,6 @@ class Authentication {
       });
     } else {
       // Token exists
-      // eslint-disable-next-line consistent-return
       _jsonwebtoken.default.verify(token, _config.default.secret, (err, result) => {
         // Get userId from decoded token
         if (err) return res.status(400).json({
