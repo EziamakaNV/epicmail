@@ -44,8 +44,9 @@ class UserController {
       if (firstNameLength && lastNameLength && userNameLength && passwordLength) {
         try {
           // Check if username exists
+          const lowerCaseUserName = userName.toLowerCase();
           const text = `SELECT * FROM users WHERE email = $1 `;
-          const value = [`${userName}@epicmail.com`];
+          const value = [`${lowerCaseUserName}@epicmail.com`];
           const emailExists = await _db.default.query(text, value);
 
           if (emailExists.rows.length === 0) {
@@ -56,16 +57,17 @@ class UserController {
             const user = await _db.default.query(insertText, insertValues); // Insert details into databse and get id
 
             const token = _jsonwebtoken.default.sign({
-              userId: user.rows[0].id
+              id: user.rows[0].id
             }, _config.default.secret, {
               expiresIn: '500h'
             });
 
+            const insertLowerCase = lowerCaseUserName;
             res.status(200).json({
               status: 200,
               data: [{
                 token,
-                email: `${userName}@epicmail.com`,
+                email: `${insertLowerCase}@epicmail.com`,
                 firstName,
                 lastName
               }],
@@ -112,6 +114,8 @@ class UserController {
 
     const _Validation$loginVali = _Validation.default.loginValidation(validationObject),
           error = _Validation$loginVali.error;
+
+    console.log(error);
 
     if (!error) {
       const query = `SELECT * FROM users WHERE email = $1`;
