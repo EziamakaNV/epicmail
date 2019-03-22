@@ -30,8 +30,9 @@ class UserController {
 
       if (firstNameLength && lastNameLength && userNameLength && passwordLength) {
         try { // Check if username exists
+          const lowerCaseUserName = userName.toLowerCase();
           const text = `SELECT * FROM users WHERE email = $1 `;
-          const value = [`${userName}@epicmail.com`];
+          const value = [`${lowerCaseUserName}@epicmail.com`];
           const emailExists = await db.query(text, value);
           if (emailExists.rows.length === 0) {
             const hashedP = await bcrypt.hash(password, 10);
@@ -39,12 +40,13 @@ class UserController {
             const insertText = `INSERT INTO users (email, firstname, lastname, password) VALUES ($1, $2, $3, $4) returning id`;
             const insertValues = [`${userName}@epicmail.com`, firstName, lastName, hashedP];
             const user = await db.query(insertText, insertValues); // Insert details into databse and get id
-            const token = jwt.sign({ userId: user.rows[0].id }, config.secret, { expiresIn: '500h' });
+            const token = jwt.sign({ id: user.rows[0].id }, config.secret, { expiresIn: '500h' });
+            const insertLowerCase = lowerCaseUserName;
             res.status(200).json({
               status: 200,
               data: [{
                 token,
-                email: `${userName}@epicmail.com`,
+                email: `${insertLowerCase}@epicmail.com`,
                 firstName,
                 lastName,
               }],
@@ -73,6 +75,7 @@ class UserController {
       password,
     };
     const { error } = Validation.loginValidation(validationObject);
+    console.log(error);
     if (!error) {
       const query = `SELECT * FROM users WHERE email = $1`;
       const value = [email];

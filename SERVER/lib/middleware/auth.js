@@ -35,13 +35,13 @@ class Authentication {
         }); // eslint-disable-next-line quotes
 
         const queryText = `SELECT * FROM users WHERE id = $1;`;
-        const value = [result.userId];
+        const value = [result.id];
 
         _db.default.query(queryText, value) // Check DB if userId exists
         .then(response => {
           // Create user property in request and set the Id
           req.user = {
-            id: result.userId
+            id: result.id
           };
           next();
         }, error => {

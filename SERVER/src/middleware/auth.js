@@ -14,11 +14,11 @@ class Authentication {
         if (err) return res.status(400).json({ status: 400, error: 'Incorrect credentials', success: false });
         // eslint-disable-next-line quotes
         const queryText = `SELECT * FROM users WHERE id = $1;`;
-        const value = [result.userId];
+        const value = [result.id];
 
         db.query(queryText, value) // Check DB if userId exists
           .then((response) => { // Create user property in request and set the Id
-            req.user = { id: result.userId };
+            req.user = { id: result.id };
             next();
           }, (error) => {
             res.status(400).json({ status: 400, error, success: false });
