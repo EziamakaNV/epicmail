@@ -8,6 +8,7 @@ body{
 }
 
 
+
 header{
     text-align: center;
     background-color: #00BCD4;
@@ -19,7 +20,7 @@ header{
     background-color: #00BCD4;
     border: none;
     color: #FFFFFF;
-    padding: 10% 10%;
+    padding: 10px 10px 10px 10px;
     text-align: center;
     text-decoration: none;
     display: inline-block;
@@ -27,7 +28,7 @@ header{
     cursor: pointer;
     margin-left: 5px;
     margin-right: 5px;
-    border-radius: 5px
+    border-radius: 5px;
 }
 
 .button:hover{
@@ -70,7 +71,8 @@ main {
 }
 
 a{
-    text-decoration: none
+    text-decoration: none;
+    color: white
 }
 
 section{
