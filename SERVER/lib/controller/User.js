@@ -5,6 +5,8 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = void 0;
 
+require("core-js/modules/es6.regexp.replace");
+
 var _jsonwebtoken = _interopRequireDefault(require("jsonwebtoken"));
 
 var _bcrypt = _interopRequireDefault(require("bcrypt"));
@@ -44,7 +46,8 @@ class UserController {
       if (firstNameLength && lastNameLength && userNameLength && passwordLength) {
         try {
           // Check if username exists
-          const lowerCaseUserName = userName.toLowerCase();
+          const lowerCaseUserName = userName.replace(/\s/g, '').toLowerCase(); // The .replace is from Stack Overflow. It removes empty spaces
+
           const text = `SELECT * FROM users WHERE email = $1 `;
           const value = [`${lowerCaseUserName}@epicmail.com`];
           const emailExists = await _db.default.query(text, value);
@@ -52,8 +55,9 @@ class UserController {
           if (emailExists.rows.length === 0) {
             const hashedP = await _bcrypt.default.hash(password, 10);
             console.log(`hashedP: ${hashedP}`);
+            console.log(lowerCaseUserName);
             const insertText = `INSERT INTO users (email, firstname, lastname, password) VALUES ($1, $2, $3, $4) returning id`;
-            const insertValues = [`${userName}@epicmail.com`, firstName, lastName, hashedP];
+            const insertValues = [`${lowerCaseUserName}@epicmail.com`, firstName, lastName, hashedP];
             const user = await _db.default.query(insertText, insertValues); // Insert details into databse and get id
 
             const token = _jsonwebtoken.default.sign({
