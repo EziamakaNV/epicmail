@@ -30,15 +30,16 @@ class UserController {
 
       if (firstNameLength && lastNameLength && userNameLength && passwordLength) {
         try { // Check if username exists
-          const lowerCaseUserName = userName.toLowerCase();
+          const lowerCaseUserName = userName.replace(/\s/g, '').toLowerCase(); // The .replace is from Stack Overflow. It removes empty spaces
           const text = `SELECT * FROM users WHERE email = $1 `;
           const value = [`${lowerCaseUserName}@epicmail.com`];
           const emailExists = await db.query(text, value);
           if (emailExists.rows.length === 0) {
             const hashedP = await bcrypt.hash(password, 10);
             console.log(`hashedP: ${hashedP}`);
+            console.log(lowerCaseUserName);
             const insertText = `INSERT INTO users (email, firstname, lastname, password) VALUES ($1, $2, $3, $4) returning id`;
-            const insertValues = [`${userName}@epicmail.com`, firstName, lastName, hashedP];
+            const insertValues = [`${lowerCaseUserName}@epicmail.com`, firstName, lastName, hashedP];
             const user = await db.query(insertText, insertValues); // Insert details into databse and get id
             const token = jwt.sign({ id: user.rows[0].id }, config.secret, { expiresIn: '500h' });
             const insertLowerCase = lowerCaseUserName;
