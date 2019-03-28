@@ -19,6 +19,7 @@ var _db = _interopRequireDefault(require("../model/db"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+/* eslint-disable linebreak-style */
 class UserController {
   static async signup(req, res) {
     const _req$body = req.body,
@@ -146,7 +147,10 @@ class UserController {
               expiresIn: '24h'
             });
 
-            res.status(200).json({
+            res.status(200).cookie('jwt', token, {
+              httpOnly: true,
+              secure: true
+            }).json({
               status: 200,
               data: {
                 token

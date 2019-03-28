@@ -1,3 +1,4 @@
+/* eslint-disable linebreak-style */
 import jwt from 'jsonwebtoken';
 
 import jwtConfig from '../config';
@@ -6,7 +7,7 @@ import db from '../model/db';
 
 class Authentication {
   static verifyToken(req, res, next) {
-    const token = req.headers['x-access-token']; // Check for token in the body
+    const token = req.cookies.jwt;
     if (!token) { // If token is not supplied
       res.status(400).json({ status: 400, error: 'Missing token', success: false });
     } else { // Token exists
