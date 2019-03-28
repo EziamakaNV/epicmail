@@ -13,9 +13,10 @@ var _db = _interopRequireDefault(require("../model/db"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+/* eslint-disable linebreak-style */
 class Authentication {
   static verifyToken(req, res, next) {
-    const token = req.headers['x-access-token']; // Check for token in the body
+    const token = req.cookies.jwt;
 
     if (!token) {
       // If token is not supplied

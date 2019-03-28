@@ -1,3 +1,4 @@
+/* eslint-disable linebreak-style */
 import jwt from 'jsonwebtoken';
 
 import bcrypt from 'bcrypt';
@@ -90,7 +91,7 @@ class UserController {
           const match = await bcrypt.compare(password, hashedPassword); // Compare against hashed password
           if (match) {
             const token = jwt.sign({ id }, config.secret, { expiresIn: '24h' });
-            res.status(200).json({ status: 200, data: { token }, success: true });
+            res.status(200).cookie('jwt', token, { httpOnly: true, secure: true }).json({ status: 200, data: { token }, success: true });
           } else {
             res.status(401).json({ status: 401, error: 'Incorrect credentials', success: false });
           }
