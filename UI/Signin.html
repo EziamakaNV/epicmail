@@ -17,22 +17,22 @@
             <p>Sign In </p>
         </section>
         <section id="form-section">
-            <form action="" method="post">
+            <form action="" method="post" onsubmit="event.preventDefault()">
                 <div id="email-phone-section">
                     <div id="email-phone">
-                        <input class="input" type="text" name=""  placeholder="Email or Mobile Number" required>
+                        <input id="emlInput"class="input" type="text" name=""  placeholder="Email or Mobile Number" required>
                         <p><a href="Forgotemail.html">Forgot Email?</a></p>
                     </div>
                 </div>
                 <div id="password-section">
                     <div id="password">
-                            <input class="input" type="password" name=""  placeholder="Password" required>
+                            <input id="pwdInput"class="input" type="password" name=""  placeholder="Password" required>
                             <p><a href="Resetpassword.html">Forgot Password?</a></p>
                     </div>
                 </div>
                 <div id="form-bottom">
                         <div>
-                              <a href="Inbox.html">Login</a>
+                              <button id="loginButton">Login</button>
                         </div>
                     <!-- <div>
                         <button type="submit">Login</button>
@@ -54,6 +54,7 @@
         </footer>
 
     </main>
-    
+    <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>
+    <script src="Js/signIn.js"></script>
 </body>
 </html>

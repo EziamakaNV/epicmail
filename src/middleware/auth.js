@@ -7,9 +7,10 @@ import db from '../model/db';
 
 class Authentication {
   static verifyToken(req, res, next) {
+    console.log('auth reached');
     const token = req.cookies.jwt;
     if (!token) { // If token is not supplied
-      res.status(400).json({ status: 400, error: 'Missing token', success: false });
+      res.status(200).json({ status: 400, error: req.cookies, success: false });
     } else { // Token exists
       jwt.verify(token, jwtConfig.secret, (err, result) => { // Get userId from decoded token
         if (err) return res.status(400).json({ status: 400, error: 'Incorrect credentials', success: false });
@@ -20,6 +21,7 @@ class Authentication {
         db.query(queryText, value) // Check DB if userId exists
           .then((response) => { // Create user property in request and set the Id
             req.user = { id: result.id };
+            console.log(`userId: ${result.id}`);
             next();
           }, (error) => {
             res.status(400).json({ status: 400, error, success: false });

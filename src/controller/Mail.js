@@ -1,3 +1,4 @@
+/* eslint-disable linebreak-style */
 /* eslint-disable quotes */
 /* eslint-disable max-len */
 import moment from 'moment';
