@@ -1,3 +1,4 @@
+/* eslint-disable linebreak-style */
 /* eslint-disable max-len */
 /* eslint-disable no-undef */
 // eslint-disable-next-line no-unused-vars
@@ -195,7 +196,7 @@ describe('GET /api/v1/messages', () => {
     it('on sucess it should return an object with properties status and data', (done) => {
       chai.request(server)
         .get('/api/v1/messages')
-        .set('x-access-token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNTUzMjIxNDE4LCJleHAiOjE1NTM1ODE0MTh9.cfQ3mk93IOdA8fTH6ieAD8eTKeMXQxQpPjytUjoewbg')
+        .set('Cookie', 'jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNTUzODcxOTg1LCJleHAiOjE1ODU0MDc5ODV9.kxiPZIp8pU9_MlvdvPaosR7GYwtjh865tP7myxsuvnw')
         .end((err, res) => {
           // eslint-disable-next-line no-unused-expressions
           expect(err).to.be.null;
@@ -216,7 +217,7 @@ describe('GET /api/v1/messages/unread', () => {
     it('on sucess it should return an object with properties status and data', (done) => {
       chai.request(server)
         .get('/api/v1/messages/unread')
-        .set('x-access-token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNTUzMjIxNDE4LCJleHAiOjE1NTM1ODE0MTh9.cfQ3mk93IOdA8fTH6ieAD8eTKeMXQxQpPjytUjoewbg')
+        .set('Cookie', 'jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNTUzODcxOTg1LCJleHAiOjE1ODU0MDc5ODV9.kxiPZIp8pU9_MlvdvPaosR7GYwtjh865tP7myxsuvnw')
         .end((err, res) => {
           // eslint-disable-next-line no-unused-expressions
           expect(err).to.be.null;
@@ -232,7 +233,7 @@ describe('GET /api/v1/messages/unread', () => {
     it('there should be no empty elements in the data array', (done) => {
       chai.request(server)
         .get('/api/v1/messages/unread')
-        .set('x-access-token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNTUzMjIxNDE4LCJleHAiOjE1NTM1ODE0MTh9.cfQ3mk93IOdA8fTH6ieAD8eTKeMXQxQpPjytUjoewbg')
+        .set('Cookie', 'jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNTUzODcxOTg1LCJleHAiOjE1ODU0MDc5ODV9.kxiPZIp8pU9_MlvdvPaosR7GYwtjh865tP7myxsuvnw')
         .end((err, res) => {
           // eslint-disable-next-line no-unused-expressions
           expect(err).to.be.null;
@@ -263,7 +264,7 @@ describe('GET /api/v1/messages/sent', () => {
     it('on sucess it should return an object with properties status and data', (done) => {
       chai.request(server)
         .get('/api/v1/messages/sent')
-        .set('x-access-token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNTUzMjIxNDE4LCJleHAiOjE1NTM1ODE0MTh9.cfQ3mk93IOdA8fTH6ieAD8eTKeMXQxQpPjytUjoewbg')
+        .set('Cookie', 'jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNTUzODcxOTg1LCJleHAiOjE1ODU0MDc5ODV9.kxiPZIp8pU9_MlvdvPaosR7GYwtjh865tP7myxsuvnw')
         .end((err, res) => {
           // eslint-disable-next-line no-unused-expressions
           expect(err).to.be.null;
@@ -279,7 +280,7 @@ describe('GET /api/v1/messages/sent', () => {
     it('there should be no empty elements in the data array', (done) => {
       chai.request(server)
         .get('/api/v1/messages/sent')
-        .set('x-access-token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNTUzMjIxNDE4LCJleHAiOjE1NTM1ODE0MTh9.cfQ3mk93IOdA8fTH6ieAD8eTKeMXQxQpPjytUjoewbg')
+        .set('Cookie', 'jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNTUzODcxOTg1LCJleHAiOjE1ODU0MDc5ODV9.kxiPZIp8pU9_MlvdvPaosR7GYwtjh865tP7myxsuvnw')
         .end((err, res) => {
           // eslint-disable-next-line no-unused-expressions
           expect(err).to.be.null;
@@ -310,7 +311,7 @@ describe('POST /api/v1/messages', () => {
     it('when all relevant properties are sent in the POST body, on sucess it should return an object with properties status and data', (done) => {
       chai.request(server)
         .post('/api/v1/messages')
-        .set('x-access-token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNTUzMjIxNDE4LCJleHAiOjE1NTM1ODE0MTh9.cfQ3mk93IOdA8fTH6ieAD8eTKeMXQxQpPjytUjoewbg')
+        .set('Cookie', 'jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNTUzODcxOTg1LCJleHAiOjE1ODU0MDc5ODV9.kxiPZIp8pU9_MlvdvPaosR7GYwtjh865tP7myxsuvnw')
         .type('form')
         .send({
           receiverEmail: 'Mekus@epicmail.com',
@@ -360,7 +361,7 @@ describe('GET /api/v1/messages/<messages-id>', () => {
   it('the endpoint should respond with a 400 bad request if the messages-id parameter is not an integer', (done) => {
     chai.request(server)
       .get('/api/v1/messages/abcd')
-      .set('x-access-token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNTUzMjIxNDE4LCJleHAiOjE1NTM1ODE0MTh9.cfQ3mk93IOdA8fTH6ieAD8eTKeMXQxQpPjytUjoewbg')
+      .set('Cookie', 'jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNTUzODcxOTg1LCJleHAiOjE1ODU0MDc5ODV9.kxiPZIp8pU9_MlvdvPaosR7GYwtjh865tP7myxsuvnw')
       .end((err, res) => {
         // eslint-disable-next-line no-unused-expressions
         expect(err).to.be.null;
@@ -377,7 +378,7 @@ describe('GET /api/v1/messages/<messages-id>', () => {
   it('the endpoint should respond with a 200 OK if the messages-id parameter is an integer and held in record', (done) => {
     chai.request(server)
       .get('/api/v1/messages/1')
-      .set('x-access-token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNTUzMjIxNDE4LCJleHAiOjE1NTM1ODE0MTh9.cfQ3mk93IOdA8fTH6ieAD8eTKeMXQxQpPjytUjoewbg')
+      .set('Cookie', 'jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNTUzODcxOTg1LCJleHAiOjE1ODU0MDc5ODV9.kxiPZIp8pU9_MlvdvPaosR7GYwtjh865tP7myxsuvnw')
       .end((err, res) => {
         // eslint-disable-next-line no-unused-expressions
         expect(err).to.be.null;
@@ -394,7 +395,7 @@ describe('GET /api/v1/messages/<messages-id>', () => {
   it('the endpoint should respond with a 404 NotFound if the messages-id parameter is an integer but not held in record', (done) => {
     chai.request(server)
       .get('/api/v1/messages/9999')
-      .set('x-access-token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNTUzMjIxNDE4LCJleHAiOjE1NTM1ODE0MTh9.cfQ3mk93IOdA8fTH6ieAD8eTKeMXQxQpPjytUjoewbg')
+      .set('Cookie', 'jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNTUzODcxOTg1LCJleHAiOjE1ODU0MDc5ODV9.kxiPZIp8pU9_MlvdvPaosR7GYwtjh865tP7myxsuvnw')
       .end((err, res) => {
         // eslint-disable-next-line no-unused-expressions
         expect(err).to.be.null;
@@ -413,7 +414,7 @@ describe('DELETE /api/v1/messages/<messages-id>', () => {
   it('the endpoint should respond with a 400 bad request if the messages-id parameter is not an integer', (done) => {
     chai.request(server)
       .delete('/api/v1/messages/abcd')
-      .set('x-access-token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNTUzMjIxNDE4LCJleHAiOjE1NTM1ODE0MTh9.cfQ3mk93IOdA8fTH6ieAD8eTKeMXQxQpPjytUjoewbg')
+      .set('Cookie', 'jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNTUzODcxOTg1LCJleHAiOjE1ODU0MDc5ODV9.kxiPZIp8pU9_MlvdvPaosR7GYwtjh865tP7myxsuvnw')
       .end((err, res) => {
         // eslint-disable-next-line no-unused-expressions
         expect(err).to.be.null;
@@ -430,7 +431,7 @@ describe('DELETE /api/v1/messages/<messages-id>', () => {
   it('the endpoint should respond with a 200 OK if the messages-id parameter is an integer and held in record', (done) => {
     chai.request(server)
       .delete('/api/v1/messages/1')
-      .set('x-access-token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNTUzMjIxNDE4LCJleHAiOjE1NTM1ODE0MTh9.cfQ3mk93IOdA8fTH6ieAD8eTKeMXQxQpPjytUjoewbg')
+      .set('Cookie', 'jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNTUzODcxOTg1LCJleHAiOjE1ODU0MDc5ODV9.kxiPZIp8pU9_MlvdvPaosR7GYwtjh865tP7myxsuvnw')
       .end((err, res) => {
         // eslint-disable-next-line no-unused-expressions
         expect(err).to.be.null;
@@ -468,7 +469,7 @@ describe('DELETE /api/v1/messages/<messages-id>', () => {
   it('the endpoint should respond with a 400 if the messages-id parameter is an integer but not held in record', (done) => {
     chai.request(server)
       .delete('/api/v1/messages/9999')
-      .set('x-access-token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNTUzMjIxNDE4LCJleHAiOjE1NTM1ODE0MTh9.cfQ3mk93IOdA8fTH6ieAD8eTKeMXQxQpPjytUjoewbg')
+      .set('Cookie', 'jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNTUzODcxOTg1LCJleHAiOjE1ODU0MDc5ODV9.kxiPZIp8pU9_MlvdvPaosR7GYwtjh865tP7myxsuvnw')
       .end((err, res) => {
         // eslint-disable-next-line no-unused-expressions
         expect(err).to.be.null;
@@ -489,7 +490,7 @@ describe('POST /api/v1/groups', () => {
     it('when all relevant properties are sent in the POST body, on sucess it should return an object with properties status and data', (done) => {
       chai.request(server)
         .post('/api/v1/groups')
-        .set('x-access-token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNTUzMjIxNDE4LCJleHAiOjE1NTM1ODE0MTh9.cfQ3mk93IOdA8fTH6ieAD8eTKeMXQxQpPjytUjoewbg')
+        .set('Cookie', 'jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNTUzODcxOTg1LCJleHAiOjE1ODU0MDc5ODV9.kxiPZIp8pU9_MlvdvPaosR7GYwtjh865tP7myxsuvnw')
         .type('form')
         .send({
           name: `Testingchai${Math.floor(Math.random() * 4000)}`,
@@ -536,7 +537,7 @@ describe('GET /api/v1/groups', () => {
     it('should return all groups', (done) => {
       chai.request(server)
         .get('/api/v1/groups')
-        .set('x-access-token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNTUzMjIxNDE4LCJleHAiOjE1NTM1ODE0MTh9.cfQ3mk93IOdA8fTH6ieAD8eTKeMXQxQpPjytUjoewbg')
+        .set('Cookie', 'jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNTUzODcxOTg1LCJleHAiOjE1ODU0MDc5ODV9.kxiPZIp8pU9_MlvdvPaosR7GYwtjh865tP7myxsuvnw')
         .end((err, res) => {
           // eslint-disable-next-line no-unused-expressions
           expect(err).to.be.null;
@@ -575,7 +576,7 @@ describe('PATCH /api/v1/groups/:groupId/:name', () => {
     it('name should change', (done) => {
       chai.request(server)
         .patch('/api/v1/groups/1/chaipatchtest')
-        .set('x-access-token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNTUzMjIxNDE4LCJleHAiOjE1NTM1ODE0MTh9.cfQ3mk93IOdA8fTH6ieAD8eTKeMXQxQpPjytUjoewbg')
+        .set('Cookie', 'jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNTUzODcxOTg1LCJleHAiOjE1ODU0MDc5ODV9.kxiPZIp8pU9_MlvdvPaosR7GYwtjh865tP7myxsuvnw')
         .end((err, res) => {
           // eslint-disable-next-line no-unused-expressions
           expect(err).to.be.null;
@@ -618,7 +619,7 @@ describe('DELETE /api/v1/groups/:groupId', () => {
     it('should delete group owned by user', (done) => {
       chai.request(server)
         .delete(`/api/v1/groups/${id}`)
-        .set('x-access-token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNTUzMjIxNDE4LCJleHAiOjE1NTM1ODE0MTh9.cfQ3mk93IOdA8fTH6ieAD8eTKeMXQxQpPjytUjoewbg')
+        .set('Cookie', 'jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNTUzODcxOTg1LCJleHAiOjE1ODU0MDc5ODV9.kxiPZIp8pU9_MlvdvPaosR7GYwtjh865tP7myxsuvnw')
         .end((err, res) => {
           // eslint-disable-next-line no-unused-expressions
           expect(err).to.be.null;
@@ -644,7 +645,7 @@ describe('POST /api/v1/groups/:groupId/user', () => {
         .send({
           user: 2,
         })
-        .set('x-access-token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNTUzMjIxNDE4LCJleHAiOjE1NTM1ODE0MTh9.cfQ3mk93IOdA8fTH6ieAD8eTKeMXQxQpPjytUjoewbg')
+        .set('Cookie', 'jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNTUzODcxOTg1LCJleHAiOjE1ODU0MDc5ODV9.kxiPZIp8pU9_MlvdvPaosR7GYwtjh865tP7myxsuvnw')
         .end((err, res) => {
           // eslint-disable-next-line no-unused-expressions
           expect(err).to.be.null;
@@ -682,7 +683,7 @@ describe('DELETE /api/v1/groups/:groupId/users/:userId', () => {
     it('should delete a user from a group owned by user', (done) => {
       chai.request(server)
         .delete('/api/v1/groups/7/users/2')
-        .set('x-access-token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNTUzMjIxNDE4LCJleHAiOjE1NTM1ODE0MTh9.cfQ3mk93IOdA8fTH6ieAD8eTKeMXQxQpPjytUjoewbg')
+        .set('Cookie', 'jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNTUzODcxOTg1LCJleHAiOjE1ODU0MDc5ODV9.kxiPZIp8pU9_MlvdvPaosR7GYwtjh865tP7myxsuvnw')
         .end((err, res) => {
           // eslint-disable-next-line no-unused-expressions
           expect(err).to.be.null;
@@ -704,7 +705,7 @@ describe('POST /api/v1/groups/:groupId/messages', () => {
       chai.request(server)
         .post('/api/v1/groups/7/messages')
         .type('form')
-        .set('x-access-token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNTUzMjIxNDE4LCJleHAiOjE1NTM1ODE0MTh9.cfQ3mk93IOdA8fTH6ieAD8eTKeMXQxQpPjytUjoewbg')
+        .set('Cookie', 'jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNTUzODcxOTg1LCJleHAiOjE1ODU0MDc5ODV9.kxiPZIp8pU9_MlvdvPaosR7GYwtjh865tP7myxsuvnw')
         .send({
           subject: `${Math.floor(Math.random(300))} test send message`,
           message: `${Math.floor(Math.random(300))} 4th lorem ipsum test message`,

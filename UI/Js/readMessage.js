@@ -7,8 +7,18 @@ $(document).ready(function () { // When document is ready, load inbox
   // eslint-disable-next-line no-undef
   $.get({
     url: '/api/v1/messages',
-    success: (messages) => {
-      console.log(messages);
+    success: (response) => {
+      console.log(response);
+      response.data.forEach((message) => {
+        $('#messages').append(`
+      <div id="${message.id}">
+      <p class="From">${message.senderid}</p>
+      <p class="Subject">${message.subject}</p>
+      <p class="Message">${message.message}</p>
+      <hr>
+      </div>
+      `);
+      });
     },
     dataType: 'json',
   });

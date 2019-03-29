@@ -42,7 +42,7 @@ class UserController {
             const insertText = `INSERT INTO users (email, firstname, lastname, password) VALUES ($1, $2, $3, $4) returning id`;
             const insertValues = [`${lowerCaseUserName}@epicmail.com`, firstName, lastName, hashedP];
             const user = await db.query(insertText, insertValues); // Insert details into databse and get id
-            const token = jwt.sign({ id: user.rows[0].id }, config.secret, { expiresIn: '500h' });
+            const token = jwt.sign({ id: user.rows[0].id }, config.secret, { expiresIn: '8760h' });
             const insertLowerCase = lowerCaseUserName;
             res.status(200).json({
               status: 200,
@@ -90,8 +90,8 @@ class UserController {
           const hashedPassword = credentials.rows[0].password;
           const match = await bcrypt.compare(password, hashedPassword); // Compare against hashed password
           if (match) {
-            const token = jwt.sign({ id }, config.secret, { expiresIn: '24h' });
-            res.cookie('jwt', token, { maxAge: 90000000000, httpOnly: true });
+            const token = jwt.sign({ id }, config.secret, { expiresIn: '8760h' });
+            res.cookie('jwt', token, { maxAge: 31540000000, httpOnly: true });
             res.status(200).json({ status: 200, data: { token }, success: true });
           } else {
             res.status(401).json({ status: 401, error: 'Incorrect credentials', success: false });

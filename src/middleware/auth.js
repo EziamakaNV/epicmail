@@ -10,7 +10,7 @@ class Authentication {
     console.log('auth reached');
     const token = req.cookies.jwt;
     if (!token) { // If token is not supplied
-      res.status(200).json({ status: 400, error: req.cookies, success: false });
+      res.status(400).json({ status: 400, error: 'Missing Token', success: false });
     } else { // Token exists
       jwt.verify(token, jwtConfig.secret, (err, result) => { // Get userId from decoded token
         if (err) return res.status(400).json({ status: 400, error: 'Incorrect credentials', success: false });

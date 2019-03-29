@@ -16,7 +16,8 @@ console.log($email);
       password: $password,
     },
     success: (data) => {
-      console.log(`Cookie: ${data}`);
+      console.log(data);
+      window.location.replace('/inbox'); // on success, redirect to the inbox
     },
   });
 });
