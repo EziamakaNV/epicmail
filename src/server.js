@@ -1,7 +1,10 @@
+/* eslint-disable linebreak-style */
 /* eslint-disable no-console */
 import express from 'express';
 
 import bodyParser from 'body-parser';
+
+import cookieParser from 'cookie-parser';
 
 import swaggerUi from 'swagger-ui-express';
 
@@ -16,9 +19,21 @@ const app = express();
 
 const swaggerDocument = require('./swagger.json');
 
+app.use(cookieParser());
+
+app.use(express.static('UI'));
+
 app.use(bodyParser.json());
 
 app.use(bodyParser.urlencoded({ extended: true }));
+
+app.get('/login', (req, res) => {
+  res.sendFile('C:/Users/IGNATIUS/Desktop/epicmail/UI/Signin.html');
+});
+
+app.get('/inbox', (req, res) => {
+  res.sendFile('C:/Users/IGNATIUS/Desktop/epicmail/UI/Inbox.html');
+});
 
 app.use('/api/v1/auth', userRoute);
 

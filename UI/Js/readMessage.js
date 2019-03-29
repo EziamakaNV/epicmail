@@ -1,25 +1,25 @@
-const divs = document.getElementById('messages').getElementsByTagName('div');
-
-
-for(let i= 0; i < divs.length; i++){
-    divs[i].addEventListener('click',(e)=>{
-        document.getElementById("message-modal").style.display = "block";
-    });
-}
-
-
-const button = document.getElementById('close-button');
-button.onclick = (e)=>{
-    document.getElementById("message-modal").style.display = "none";
-}
-
-const dropDown = document.getElementsByClassName('dropdown')[0];
-const dropDownContent= document.getElementsByClassName('dropdown-content')[0];
-
-dropDown.addEventListener('click',()=>{
-    dropDownContent.style.display="block";
-});
-
-dropDownContent.addEventListener('click',()=>{
-    dropDownContent.style.display="block";
+/* eslint-disable func-names */
+/* eslint-disable prefer-arrow-callback */
+/* eslint-disable linebreak-style */
+// eslint-disable-next-line func-names
+// eslint-disable-next-line no-undef
+$(document).ready(function () { // When document is ready, load inbox
+  // eslint-disable-next-line no-undef
+  $.get({
+    url: '/api/v1/messages',
+    success: (response) => {
+      console.log(response);
+      response.data.forEach((message) => {
+        $('#messages').append(`
+      <div id="${message.id}">
+      <p class="From">${message.senderid}</p>
+      <p class="Subject">${message.subject}</p>
+      <p class="Message">${message.message}</p>
+      <hr>
+      </div>
+      `);
+      });
+    },
+    dataType: 'json',
+  });
 });
