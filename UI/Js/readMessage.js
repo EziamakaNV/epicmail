@@ -3,7 +3,7 @@
 /* eslint-disable linebreak-style */
 // eslint-disable-next-line func-names
 // eslint-disable-next-line no-undef
-$(document).ready(function () {
+$(document).ready(function () { // When document is ready, load inbox
   // eslint-disable-next-line no-undef
   $.get({
     url: '/api/v1/messages',
