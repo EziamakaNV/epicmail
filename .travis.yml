@@ -6,12 +6,9 @@ node_js:
   - node
 
 install:
-  - cd SERVER && npm ci
+  - npm ci
 
 script:
   - npm test
 
 after_success: npm run coverage
-
-notifications:
-  emails: false
