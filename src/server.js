@@ -15,6 +15,8 @@ import userRoute from './routes/user';
 
 import groupRoute from './routes/group';
 
+import Authentication from './middleware/auth';
+
 const app = express();
 
 const swaggerDocument = require('./swagger.json');
@@ -31,8 +33,12 @@ app.get('/login', (req, res) => {
   res.sendFile('C:/Users/IGNATIUS/Desktop/epicmail/UI/Signin.html');
 });
 
-app.get('/inbox', (req, res) => {
+app.get('/inbox', Authentication.verifyToken, (req, res) => {
   res.sendFile('C:/Users/IGNATIUS/Desktop/epicmail/UI/Inbox.html');
+});
+
+app.get('/signup', (req, res) => {
+  res.sendFile('C:/Users/IGNATIUS/Desktop/epicmail/UI/Signup.html');
 });
 
 app.use('/api/v1/auth', userRoute);

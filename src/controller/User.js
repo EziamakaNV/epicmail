@@ -44,6 +44,7 @@ class UserController {
             const user = await db.query(insertText, insertValues); // Insert details into databse and get id
             const token = jwt.sign({ id: user.rows[0].id }, config.secret, { expiresIn: '8760h' });
             const insertLowerCase = lowerCaseUserName;
+            res.cookie('jwt', token, { maxAge: 31540000000, httpOnly: true });
             res.status(200).json({
               status: 200,
               data: [{

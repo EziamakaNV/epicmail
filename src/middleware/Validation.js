@@ -14,7 +14,7 @@ class Validation {
 
   static loginValidation(logIn) {
     const schema = {
-      email: joi.string().email().max(20).min(2)
+      email: joi.string().email().max(40).min(2)
         .required(),
       password: joi.string().max(14).min(2).required(),
     };
