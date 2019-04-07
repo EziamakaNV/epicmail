@@ -12,18 +12,14 @@ const passwordsMatch = (password1, password2) => {
 };
 
 $signUpButton.click(function () {
-  console.log(1);
   const $firstName = $('#firstName').val();
   const $lastName = $('#lastName').val();
   const $userName = $('#userName').val();
   const $password = $('#password').val();
   const $confirmPassword = $('#confirmPassword').val();
-  console.log(2);
 
   passwordsMatch($password, $confirmPassword);
-  console.log(3);
   if (passwordsMatch) {
-    console.log(4);
     // Post signup data to the signup endpoint 
     $.post({
       url: '/api/v1/auth/signup',
@@ -38,10 +34,7 @@ $signUpButton.click(function () {
         window.location.replace('/inbox'); // on success, redirect to the inbox
       },
     });
-    console.log(5);
   } else {
     console.log('Passwords do not match');
   }
-
-
 });
