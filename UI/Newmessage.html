@@ -55,16 +55,16 @@
         <section id="send-message">
             <form action="#" method="post" onsubmit="event.preventDefault()">
                 <div>
-                    <input class ="input recepients" type="text" name="" id="" id="to" placeholder="To:">
+                    <input class ="input recepients" type="text" name="" id="receiverEmail" placeholder="To:">
                 </div>
                 <div>
-                    <input class="input recepients" type="text" id="Bcc" placeholder="Bcc:">
+                    <input class="input recepients" type="text" id="bcc" placeholder="Bcc:">
                 </div>
                 <div>
-                    <input class="input recepients" type="text" id="Subject" placeholder="Subject">
+                    <input class="input recepients" type="text" id="subject" placeholder="Subject">
                 </div>
                 <div>
-                    <textarea id="mail-message" name="" id=""></textarea>
+                    <textarea id="message" name="" id=""></textarea>
                 </div>
                 <div id="form-bottom" class="flex-wrapper">
                         <button id="send">
@@ -95,6 +95,7 @@
         </footer>
 
     </main>
+    <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>
     <script src="Js/newMessage.js"></script>
 </body>
 </html>
