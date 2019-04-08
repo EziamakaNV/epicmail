@@ -41,6 +41,10 @@ app.get('/signup', (req, res) => {
   res.sendFile('C:/Users/IGNATIUS/Desktop/epicmail/UI/Signup.html');
 });
 
+app.get('/sent', (req, res) => {
+  res.sendFile('C:/Users/IGNATIUS/Desktop/epicmail/UI/Sent.html');
+});
+
 app.use('/api/v1/auth', userRoute);
 
 app.use('/api/v1/messages', mailRoute);
