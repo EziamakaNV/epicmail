@@ -31,7 +31,7 @@ $signUpButton.click(function () {
       },
       success: (data) => {
         console.log(data);
-        window.location.replace('/inbox'); // on success, redirect to the inbox
+        window.location.replace('/views/inbox'); // on success, redirect to the inbox
       },
     });
   } else {
