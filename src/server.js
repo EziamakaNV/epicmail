@@ -31,7 +31,7 @@ app.use(bodyParser.json());
 
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.get('/', (req, res) => res.sendFile('/UI/Signin.html', { root: process.cwd() }));
+app.get('/', (req, res) => res.sendFile('/UI/Index.html', { root: process.cwd() }));
 
 app.use('/views', viewsRoute);
 

@@ -20,38 +20,43 @@
                 <div class="dropdown-content">
                     <a href="/views/inbox">Inbox</a>
                     <a href="/views/sent">Sent</a>
-                    <a href="/views/Drafts">Drafts</a>
+                    <a href="/views/drafts">Drafts</a>
                     <a href="/views/contacts">Contacts</a>
                     <a href="/views/groups">Groups</a>
                 </div>
             </div>
-            
             <div id="page-title">
-                <h3>
-                    Inbox
-                </h3>
+                    <a href = '/'>
+                        <h3>
+                           Inbox
+                        </h3>
+                    </a>
             </div>
+            <nav>
+                <ul>
+                    <li><a href="/views/inbox">Inbox</a></li>
+                    <li><a href="/views/sent">Sent</a></li>
+                    <li><a href="/views/drafts">Drafts</a></li>
+                    <li><a href="views/contacts">Contacts</a></li>
+                    <li><a href="/views/creategroups">Creategroups</a></li>
+                    <li><a href="/views/contactus">Contact Us</a></li>
+                    <li><a href="/views/terms">Terms</a></li>
+                </ul>
+            </nav>
             <div id="new-message-icon">
                 <a href="/views/newmessage">
-                    <img src="/Images/CreateMessage.png" alt="New Message Icon">
+                    <img src="/Images/CreateMessage.png" alt="New Message">
                     <span class="pop-up">Create New Message</span>
                 </a>  
             </div>
         </header>
-        <section id="messages">
-            
+        <section id="messages" class = "card">
+            <section id="message-modal">
+                <button id="close-button" class="close button">Close</button>
+                <iframe id="individual-message" src="Readmessage.html"></iframe>
+            </section>
         </section>
         
-        <footer>
-                <div id="contact-us">
-                    <span><a href="/views/contactus">Contact Us</a></span>
-                </div>
-                <div id="terms">
-                    <span><a href="/views/terms">Terms</a></span>
-                </div>
-            
-        </footer>
-
     </main>
     <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>
     <script src="/Js/readMessage.js"></script>

@@ -4,14 +4,37 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="/Style/Style.css">
-    <title>Document</title>
+    <title>Sign Up</title>
 </head>
 <body>
     <main>
-        <header>
-            <h1>
-                Epic Mail
-            </h1>
+        <header class="flex-wrapper">
+            <div id="page-title">
+                <h3>
+                    Epic Mail
+                </h3>
+            </div>
+            <div class="dropdown">
+                    <div class="dropbtn">
+                        <div id="menu-bar">
+                        <div></div>
+                        <div></div>
+                    <div></div>
+                </div>
+                </div>
+                <div class="dropdown-content">
+                    <a href="/views/forgotemail">Forgot Email</a>
+                    <a href="/views/resetpassword">Forgot Password</a>
+                    <a href="/views/login">Login</a>
+                </div>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="/views/forgotemail">Forgot Email</a></li>
+                    <li><a href="/views/resetpassword">Forgot Password</a></li>
+                    <li><a href="/views/login">Login</a></li>
+                </ul>
+            </nav>
         </header>
         <section id="heading-message">
             <p>Create your Epic Mail Account </p>
@@ -46,29 +69,13 @@
                 <div id="form-bottom">
                     <div>
                         <span>
-                            <a href="/views/login">Sign In</a>
+                            <button id="signUpButton" class = 'button'>Sign Up</a>
                         </span>
                     </div>
-                    <!-- <div>
-                        <a href="Signin.html">Continue</a>
-                   </div> -->
-                    <div>
-                        <button id="signUpButton">Sign up</button>
-                    </div>
-                    
                 </div>
                 
             </form>
         </section>
-        <footer>
-                <div id="contact-us">
-                    <span><a href="Contactus.html">Contact Us</a></span>
-                </div>
-                <div id="terms">
-                    <span><a href="Terms.html">Terms</a></span>
-                </div>
-            
-        </footer>
 
     </main>
     <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>

@@ -1,38 +1,102 @@
-/* @import url('https://fonts.googleapis.com/css?family=Roboto+Condensed'); */
+@import url('https://fonts.googleapis.com/css?family=Roboto+Condensed');
 
 body{
     font-family: 'Roboto Condensed', sans-serif;
     margin: 0;
     height: auto;
+    background-color: #FFFFFF;
 }
+
+
 
 header{
     text-align: center;
-    background-color: #f80652;
-    color: white
+    background-color: #00BCD4;
+    color: white;
+}
+
+.button{
+    margin-top: 5px;
+    background-color: #00BCD4;
+    border: none;
+    color: #FFFFFF;
+    padding: 10px 10px 10px 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    cursor: pointer;
+    margin-left: 5px;
+    margin-right: 5px;
+    border-radius: 5px;
+}
+
+.button:hover{
+    color: black
 }
 
 #heading-message{
     text-align: center;
 }
 
-main{
-    max-width: 800px;
-    margin:auto
+#page-title{
+    margin-left: 1%;
 }
 
+nav{
+    float: right
+}
+
+main {
+    background-color: #FFFFFF;
+    color: white;
+    height: 100%;
+    overflow: auto;
+    background-image:url('/Images/backgroundhd.jpg')
+}
+
+.card {
+    background-color: white;
+    color: black;
+    border-radius: 5px
+}
+
+.modal-content{
+    color:black
+}
+
+.landing-message-1, .landing-message-2{
+    text-align: center;
+    font-size: 50px;
+}
+
+a{
+    text-decoration: none;
+    color: white
+}
 
 section{
     max-width: 100%;
-    width: 90vw;
+    width: 60vw;
     margin: auto;
     
 }
 
+section#form-section{
+    max-width: 500px;
+    border: 2px solid grey;
+    border-radius: 4px;
+    padding: 20px
+}
+
+#form-section .input{
+    margin-top: 15px
+}
+
 
 .input{
-    width: 100%;
-    margin-top: 15px;
+    width:100%;
+    margin-top: 10px;
     padding: 10px 0 10px 10px;
     border-radius: 4px;
     border-width: 0.5px;
@@ -58,29 +122,18 @@ p{
 
 #form-bottom div span a{
     text-decoration: none;
-    font-size: 16px
-}
-
-button{
-    background-color: #e8f1f8;
-    border: none;
-    color: blue;
-    padding: 15px 32px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
     font-size: 16px;
-    cursor: pointer;
+    border-radius: 5px;
 }
 
-button:hover{
-    background-color: #ADC4DC
-}
 
 footer{
+    height: 10%;
+    background-color: #00BCD4;
     display: flex;
     flex-direction: row;
-    justify-content: center
+    justify-content: center;
+    margin-top: 5%;
 }
 footer div{
     margin:auto
@@ -137,7 +190,10 @@ footer div{
   }
   
   /* Change color of dropdown links on hover */
-  .dropdown-content a:hover {background-color: #f1f1f1}
+  .dropdown-content a:hover {
+    background-color:  #00BCD4;
+    color: #FFFFFF
+    }
   
   /* Show the dropdown menu on hover */
   .dropdown:hover .dropdown-content{
@@ -150,7 +206,7 @@ footer div{
   }
 
   #messages div:hover{
-      border: 1px solid blue;
+      border: 1px solid #BDBDBD;
       border-radius: 4px;
       cursor: pointer;
   }
@@ -185,23 +241,25 @@ textarea:focus{
 }
 
 #form-bottom a{
-    background-color: #e8f1f8;
+    margin-top: 5px;
+    background-color: #00BCD4;
     border: none;
-    color: blue;
+    color: #FFFFFF;
     padding: 15px 32px;
     text-align: center;
     text-decoration: none;
     display: inline-block;
     font-size: 16px;
     cursor: pointer;
+    border-radius: 5px
 }
 
 #form-bottom a:hover{
-    background-color: #ADC4DC
+    color: black
 }
 
 #sent-messages div.flex-wrapper:hover{
-    border: 1px solid blue;
+    border: 1px solid #BDBDBD;
     border-radius: 4px;
     cursor: pointer;
 }
@@ -222,8 +280,9 @@ a:hover span.pop-up{
     display: block;
     position: absolute
 }
+
 #draft-messages div.flex-wrapper:hover{
-    border: 1px solid blue;
+    border: 1px solid #BDBDBD;
     border-radius: 4px;
     cursor: pointer;
 }
@@ -291,11 +350,40 @@ body.message-body{
     cursor: pointer
 }
 
-.modal a:hover{
-    background-color: #ADC4DC
+#contact-us span a, #terms span a {
+    text-decoration: none;
+    color: #FFFFFF
 }
 
+#contact-us span a:hover, #terms span a:hover {
+    color: black
+}
 
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  li {
+      float: left;
+  }
+
+  li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 20px 15px 0 0;
+    text-decoration: none;
+  }
+
+  li a:hover{
+      color: black
+  }
+
+  nav{
+      display: none
+  }
 
 img{
     border: 1px solid black;
@@ -303,11 +391,16 @@ img{
     height:35px;
 }
 
+
 @media(min-width:700px){
-    main{
-        margin-top: 5vh;
-        border: 1px solid gainsboro;
-        border-radius: 4px;
-        padding: 10px
+    
+    .dropdown{
+        display: none
+    }
+    nav{
+        display: block
+    }
+    .hide{
+        display: none
     }
 }

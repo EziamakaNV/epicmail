@@ -19,7 +19,7 @@ $(document).ready(function () { // When document is ready, load sent messages
                     <p class="Message">${message.message}</p>
                 </div>
                 <div>
-                    <button>Retract Message</button>
+                    <button class = 'button'>Retract Message</button>
                 </div>
             </div>
             <hr>
