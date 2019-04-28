@@ -36,40 +36,44 @@ Before running the project, install the following
 - Git
 
 #### To run
-```$ git clone https://github.com/EziamakaNV/epicmail.git
-$ cd EPIC-Mail
+$ git clone https://github.com/EziamakaNV/epicmail.git
+$ cd epicmail
 $ npm install
-$ npm start```
-#### To Test
-```$ npm test```
+$ npm start
 
-## Relevant Links
+#### To Test
+$ npm test
+
+### Relevant Links
 
 ### Pivotal Tracker stories
 [https://www.pivotaltracker.com/n/projects/2314553](https://www.pivotaltracker.com/n/projects/2314553)
+
+### Hosted App
+- https://epicmails.herokuapp.com/
 
 ### UI Template
 [https://eziamakanv.github.io/epicmail](https://eziamakanv.github.io/epicmail)
 
 ## API Endpoints
 
-POST 'https://radiant-thicket-73219.herokuapp.com/auth/signup' - Allows a user to create an account
+POST 'https://epicmails.herokuapp.com/auth/signup' - Allows a user to create an account
 
-POST 'https://radiant-thicket-73219.herokuapp.com/api/v1/auth/login' - Allows a user to create an account
+POST 'https://epicmails.herokuapp.com/api/v1/auth/login' - Allows a user to create an account
 
-POST 'https://radiant-thicket-73219.herokuapp.com/api/v1/messages' - Sends a new message
+POST 'https://epicmails.herokuapp.com/api/v1/messages' - Sends a new message
 
-GET 'https://radiant-thicket-73219.herokuapp.com/api/v1/messages/all' - Gets all messages
+GET 'https://epicmails.herokuapp.com/api/v1/messages/all' - Gets all messages
 
-GET 'https://radiant-thicket-73219.herokuapp.com/api/v1/messages' - Gets all received messages
+GET 'https://epicmails.herokuapp.com/api/v1/messages' - Gets all received messages
 
-GET 'https://radiant-thicket-73219.herokuapp.com/api/v1/messages/sent' - Gets all sent messages
+GET 'https://epicmails.herokuapp.com/api/v1/messages/sent' - Gets all sent messages
 
-GET 'https://radiant-thicket-73219.herokuapp.com/api/v1/messages/unread' - Gets all unread messages
+GET 'https://epicmails.herokuapp.com/api/v1/messages/unread' - Gets all unread messages
 
-GET 'https://radiant-thicket-73219.herokuapp.com/api/v1/messages/:id' - Gets a single message by the id
+GET 'https://epicmails.herokuapp.com/api/v1/messages/:id' - Gets a single message by the id
 
-DELETE 'https://radiant-thicket-73219.herokuapp.com/api/v1/messages/:id' - Deletes a single message by the id
+DELETE 'https://epicmails.herokuapp.com/api/v1/messages/:id' - Deletes a single message by the id
 
 ## Author
 
