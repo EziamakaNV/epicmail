@@ -21,6 +21,8 @@ const app = express();
 
 const swaggerDocument = require('./swagger.json');
 
+const PORT = process.env.PORT || 5000;
+
 app.use(cookieParser());
 
 app.use(express.static('UI'));
@@ -49,8 +51,8 @@ app.use((req, res) => {
 
 
 if (process.env.NODE_ENV !== 'test') {
-  app.listen(8080, () => {
-    console.log('App listening on port 8080');
+  app.listen(PORT, () => {
+    console.log(`App listening on port ${PORT}`);
   });
 }
 
